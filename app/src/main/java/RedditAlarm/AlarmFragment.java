@@ -252,7 +252,7 @@ public class AlarmFragment extends Fragment {
                 }
             }
         });
-
+        //Toggle button
         ToggleButton toggle_Sun = (ToggleButton) view.findViewById(R.id.toggle_sun);
 
         toggle_Sun.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
