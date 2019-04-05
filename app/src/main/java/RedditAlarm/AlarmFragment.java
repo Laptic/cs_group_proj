@@ -1,9 +1,13 @@
 package RedditAlarm;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +25,38 @@ public class AlarmFragment extends Fragment {
     int second;
     boolean[] dayBools;
 
-    @Nullable
+    OnMessageReadListener messageReadListener;
+
+    public AlarmFragment() {
+
+    }
+
+    public interface OnMessageReadListener {
+
+        public void onMessageRead(String message);
+    }
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.alarm_fragment, container,false);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        Activity activity = (Activity) context;
+
+        try {
+            messageReadListener = (OnMessageReadListener) activity;
+        }catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must override onMessageRead...");
+        }
+    }
 
 
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.alarm_fragment, container,false);
+
+        alarm = new Alarm();
 
         //Create an object for the spinner box HOUR
         Spinner spinner_hour = view.findViewById(R.id.spinner_hour);
@@ -107,6 +136,9 @@ public class AlarmFragment extends Fragment {
             }
         });
 
+
+
+
         final TextView txt_name = (TextView) view.findViewById(R.id.text_NAME);
 
         ToggleButton toggle_Mon = (ToggleButton) view.findViewById(R.id.toggle_mon);
@@ -118,12 +150,12 @@ public class AlarmFragment extends Fragment {
                 if(isChecked) {
 
                     txt_name.setText("IS COOL");
-                    alarm.daysOfWeek[0] = true;
+
                 }
 
                 else {
                     txt_name.setText("John M");
-                    alarm.daysOfWeek[0] = false;
+
                 }
             }
         });
@@ -219,16 +251,13 @@ public class AlarmFragment extends Fragment {
 
             }
         });
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        return view;
     }
 
     private void populate() {
         dayBools = alarm.daysOfWeek;
 
     }
+
+
 }

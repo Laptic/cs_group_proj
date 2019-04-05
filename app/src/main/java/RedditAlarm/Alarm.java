@@ -12,6 +12,11 @@ public class Alarm {
      int time;
      boolean recurring;
 
+     public Alarm() {
+
+         daysOfWeek = new boolean[7];
+     }
+
 
 
 
