@@ -1,4 +1,4 @@
-package jmarti71.masonlive.edu.alarmadd;
+package RedditAlarm;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

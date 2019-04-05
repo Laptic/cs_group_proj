@@ -1,4 +1,4 @@
-package jmarti71.masonlive.edu.alarmadd;
+package RedditAlarm;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class UIClass extends AppCompatActivity {
 
     boolean[] daysOfWeek = new boolean[7];
 

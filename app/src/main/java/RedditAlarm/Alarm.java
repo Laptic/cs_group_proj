@@ -1,4 +1,4 @@
-package jmarti71.masonlive.edu.alarmadd;
+package RedditAlarm;
 
 import android.support.v4.app.Fragment;
 
