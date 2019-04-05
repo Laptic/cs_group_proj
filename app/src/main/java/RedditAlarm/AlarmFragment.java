@@ -31,11 +31,13 @@ public class AlarmFragment extends Fragment {
 
     }
 
+    //used to communicate information between fragment (AlarmFragment) and activity (UIClass)
     public interface OnMessageReadListener {
 
         public void onMessageRead(String message);
     }
 
+    //ensure that the host activity implements the proper interface
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -53,7 +55,7 @@ public class AlarmFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        //populates the fragment with the layout of alarm_fragment, which is under res
         View view = inflater.inflate(R.layout.alarm_fragment, container,false);
 
         alarm = new Alarm();
@@ -138,27 +140,42 @@ public class AlarmFragment extends Fragment {
 
 
 
-
+        //gets the textbox called text_NAME, used to display some info
+        //CAN DELETE txt_name
         final TextView txt_name = (TextView) view.findViewById(R.id.text_NAME);
 
+
+        //To get the inputs for the days of the week, we are gonna use toggle buttons
+        //to get the days that the user wants the alarm to go off
+
+        //Monday toggle button
         ToggleButton toggle_Mon = (ToggleButton) view.findViewById(R.id.toggle_mon);
 
+        //.setOnCheckedChangeListener is used to listen for the button toggles
+        //if the user makes a toggle, it will perform the following if-else statements
         toggle_Mon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+                //checks if it is toggled, otherwise not
+
                 if(isChecked) {
 
+                    //delete if you delete txt_name
                     txt_name.setText("IS COOL");
 
                 }
 
                 else {
+                    //delete if you delete txt_name
                     txt_name.setText("John M");
 
                 }
             }
         });
+
+        //The toggle buttons for tuesday-sunday follow the exact layout of the monday
+        //toggle button
 
         ToggleButton toggle_Tues = (ToggleButton) view.findViewById(R.id.toggle_tues);
 
@@ -251,9 +268,12 @@ public class AlarmFragment extends Fragment {
 
             }
         });
+
+        //returns the fragment
         return view;
     }
 
+    //Not sure what to do with this anymore, ask ben
     private void populate() {
         dayBools = alarm.daysOfWeek;
 
