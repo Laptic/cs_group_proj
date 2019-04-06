@@ -18,8 +18,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_DAYS = "days";
     private static final String KEY_NAME = "name";
     private static final String KEY_URL = "url";
+    private static final String KEY_STATUS = "status";
 
-    public DatabaseHandler(Context context) {
+    DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -27,18 +28,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_ALARMS_TABLE = "CREATE TABLE " + TABLE_ALARMS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + KEY_TIMESTAMP + " TEXT," + KEY_DAYS + " TEXT, " + KEY_URL
-                + " TEXT" + ")";
+                + KEY_TIMESTAMP + " TEXT," + KEY_DAYS + " TEXT," + KEY_URL
+                + " TEXT," + KEY_STATUS + " INTEGER" + ")";
         db.execSQL(CREATE_ALARMS_TABLE);
     }
 
     // Upgrading database
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db,
+                          int oldVersion,
+                          int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALARMS);
 
-        // Create tables againn
+        // Create tables again
         onCreate(db);
     }
 
@@ -50,6 +53,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TIMESTAMP, alarmIn.getTimeStamp());
         values.put(KEY_DAYS, alarmIn.strRepDays());
         values.put(KEY_URL, alarmIn.url);
+        values.put(KEY_STATUS, alarmIn.status);
 
 
         // Inserting Row
@@ -59,8 +63,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // code to get all contacts in a list view
-    public List<Alarm> getAllAlarm() {
-        List<Alarm> alarmList = new ArrayList<Alarm>();
+    List<Alarm> getAllAlarm() {
+        List<Alarm> alarmList = new ArrayList<>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_ALARMS;
 
@@ -71,16 +75,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Alarm tempAlarm = new Alarm();
-                tempAlarm.setID(Integer.parseInt(cursor.getString(0)));
-                tempAlarm.setName(cursor.getString(1));
+                tempAlarm.id = Integer.parseInt(cursor.getString(0));
+                tempAlarm.name = cursor.getString(1);
                 tempAlarm.setTime(cursor.getString(2));
-                tempAlarm.setURL(cursor.getString(3));
+                tempAlarm.url = cursor.getString(3);
                 tempAlarm.setDays(cursor.getString(4));
+                tempAlarm.status = Integer.parseInt(cursor.getString(5));
                 // Adding contact to list
                 alarmList.add(tempAlarm);
             } while (cursor.moveToNext());
         }
-
+        cursor.close();
         // return contact list
         return alarmList;
     }
@@ -90,21 +95,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, alarmIn.getName());
+        values.put(KEY_NAME, alarmIn.name);
         values.put(KEY_TIMESTAMP, alarmIn.getTimeStamp());
         values.put(KEY_DAYS, alarmIn.strRepDays());
         values.put(KEY_URL, alarmIn.url);
+        values.put(KEY_STATUS, alarmIn.status);
 
         // updating row
         return db.update(TABLE_ALARMS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(alarmIn.getID()) });
+                new String[] { String.valueOf(alarmIn.id) });
     }
 
     // Deleting single contact
-    public void deleteContact(Alarm alarmIn) {
+    public void deleteAlarm(Alarm alarmIn) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_ALARMS, KEY_ID + " = ?",
-                new String[] { String.valueOf(alarmIn.getID()) });
+                new String[] { String.valueOf(alarmIn.id) });
         db.close();
+    }
+
+    public int getAlarmCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_ALARMS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.close();
+
+        // return count
+        return cursor.getCount();
     }
 }

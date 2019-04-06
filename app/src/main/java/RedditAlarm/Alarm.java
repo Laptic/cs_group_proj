@@ -1,7 +1,5 @@
 package RedditAlarm;
 
-import android.support.v4.app.Fragment;
-
 class Alarm {
     int id;
     String name;
@@ -9,7 +7,7 @@ class Alarm {
     boolean[] daysOfWeek;
     int hour = 12;
     int minute = 0;
-    boolean recurring = false;
+    int status = 0;
 
     Alarm() {
         daysOfWeek = new boolean[7];
@@ -18,43 +16,25 @@ class Alarm {
         }
     }
 
-    String getName() {
-        return name;
-    }
-
-    // need to deal with case where id is not assigned
-    int getID() {
-        return id;
-    }
-
     String strRepDays() {
-        String csvForm = "";
+        StringBuilder csvForm = new StringBuilder(8);
         for (int i = 0; i < 7; i++) {
             if (daysOfWeek[i]) {
-                csvForm +=  "1";
+                csvForm.append("1");
             }
             else {
-                csvForm += "0";
+                csvForm.append("0");
             }
         }
-        return csvForm;
+        return csvForm.toString();
     }
 
     String getTimeStamp() {
-        String timeStamp = hour + "," + minute;
-        return timeStamp;
+        return hour + "," + minute;
     }
 
-    void setID(int idIn) {
-        this.id = idIn;
-    }
-
-    void setName(String nameIn) {
-        this.name = nameIn;
-    }
-
-    void setURL(String urlIn) {
-        this.url = urlIn;
+    long getMiliTime() {
+        return (minute * 60 * 100 ) + (hour * 60 * 60 * 100);
     }
 
     void setTime(String timestamp) {
@@ -77,15 +57,8 @@ class Alarm {
     void setDays(String daysIn) {
         char[] days = daysIn.toCharArray();
         for(int i = 0; i < days.length; i++) {
-            if (days[i] == 0) {
-                daysOfWeek[i] = false;
-            }
-            else {
-                daysOfWeek[i] = true;
-            }
+            daysOfWeek[i] = (days[i] == 1);
         }
     }
-
-
 
 }
