@@ -1,6 +1,7 @@
 package RedditAlarm;
 
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -52,19 +53,9 @@ public class LogicHandler extends BroadcastReceiver {
             RedditClient apiService =
                     retrofitCall.create(RedditClient.class);
             String subreddit = executeAlarm.url;
-            Call<RedditResult> call = apiService.getRedditPosts(NUM_POSTS, subreddit);
-            call.enqueue(new Callback<RedditResult>() {
-                @Override
-                public void onResponse(Call<RedditResult> call, Response<RedditResult> response) {
-                    RedditResult result = response.body();
-                    // call notification now
-                }
-
-                @Override
-                public void onFailure(Call<RedditResult> call, Throwable t) {
-                    // Log error here since request failed
-                }
-            });
+            Call<RedditResult> retroCall = apiService.getRedditPosts(NUM_POSTS, subreddit);
+            RedditCall redditCall = new RedditCall();
+            redditCall.execute(retroCall);
         }
     }
 
@@ -93,5 +84,10 @@ public class LogicHandler extends BroadcastReceiver {
                 alarmIn.getMiliTime(),
                 AlarmManager.INTERVAL_DAY,
                 pendIntent);
+    }
+
+    public void processFinish(Call<RedditResult> callIn, Context conIn) {
+        Notifications newNotification = new Notifications();
+        newNotification.newNotification(conIn);
     }
 }

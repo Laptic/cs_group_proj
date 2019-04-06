@@ -38,7 +38,7 @@ public class RedditResult {
         this.dist = dist;
     }
 
-    public List<RedditPost> getChildren() {
+    public List<RedditPost> getRedditPost() {
         return postsGot;
     }
     public void setChildren(List<RedditPost> postsIn) {
