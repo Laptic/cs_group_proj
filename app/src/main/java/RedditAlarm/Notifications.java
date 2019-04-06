@@ -1,10 +1,22 @@
 package RedditAlarm;
 //import android.app.NotificationManager;
-import android.app.Notification;
+import android.app.Notification; // Maybe change to Notification.Builder
+import android.content.Context;
 
 
+// NOTE: This class uses Notification.Builder, not Notification
 public class Notifications {
 
+    private Notification.Builder noti;
 
+    // assume we have context set up, method here will be called with the existing context passed in from LogicHandler
+    public Notification.Builder newNotification(Context context) {
+        noti = new Notification.Builder(context);
+        return noti;
+    }
+
+    // if no reddit information
+
+    // if reddit information included
 
 }
