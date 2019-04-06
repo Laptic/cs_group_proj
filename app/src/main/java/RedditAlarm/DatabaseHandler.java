@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
+    // various database keys for fields
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "RedditAlarmDB";
     private static final String TABLE_ALARMS = "alarms";
@@ -62,7 +63,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    // code to get all contacts in a list view
+    // code to get all alarms in a list
     List<Alarm> getAllAlarm() {
         List<Alarm> alarmList = new ArrayList<>();
         // Select All Query
@@ -86,11 +87,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        // return contact list
+        // return alarm list
         return alarmList;
     }
 
-    // code to update the single contact
+    // code to update the single alarm
     public int updateAlarm(Alarm alarmIn) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -106,7 +107,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(alarmIn.id) });
     }
 
-    // Deleting single contact
+    // Deleting single alarm
     public void deleteAlarm(Alarm alarmIn) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_ALARMS, KEY_ID + " = ?",
