@@ -1,56 +1,30 @@
 package RedditAlarm;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.PriorityQueue;
 
-public class AlarmAdapter extends BaseAdapter {
+public class editAlarmAdapter extends AlarmAdapter {
 
-    // declares the layout inflater which defines the row layout of the list view
-    public LayoutInflater mInflater;
-
-    // declares the priority queue of the alarms
-    private PriorityQueue<Alarm> alarmQueue;
-
-    // constructs the alarm adapter
-    public AlarmAdapter(Context c, PriorityQueue<Alarm> aq){
-        mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        alarmQueue = aq;
+    public editAlarmAdapter(Context c, PriorityQueue<Alarm> aq) {
+        super(c, aq);
     }
-
-    // gets the number of alarms
-    @Override
-    public int getCount() {
-        return alarmQueue.size();
-    }
-
-    // gets the alarm at the specified position
-    @Override
-    public Alarm getItem(int position) {
-        Alarm[] alarmArray = alarmQueue.toArray(new Alarm[getCount()]);
-        return alarmArray[position];
-    }
-
-    // gets the id of the alarm at the specified position
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
     // generates the items in the list view
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = mInflater.inflate(R.layout.alarm_listview_detail, null);
+        View v = mInflater.inflate(R.layout.editalarm_listview_detail, null);
 
         TextView timeTextView = v.findViewById(R.id.timeTextView);
         TextView daysTextView = v.findViewById(R.id.daysTextView);
         Switch alarmSwitch = v.findViewById(R.id.alarmSwitch);
+        ImageView removeImageView = v.findViewById(R.id.removeImageView);
+
+        removeImageView.setImageResource(R.drawable.minus);
 
         Alarm alarmViewed = getItem(position);
 
@@ -93,3 +67,4 @@ public class AlarmAdapter extends BaseAdapter {
         return v;
     }
 }
+

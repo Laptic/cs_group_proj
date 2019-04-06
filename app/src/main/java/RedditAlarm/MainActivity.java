@@ -10,7 +10,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import java.util.PriorityQueue;
+
 public class MainActivity extends AppCompatActivity {
+
+    // declares and initializes the priority queue of the alarms
+    PriorityQueue<Alarm> alarmQueue = new PriorityQueue<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // declares and initializes the button to edit the alarms
-        Button editBtn = findViewById(R.id.editBtn);
+        final Button editBtn = findViewById(R.id.editBtn);
 
         // declares and initializes the image view to add a new alarm
         ImageView addImgView = findViewById(R.id.addImgView);
@@ -30,7 +35,10 @@ public class MainActivity extends AppCompatActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editBtn.setText("Done");
 
+                editAlarmAdapter editAlarmAdapter = new editAlarmAdapter(getApplicationContext(), alarmQueue);
+                alarmListView.setAdapter(editAlarmAdapter);
             }
         });
 
@@ -43,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 //startActivity(addAlarmIntent);
 
                 // uses the alarm adapter class to modify the alarm list view
-                AlarmAdapter alarmAdapter = new AlarmAdapter(getApplicationContext());
+                AlarmAdapter alarmAdapter = new AlarmAdapter(getApplicationContext(), alarmQueue);
                 alarmListView.setAdapter(alarmAdapter);
             }
         });
