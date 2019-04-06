@@ -1,9 +1,13 @@
 package RedditAlarm;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +25,40 @@ public class AlarmFragment extends Fragment {
     int second;
     boolean[] dayBools;
 
-    @Nullable
+    OnMessageReadListener messageReadListener;
+
+    public AlarmFragment() {
+
+    }
+
+    //used to communicate information between fragment (AlarmFragment) and activity (UIClass)
+    public interface OnMessageReadListener {
+
+        public void onMessageRead(String message);
+    }
+
+    //ensure that the host activity implements the proper interface
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.alarm_fragment, container,false);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        Activity activity = (Activity) context;
+
+        try {
+            messageReadListener = (OnMessageReadListener) activity;
+        }catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must override onMessageRead...");
+        }
+    }
 
 
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        //populates the fragment with the layout of alarm_fragment, which is under res
+        View view = inflater.inflate(R.layout.alarm_fragment, container,false);
+
+        alarm = new Alarm();
 
         //Create an object for the spinner box HOUR
         Spinner spinner_hour = view.findViewById(R.id.spinner_hour);
@@ -107,26 +138,44 @@ public class AlarmFragment extends Fragment {
             }
         });
 
+
+
+        //gets the textbox called text_NAME, used to display some info
+        //CAN DELETE txt_name
         final TextView txt_name = (TextView) view.findViewById(R.id.text_NAME);
 
+
+        //To get the inputs for the days of the week, we are gonna use toggle buttons
+        //to get the days that the user wants the alarm to go off
+
+        //Monday toggle button
         ToggleButton toggle_Mon = (ToggleButton) view.findViewById(R.id.toggle_mon);
 
+        //.setOnCheckedChangeListener is used to listen for the button toggles
+        //if the user makes a toggle, it will perform the following if-else statements
         toggle_Mon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+                //checks if it is toggled, otherwise not
+
                 if(isChecked) {
 
+                    //delete if you delete txt_name
                     txt_name.setText("IS COOL");
-                    alarm.daysOfWeek[0] = true;
+
                 }
 
                 else {
+                    //delete if you delete txt_name
                     txt_name.setText("John M");
-                    alarm.daysOfWeek[0] = false;
+
                 }
             }
         });
+
+        //The toggle buttons for tuesday-sunday follow the exact layout of the monday
+        //toggle button
 
         ToggleButton toggle_Tues = (ToggleButton) view.findViewById(R.id.toggle_tues);
 
@@ -203,7 +252,7 @@ public class AlarmFragment extends Fragment {
                 }
             }
         });
-
+        //Toggle button
         ToggleButton toggle_Sun = (ToggleButton) view.findViewById(R.id.toggle_sun);
 
         toggle_Sun.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -219,16 +268,16 @@ public class AlarmFragment extends Fragment {
 
             }
         });
-        return super.onCreateView(inflater, container, savedInstanceState);
+
+        //returns the fragment
+        return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
+    //Not sure what to do with this anymore, ask ben
     private void populate() {
         dayBools = alarm.daysOfWeek;
 
     }
+
+
 }
