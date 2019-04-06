@@ -9,6 +9,7 @@ import android.content.Intent;
 import java.util.Calendar;
 import java.util.List;
 
+import RedditAlarm.Models.RedditPost;
 import RedditAlarm.Models.RedditResult;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,9 +17,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LogicHandler extends BroadcastReceiver {
+public class LogicHandler
+        extends BroadcastReceiver
+        implements RedditCall.AsyncResponse {
     private UIClass ui;
-    public String BASE_URL = "http://www.reddit.com";
+    public String BASE_URL = "http://www.reddit.com/r";
     public int NUM_POSTS = 3;
     private DatabaseHandler database;
     List<Alarm> alarmList;
@@ -63,8 +66,9 @@ public class LogicHandler extends BroadcastReceiver {
         this.ui = uiReference;
         /* builds database from UI's context, populates a list of alarms with
             alarms created from database entries */
-        DatabaseHandler database = new DatabaseHandler(ui);
+        database = new DatabaseHandler(ui);
         alarmList = database.getAllAlarm();
+        System.out.println(alarmList.toString());
     }
 
     public void addAlarm(Alarm alarmIn) {
@@ -84,9 +88,10 @@ public class LogicHandler extends BroadcastReceiver {
                 alarmIn.getMiliTime(),
                 AlarmManager.INTERVAL_DAY,
                 pendIntent);
+
     }
 
-    public void processFinish(Call<RedditResult> callIn, Context conIn) {
+    public void processFinish(List<RedditPost> output, Context conIn) {
         Notifications newNotification = new Notifications();
         newNotification.newNotification(conIn);
     }

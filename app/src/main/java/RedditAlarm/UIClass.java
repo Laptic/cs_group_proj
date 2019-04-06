@@ -1,5 +1,6 @@
 package RedditAlarm;
 
+import android.app.Notification;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 import android.support.v4.app.FragmentTransaction;
-
 import java.util.ArrayList;
 
 
@@ -20,17 +20,18 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.OnMessag
     //ask ben if we still need these 2
     boolean[] daysOfWeek = new boolean[7];
     ArrayList<Alarm> listOfArrays = new ArrayList<>();
+    LogicHandler logicReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_layout);
+        logicReference = new LogicHandler(this);
 
-        Alarm alarm = new Alarm();
 
         // temporary call for Notifications testing
-        Notifications tempNotification = Notifications.newNotifications(self);
+        Notification.Builder tempNotification = Notifications.newNotification(this);
 
         AlarmFragment alarmFrag = new AlarmFragment();
 
