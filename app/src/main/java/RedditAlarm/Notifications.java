@@ -11,7 +11,11 @@ public class Notifications {
 
     // assume we have context set up, method here will be called with the existing context passed in from LogicHandler
     public Notification.Builder newNotification(Context context) {
-        noti = new Notification.Builder(context);
+        noti = new Notification.Builder(context)
+        .setContentTitle("Notification.")
+        .setContentText("This is your notification.")
+        .setVisibility(Notification.VISIBILITY_PUBLIC);
+        // now methods to display it, maybe include preferences in making this better
         return noti;
     }
 
