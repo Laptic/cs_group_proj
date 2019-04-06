@@ -29,6 +29,9 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.OnMessag
 
         Alarm alarm = new Alarm();
 
+        // temporary call for Notifications testing
+        Notifications tempNotification = Notifications.newNotifications(self);
+
         AlarmFragment alarmFrag = new AlarmFragment();
 
             //the next two expressions are used to call and populate a frame layout with
