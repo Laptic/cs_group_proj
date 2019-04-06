@@ -8,8 +8,17 @@ import android.content.Intent;
 import java.util.Calendar;
 import java.util.List;
 
+import RedditAlarm.Models.RedditResult;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class LogicHandler extends BroadcastReceiver {
     private UIClass ui;
+    public String BASE_URL = "http://www.reddit.com";
+    public int NUM_POSTS = 3;
     private DatabaseHandler database;
     List<Alarm> alarmList;
 
@@ -27,17 +36,35 @@ public class LogicHandler extends BroadcastReceiver {
         objects can't be used in alarm manager, perhaps storing id of next
         one to execute in preferences? -bchesnut*/
         alarmList = database.getAllAlarm();
-        Alarm execute = null;
+        Alarm executeAlarm = null;
         for (int i=0; i < alarmList.size(); i++ ) {
             Alarm temp = alarmList.get(i);
             if ((temp.hour == hourTemp) && (temp.minute == minuteTemp)) {
-                execute = temp;
+                executeAlarm = temp;
                 break;
             }
         }
-        if (execute != null) {
+        if (executeAlarm != null) {
+            Retrofit retrofitCall = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            RedditClient apiService =
+                    retrofitCall.create(RedditClient.class);
+            String subreddit = executeAlarm.url;
+            Call<RedditResult> call = apiService.getRedditPosts(NUM_POSTS, subreddit);
+            call.enqueue(new Callback<RedditResult>() {
+                @Override
+                public void onResponse(Call<RedditResult> call, Response<RedditResult> response) {
+                    RedditResult result = response.body();
+                    // call notification now
+                }
 
-            //#TODO: implement calls to async tasks for Reddit and display of notifications
+                @Override
+                public void onFailure(Call<RedditResult> call, Throwable t) {
+                    // Log error here since request failed
+                }
+            });
         }
     }
 

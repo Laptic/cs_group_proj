@@ -43,21 +43,21 @@ public class RedditResult {
     }
     public void setChildren(List<RedditPost> postsIn) {
         this.postsGot = postsIn;
-        }
+    }
 
-        public String getAfter() {
-            return after;
-        }
+    public String getAfter() {
+        return after;
+    }
 
-        public void setAfter(String after) {
-            this.after = after;
-        }
+    public void setAfter(String after) {
+        this.after = after;
+    }
 
-        public Object getBefore() {
-            return before;
-        }
+    public Object getBefore() {
+        return before;
+    }
 
-        public void setBefore(Object before) {
-            this.before = before;
-        }
+    public void setBefore(Object before) {
+        this.before = before;
+    }
 }
