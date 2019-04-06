@@ -7,10 +7,10 @@ import android.content.Context;
 // NOTE: This class uses Notification.Builder, not Notification
 public class Notifications {
 
-    private Notification.Builder noti;
+    private static Notification.Builder noti;
 
     // assume we have context set up, method here will be called with the existing context passed in from LogicHandler
-    public Notification.Builder newNotification(Context context) {
+    public static Notification.Builder newNotification(Context context) {
         noti = new Notification.Builder(context)
         .setContentTitle("Notification.")
         .setContentText("This is your notification.")
