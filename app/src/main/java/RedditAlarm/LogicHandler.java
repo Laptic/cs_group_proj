@@ -17,6 +17,10 @@ public class LogicHandler extends BroadcastReceiver {
     @Override
     public void onReceive(Context context,
                           Intent intent) {
+        Calendar time = Calendar.getInstance();
+        // alarm is triggered at time set, so compares trigger times with current time
+        int hourTemp = time.get(Calendar.HOUR_OF_DAY);
+        int minuteTemp = time.get(Calendar.MINUTE);
         // needs to load database and search for alarm that is executed
         database = new DatabaseHandler(ui);
         /* can't immediately think of a better way of doing this,
@@ -25,10 +29,6 @@ public class LogicHandler extends BroadcastReceiver {
         alarmList = database.getAllAlarm();
         Alarm execute = null;
         for (int i=0; i < alarmList.size(); i++ ) {
-            Calendar time = Calendar.getInstance();
-            // alarm is triggered at time set, so compares trigger times with current time
-            int hourTemp = time.get(Calendar.HOUR_OF_DAY);
-            int minuteTemp = time.get(Calendar.MINUTE);
             Alarm temp = alarmList.get(i);
             if ((temp.hour == hourTemp) && (temp.minute == minuteTemp)) {
                 execute = temp;
@@ -36,6 +36,7 @@ public class LogicHandler extends BroadcastReceiver {
             }
         }
         if (execute != null) {
+
             //#TODO: implement calls to async tasks for Reddit and display of notifications
         }
     }
@@ -66,5 +67,4 @@ public class LogicHandler extends BroadcastReceiver {
                 AlarmManager.INTERVAL_DAY,
                 pendIntent);
     }
-
 }
