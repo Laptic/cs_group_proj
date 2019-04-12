@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.main_menu);
+/*
         // declares and initializes the button to edit the alarms
         final Button editBtn = findViewById(R.id.editBtn);
 
@@ -54,6 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 alarmListView.setAdapter(alarmAdapter);
             }
         });
-
+*/
     }
 }
