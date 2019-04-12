@@ -7,16 +7,21 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import java.util.List;
 import java.util.PriorityQueue;
 
-public class editAlarmAdapter extends AlarmAdapter {
+public class EditAlarmAdapter extends AlarmAdapter {
 
-    public editAlarmAdapter(Context c, PriorityQueue<Alarm> aq) {
-        super(c, aq);
+    List<Alarm> alarmList;
+
+    public EditAlarmAdapter(Context c, List<Alarm> al) {
+        super(c, al);
+        alarmList = al;
     }
+
     // generates the items in the list view
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View v = mInflater.inflate(R.layout.editalarm_listview_detail, null);
 
         TextView timeTextView = v.findViewById(R.id.timeTextView);
@@ -25,6 +30,13 @@ public class editAlarmAdapter extends AlarmAdapter {
         ImageView removeImageView = v.findViewById(R.id.removeImageView);
 
         removeImageView.setImageResource(R.drawable.minus);
+
+        removeImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alarmList.remove(position);
+            }
+        });
 
         Alarm alarmViewed = getItem(position);
 

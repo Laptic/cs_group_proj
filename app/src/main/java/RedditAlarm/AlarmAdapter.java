@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
-
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class AlarmAdapter extends BaseAdapter {
@@ -16,24 +16,24 @@ public class AlarmAdapter extends BaseAdapter {
     public LayoutInflater mInflater;
 
     // declares the priority queue of the alarms
-    private PriorityQueue<Alarm> alarmQueue;
+    private List<Alarm> alarmList;
 
     // constructs the alarm adapter
-    public AlarmAdapter(Context c, PriorityQueue<Alarm> aq){
+    public AlarmAdapter(Context c, List<Alarm> al){
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        alarmQueue = aq;
+        alarmList = al;
     }
 
     // gets the number of alarms
     @Override
     public int getCount() {
-        return alarmQueue.size();
+        return alarmList.size();
     }
 
     // gets the alarm at the specified position
     @Override
     public Alarm getItem(int position) {
-        Alarm[] alarmArray = alarmQueue.toArray(new Alarm[getCount()]);
+        Alarm[] alarmArray = alarmList.toArray(new Alarm[getCount()]);
         return alarmArray[position];
     }
 

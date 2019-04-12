@@ -1,8 +1,5 @@
 package RedditAlarm;
 
-import android.content.Intent;
-import android.content.res.Resources;
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,12 +7,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class MainActivity extends AppCompatActivity {
 
-    // declares and initializes the priority queue of the alarms
-    PriorityQueue<Alarm> alarmQueue = new PriorityQueue<>();
+    // declares the list of the alarms
+    List<Alarm> alarmList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +33,11 @@ public class MainActivity extends AppCompatActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editBtn.setText("Done");
+                String doneText = "Done";
+                editBtn.setText(doneText);
 
-                editAlarmAdapter editAlarmAdapter = new editAlarmAdapter(getApplicationContext(), alarmQueue);
-                alarmListView.setAdapter(editAlarmAdapter);
+                //EditAlarmAdapter EditAlarmAdapter = new EditAlarmAdapter(getApplicationContext(), alarmList);
+               // alarmListView.setAdapter(EditAlarmAdapter);
             }
         });
 
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 //startActivity(addAlarmIntent);
 
                 // uses the alarm adapter class to modify the alarm list view
-                AlarmAdapter alarmAdapter = new AlarmAdapter(getApplicationContext(), alarmQueue);
+                AlarmAdapter alarmAdapter = new AlarmAdapter(getApplicationContext(), alarmList);
                 alarmListView.setAdapter(alarmAdapter);
             }
         });
