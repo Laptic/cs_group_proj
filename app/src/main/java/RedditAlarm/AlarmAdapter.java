@@ -15,7 +15,7 @@ public class AlarmAdapter extends BaseAdapter {
     // declares the layout inflater which defines the row layout of the list view
     public LayoutInflater mInflater;
 
-    // declares the priority queue of the alarms
+    // declares the list of the alarms
     private List<Alarm> alarmList;
 
     // constructs the alarm adapter

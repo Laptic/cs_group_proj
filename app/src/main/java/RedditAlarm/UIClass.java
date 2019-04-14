@@ -32,7 +32,7 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.OnMessag
         //for (int i = 0; i < 7; i++) {
             que.add(new Alarm());
         //}
-        AlarmAdapter ad = new AlarmAdapter(this, que);
+        //AlarmAdapter ad = new AlarmAdapter(this, que);
 
 
         // temporary call for Notifications testing
@@ -40,12 +40,14 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.OnMessag
 
         AlarmFragment alarmFrag = new AlarmFragment();
         AlarmListFragment alarmListFrag = new AlarmListFragment();
+        MainMenuFragment mainMenuFrag = new MainMenuFragment();
             //the next two expressions are used to call and populate a frame layout with
             //a fragment (AlarmFragment)
-            //frament1 is the name of the FrameLayout under base_layout.xml
+            //fragment1 is the name of the FrameLayout under base_layout.xml
             FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.fragment1,alarmListFrag);
+                    .add(R.id.fragment1,mainMenuFrag);
+
             //commits the fragment to the layout?
             fragmentTransaction.commit();
 
