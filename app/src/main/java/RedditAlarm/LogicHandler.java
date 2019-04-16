@@ -18,13 +18,16 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LogicHandler
-        extends BroadcastReceiver
-        implements RedditCall.AsyncResponse {
+        extends BroadcastReceiver            //problem here
+        implements RedditCall.AsyncResponse, AlarmFragment.logicHandler {
     private UIClass ui;
     public String BASE_URL = "http://www.reddit.com/r";
     public int NUM_POSTS = 3;
     private DatabaseHandler database;
     List<Alarm> alarmList;
+
+
+
 
     // run upon trigger by AlarmManager
     @Override

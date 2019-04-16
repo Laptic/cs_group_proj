@@ -26,16 +26,16 @@ public class AlarmFragment extends Fragment {
     int second;
     boolean[] dayBools;
 
-    OnMessageReadListener messageReadListener;
+    logicHandler logic;
 
     public AlarmFragment() {
 
     }
 
     //used to communicate information between fragment (AlarmFragment) and activity (UIClass)
-    public interface OnMessageReadListener {
+    public interface logicHandler {
 
-        public void onMessageRead(String message);
+        public void addAlarm(Alarm alarm);
     }
 
     //ensure that the host activity implements the proper interface
@@ -46,7 +46,7 @@ public class AlarmFragment extends Fragment {
         Activity activity = (Activity) context;
 
         try {
-            messageReadListener = (OnMessageReadListener) activity;
+            logic = (logicHandler) activity;
         }catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must override onMessageRead...");
         }
@@ -272,6 +272,8 @@ public class AlarmFragment extends Fragment {
 
 
         Button create_btn = (Button) view.findViewById(R.id.create_btn);
+
+
 
         //returns the fragment
         return view;
