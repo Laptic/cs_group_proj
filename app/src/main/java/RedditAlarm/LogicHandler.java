@@ -74,6 +74,7 @@ public class LogicHandler
         System.out.println(alarmList.toString());
     }
 
+    @Override
     public void addAlarm(Alarm alarmIn) {
         database.addAlarm(alarmIn);
         alarmList = database.getAllAlarm();
