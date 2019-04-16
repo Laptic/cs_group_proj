@@ -26,6 +26,9 @@ public class MainMenuFragment extends Fragment {
     // declares and initializes the list of the alarms
     ArrayList<Alarm> alarmList = new ArrayList<>();
 
+    // reference to UI
+    UIClass ui;
+
     // declares the list view that will show the list of alarms
     ListView alarmListView;
 
@@ -91,20 +94,11 @@ public class MainMenuFragment extends Fragment {
         addImgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                editBtn.setText(editText);
-
-                // creates a new fragment where the user will be able to add an alarm
-                AlarmFragment addAlarmFrag = new AlarmFragment();
-
-                // changes the interface to the add alarm fragment
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment1, addAlarmFrag);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                AlarmFragment addAlarmFrag = ui.addAlarmFrag();
+                //editBtn.setText(editText);
 
                 // adds the alarm into the alarm list
-                // alarmList.add(addAlarmFrag.alarm);
+                alarmList.add(addAlarmFrag.alarm);
 
                 // uses the alarm adapter class to modify the alarm list view
                 AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);

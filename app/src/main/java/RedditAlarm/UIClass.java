@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 
-public class UIClass extends AppCompatActivity implements AlarmFragment.OnMessageReadListener {
+public class UIClass extends AppCompatActivity {
 
     //ArrayList<Alarm> listOfArrays = new ArrayList<>();
     LogicHandler logicReference;
@@ -37,9 +37,8 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.OnMessag
 
         // temporary call for Notifications testing
         //Notification.Builder tempNotification = Notifications.newNotification(this);
-
-        AlarmFragment alarmFrag = new AlarmFragment();
         MainMenuFragment mainMenuFrag = new MainMenuFragment();
+        mainMenuFrag.ui = this;
             //the next two expressions are used to call and populate a frame layout with
             //a fragment (AlarmFragment)
             //fragment1 is the name of the FrameLayout under base_layout.xml
@@ -52,10 +51,25 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.OnMessag
 
     }
 
-    //used to pass information between fragment and activity
-    //not used yet
-    @Override
-    public void onMessageRead(String message) {
+    public AlarmFragment addAlarmFrag() {
+        AlarmFragment alarmFrag = new AlarmFragment();
+        alarmFrag.ui = this;
+        alarmFrag.logic = this.logicReference;
+
+        // changes the interface to the add alarm fragment
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment1, alarmFrag)
+                            .addToBackStack("add")
+                            .commit();
+        return alarmFrag;
+    }
+
+    public void killAlarmEdit(AlarmFragment fragIn) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction()
+                .remove(fragIn);
+        getSupportFragmentManager().popBackStack();
+        fragmentTransaction.commit();
 
     }
 }

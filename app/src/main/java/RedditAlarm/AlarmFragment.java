@@ -27,14 +27,14 @@ public class AlarmFragment extends Fragment {
     boolean[] dayBools;
 
     logicHandler logic;
+    UIClass ui;
 
     public AlarmFragment() {
-
+        this.alarm = new Alarm();
     }
 
     //used to communicate information between fragment (AlarmFragment) and activity (UIClass)
     public interface logicHandler {
-
         public void addAlarm(Alarm alarm);
     }
 
@@ -42,14 +42,6 @@ public class AlarmFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        Activity activity = (Activity) context;
-
-        try {
-            logic = (logicHandler) activity;
-        }catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must override onMessageRead...");
-        }
     }
 
 
@@ -272,7 +264,12 @@ public class AlarmFragment extends Fragment {
 
 
         Button create_btn = (Button) view.findViewById(R.id.create_btn);
-
+        create_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish(view);
+            }
+        });
 
 
         //returns the fragment
@@ -282,6 +279,11 @@ public class AlarmFragment extends Fragment {
     //Not sure what to do with this anymore, ask ben
     private void populate() {
         dayBools = alarm.daysOfWeek;
+    }
+
+    public void finish(View view) {
+        this.logic.addAlarm(alarm);
+        this.ui.killAlarmEdit(this);
 
     }
 

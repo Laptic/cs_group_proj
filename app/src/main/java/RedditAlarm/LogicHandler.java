@@ -61,6 +61,7 @@ public class LogicHandler
             String subreddit = executeAlarm.url;
             Call<RedditResult> retroCall = apiService.getRedditPosts(NUM_POSTS, subreddit);
             RedditCall redditCall = new RedditCall();
+            redditCall.delegate = this;
             redditCall.execute(retroCall);
         }
     }

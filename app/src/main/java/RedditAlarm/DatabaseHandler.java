@@ -79,8 +79,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 tempAlarm.id = Integer.parseInt(cursor.getString(0));
                 tempAlarm.name = cursor.getString(1);
                 tempAlarm.setTime(cursor.getString(2));
-                tempAlarm.url = cursor.getString(3);
-                tempAlarm.setDays(cursor.getString(4));
+                tempAlarm.setDays(cursor.getString(3));
+                tempAlarm.url = cursor.getString(4);
                 tempAlarm.status = Integer.parseInt(cursor.getString(5));
                 // Adding contact to list
                 alarmList.add(tempAlarm);
