@@ -19,7 +19,7 @@ import java.util.PriorityQueue;
 
 public class UIClass extends AppCompatActivity {
 
-    //ArrayList<Alarm> listOfArrays = new ArrayList<>();
+    List<Alarm> listOfAlarms = new ArrayList<>();
     LogicHandler logicReference;
 
     @Override
@@ -28,6 +28,7 @@ public class UIClass extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_layout);
         logicReference = new LogicHandler(this);
+        listOfAlarms = logicReference.alarmList;
         PriorityQueue<Alarm> que = new PriorityQueue<>();
         //for (int i = 0; i < 7; i++) {
             que.add(new Alarm());
@@ -39,6 +40,7 @@ public class UIClass extends AppCompatActivity {
         //Notification.Builder tempNotification = Notifications.newNotification(this);
         MainMenuFragment mainMenuFrag = new MainMenuFragment();
         mainMenuFrag.ui = this;
+        mainMenuFrag.alarmList = (ArrayList<Alarm>) this.listOfAlarms;
             //the next two expressions are used to call and populate a frame layout with
             //a fragment (AlarmFragment)
             //fragment1 is the name of the FrameLayout under base_layout.xml
