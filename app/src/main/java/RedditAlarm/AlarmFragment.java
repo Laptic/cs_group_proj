@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -268,6 +269,9 @@ public class AlarmFragment extends Fragment {
 
             }
         });
+
+
+        Button create_btn = (Button) view.findViewById(R.id.create_btn);
 
         //returns the fragment
         return view;

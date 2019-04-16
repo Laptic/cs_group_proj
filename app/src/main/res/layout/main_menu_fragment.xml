@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainMenuFragment">
 
+
+
     <!-- TODO: Update blank fragment layout -->
     <ListView
         android:id="@+id/alarmListView"
@@ -32,7 +34,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="Edit"
-        app:layout_constraintBottom_toTopOf="@+id/alarmListView"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.888" />
@@ -48,7 +50,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/alarmListView"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.967"
         app:layout_constraintStart_toEndOf="@+id/editBtn"

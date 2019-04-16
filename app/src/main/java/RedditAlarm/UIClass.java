@@ -39,7 +39,6 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.OnMessag
         //Notification.Builder tempNotification = Notifications.newNotification(this);
 
         AlarmFragment alarmFrag = new AlarmFragment();
-        AlarmListFragment alarmListFrag = new AlarmListFragment();
         MainMenuFragment mainMenuFrag = new MainMenuFragment();
             //the next two expressions are used to call and populate a frame layout with
             //a fragment (AlarmFragment)
