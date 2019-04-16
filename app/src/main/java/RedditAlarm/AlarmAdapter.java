@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 import java.util.List;
-import java.util.PriorityQueue;
 
 public class AlarmAdapter extends BaseAdapter {
 
@@ -48,16 +47,20 @@ public class AlarmAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = mInflater.inflate(R.layout.alarm_listview_detail, null);
 
+        // declares and initializes the parts of the alarm within the list
         TextView timeTextView = v.findViewById(R.id.timeTextView);
         TextView daysTextView = v.findViewById(R.id.daysTextView);
         Switch alarmSwitch = v.findViewById(R.id.alarmSwitch);
 
+        // declares and initializes the current alarm
         Alarm alarmViewed = getItem(position);
 
+        // sets the time of the alarm
         String timeText = alarmViewed.hour + ":" + alarmViewed.minute;
-        String daysText = "";
-
         timeTextView.setText(timeText);
+
+        // sets the days of the week
+        String daysText = "";
 
         if (alarmViewed.daysOfWeek[0]) {
             daysText += "SU ";
@@ -83,6 +86,7 @@ public class AlarmAdapter extends BaseAdapter {
 
         daysTextView.setText(daysText);
 
+        // sets the alarm switch based on the status variable
         if (getItem(position).status == 1) {
             alarmSwitch.setChecked(true);
         }

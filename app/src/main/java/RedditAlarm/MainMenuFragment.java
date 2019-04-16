@@ -2,10 +2,8 @@ package RedditAlarm;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,21 +23,22 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class MainMenuFragment extends Fragment {
-    // declares the list of the alarms
-    List<Alarm> alarmList = new ArrayList<>();
+    // declares and initializes the list of the alarms
+    ArrayList<Alarm> alarmList = new ArrayList<>();
 
-    // declares and initializes the list view that will show the list of alarms
-    //ListView alarmListView = getActivity().findViewById(R.id.alarmListView);
+    // declares the list view that will show the list of alarms
     ListView alarmListView;
 
-    // declares and initializes the image view to add a new alarm
-    //ImageView addImgView = getActivity().findViewById(R.id.addImgView);
+    // declares the image view to add a new alarm
     ImageView addImgView;
 
-    // declares and initializes the button to edit the alarms
-    //Button editBtn = getActivity().findViewById(R.id.editBtn);
+    // declares the button to edit the alarms
     Button editBtn;
 
+    // counts the amount of times the edit button has been pressed
+    int buttonCounter = 0;
+
+    // declares how the fragment interacts with other fragments
     private OnFragmentInteractionListener mListener;
 
     public MainMenuFragment() {
@@ -51,11 +49,11 @@ public class MainMenuFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param al Parameter 1.
+     * //@param  Parameter 1.
      * @return A new instance of fragment MainMenuFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MainMenuFragment newInstance(List<Alarm> al) {
+    public static MainMenuFragment newInstance() {
         MainMenuFragment fragment = new MainMenuFragment();
         Bundle args = new Bundle();
         //args.putParcelableArrayList("Alarm List", al);
@@ -67,9 +65,7 @@ public class MainMenuFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            alarmList = (List<Alarm>) getArguments().get("0");
             //mParam2 = getArguments().getString(ARG_PARAM2);
-
         }
     }
 
@@ -78,11 +74,16 @@ public class MainMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.main_menu_fragment, container, false);
 
+        // declares and initializes the objects within the fragment
         alarmListView = rootView.findViewById(R.id.alarmListView);
         addImgView = rootView.findViewById(R.id.addImgView);
         editBtn = rootView.findViewById(R.id.editBtn);
 
-        // Inflate the layout for this fragment
+        // declares and initializes the text of the edit button
+        final String editText = "Edit";
+        final String doneText = "Done";
+
+        // inflate the layout for this fragment
         AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
         alarmListView.setAdapter(alarmAdapter);
 
@@ -90,15 +91,20 @@ public class MainMenuFragment extends Fragment {
         addImgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                editBtn.setText(editText);
+
                 // creates a new fragment where the user will be able to add an alarm
-                AlarmFragment addAlarm = new AlarmFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(v.getId(), addAlarm, "addAlarmFragment");
+                AlarmFragment addAlarmFrag = new AlarmFragment();
+
+                // changes the interface to the add alarm fragment
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment1, addAlarmFrag);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
-                alarmList.add(addAlarm.alarm);
+                // adds the alarm into the alarm list
+                // alarmList.add(addAlarmFrag.alarm);
 
                 // uses the alarm adapter class to modify the alarm list view
                 AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
@@ -110,11 +116,25 @@ public class MainMenuFragment extends Fragment {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String doneText = "Done";
-                editBtn.setText(doneText);
+                buttonCounter++;
 
-                EditAlarmAdapter editAlarmAdapter = new EditAlarmAdapter(getActivity(), alarmList);
-                alarmListView.setAdapter(editAlarmAdapter);
+                // sets the edit button to edit the alarms
+                if (buttonCounter % 2 == 0) {
+                    editBtn.setText(editText);
+
+                    // uses the alarm adapter class to modify the alarm list view
+                    AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
+                    alarmListView.setAdapter(alarmAdapter);
+                }
+                // sets the edit button to instead bring the user back to the main menu
+                else if (buttonCounter % 2 == 1) {
+                    editBtn.setText(doneText);
+
+                    // uses the alarm adapter class to modify the alarm list view
+                    EditAlarmAdapter editAlarmAdapter = new EditAlarmAdapter(getActivity(), alarmList);
+                    alarmListView.setAdapter(editAlarmAdapter);
+                }
+
             }
         });
 
@@ -152,7 +172,6 @@ public class MainMenuFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
 
     /**
      * This interface must be implemented by activities that contain this
