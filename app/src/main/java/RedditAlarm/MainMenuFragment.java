@@ -45,7 +45,9 @@ public class MainMenuFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public MainMenuFragment() {
+
         // Required empty public constructor
+
     }
 
     /**

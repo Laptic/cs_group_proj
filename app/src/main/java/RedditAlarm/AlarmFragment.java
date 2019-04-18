@@ -15,9 +15,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
 
 public class AlarmFragment extends Fragment {
     Alarm alarm;
@@ -73,6 +75,7 @@ public class AlarmFragment extends Fragment {
                 //of the item that the user picked
                 String text = parent.getItemAtPosition(position).toString();
 
+                alarm.hour = Integer.parseInt(text);
             }
 
             @Override
@@ -98,6 +101,8 @@ public class AlarmFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 String text = parent.getItemAtPosition(position).toString();
+
+                alarm.minute = Integer.parseInt(text);
             }
 
             @Override
@@ -123,6 +128,8 @@ public class AlarmFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
+
+
             }
 
             @Override
@@ -130,12 +137,6 @@ public class AlarmFragment extends Fragment {
 
             }
         });
-
-
-
-        //gets the textbox called text_NAME, used to display some info
-        //CAN DELETE txt_name
-        final TextView txt_name = (TextView) view.findViewById(R.id.text_NAME);
 
 
         //To get the inputs for the days of the week, we are gonna use toggle buttons
@@ -154,15 +155,12 @@ public class AlarmFragment extends Fragment {
 
                 if(isChecked) {
 
-                    //delete if you delete txt_name
-                    txt_name.setText("IS COOL");
-
+                    alarm.daysOfWeek[0] = true;
                 }
 
                 else {
-                    //delete if you delete txt_name
-                    txt_name.setText("John M");
 
+                    alarm.daysOfWeek[0] = false;
                 }
             }
         });
@@ -262,7 +260,7 @@ public class AlarmFragment extends Fragment {
             }
         });
 
-
+        //
         Button create_btn = (Button) view.findViewById(R.id.create_btn);
         create_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -271,6 +269,23 @@ public class AlarmFragment extends Fragment {
             }
         });
 
+        /*
+        Button back_btn = (Button) view.findViewById(R.id.back_btn);
+
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                MainMenuFragment mainMenu = new MainMenuFragment();
+                                                        //added this line 9:52pm 4/16/2019
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment1, mainMenu,null)
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
+*/
 
         //returns the fragment
         return view;

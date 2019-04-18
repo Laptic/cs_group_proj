@@ -2,7 +2,7 @@ package RedditAlarm;
 
 class Alarm {
     int id;
-    String name = "Test";
+    String name;
     String url;
     boolean[] daysOfWeek;
     int hour = 12;
@@ -15,6 +15,7 @@ class Alarm {
         for (int i = 0; i< 7; i++) {
             daysOfWeek[i] = false;
         }
+
     }
 
     // creates string of 7 1s and 0s representing sat-sun for database storage

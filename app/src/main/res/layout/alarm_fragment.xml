@@ -6,207 +6,173 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Spinner
-        android:id="@+id/spinner_AmOrPm"
-        android:layout_width="92dp"
-        android:layout_height="33dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="368dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.88" />
-
-    <Spinner
-        android:id="@+id/spinner_min"
-        android:layout_width="90dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/spinner_AmOrPm"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toEndOf="@+id/spinner_hour"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.296" />
-
-    <Spinner
-        android:id="@+id/spinner_hour"
-        android:layout_width="98dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="372dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.889" />
-
-    <EditText
-        android:id="@+id/editText5"
-        android:layout_width="wrap_content"
-        android:layout_height="49dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="88dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <ToggleButton
-        android:id="@+id/toggle_mon"
+        android:id="@+id/toggle_sun"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="236dp"
-        android:contentDescription="Monday"
-        android:text="ToggleButton"
-        android:textOff="Mon"
-        android:textOn="Mon"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="156dp"
+        android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/toggle_tues"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_hour"
-        app:layout_constraintVertical_bias="0.983" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ToggleButton
-        android:id="@+id/toggle_tues"
+        android:id="@+id/toggle_sat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="236dp"
-        android:text="ToggleButton"
-        android:textOff="Tues"
-        android:textOn="Tues"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="156dp"
+        android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/toggle_wed"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_hour"
-        app:layout_constraintVertical_bias="0.983" />
+        app:layout_constraintEnd_toStartOf="@+id/toggle_sun" />
+
+    <ToggleButton
+        android:id="@+id/toggle_fri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="156dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/toggle_sat" />
+
+    <ToggleButton
+        android:id="@+id/toggle_thurs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/toggle_sun"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ToggleButton
         android:id="@+id/toggle_wed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="236dp"
-        android:text="ToggleButton"
-        android:textOff="Wed"
-        android:textOn="Wed"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/toggle_sat"
         app:layout_constraintEnd_toStartOf="@+id/toggle_thurs"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_min"
-        app:layout_constraintVertical_bias="0.982" />
+        app:layout_constraintTop_toBottomOf="@+id/toggle_mon"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ToggleButton
-        android:id="@+id/toggle_thurs"
+        android:id="@+id/toggle_tues"
         android:layout_width="wrap_content"
-        android:layout_height="47dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/toggle_fri"
+        app:layout_constraintEnd_toStartOf="@+id/toggle_wed" />
+
+    <ToggleButton
+        android:id="@+id/toggle_mon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="236dp"
-        android:text="ToggleButton"
-        android:textOff="Thurs"
-        android:textOn="Thurs"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="144dp"
+        android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_AmOrPm"
-        app:layout_constraintVertical_bias="0.982" />
-
-    <ToggleButton
-        android:id="@+id/toggle_fri"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="ToggleButton"
-        android:textOff="Fri"
-        android:textOn="Fri"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggle_tues"
-        app:layout_constraintVertical_bias="0.006" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
-    <ToggleButton
-        android:id="@+id/toggle_sat"
+    <EditText
+        android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="ToggleButton"
-        android:textOff="Sat"
-        android:textOn="Sat"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="92dp"
+        android:layout_marginBottom="72dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/toggle_fri"
-        app:layout_constraintTop_toBottomOf="@+id/toggle_wed"
-        app:layout_constraintVertical_bias="0.006" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.979"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <ToggleButton
-        android:id="@+id/toggle_sun"
+    <Button
+        android:id="@+id/back_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="ToggleButton"
-        android:textOff="Sun"
-        android:textOn="Sun"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/toggle_sat"
-        app:layout_constraintTop_toBottomOf="@+id/toggle_thurs"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_marginTop="36dp"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/text_NAME"
-        android:layout_width="155dp"
-        android:layout_height="49dp"
+    <Spinner
+        android:id="@+id/spinner_hour"
+        android:layout_width="92dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <Spinner
+        android:id="@+id/spinner_min"
+        android:layout_width="92dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="JOHN M"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/toggle_wed"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/spinner_AmOrPm"
+        app:layout_constraintStart_toEndOf="@+id/spinner_hour"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <Spinner
+        android:id="@+id/spinner_AmOrPm"
+        android:layout_width="92dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_min"
-        tools:text="John m" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="165dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="95dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="172dp" />
 
     <Button
         android:id="@+id/create_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:onClick="create"
-        android:text="Create"
-        app:layout_constraintBottom_toTopOf="@+id/spinner_AmOrPm"
+        android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 
 </android.support.constraint.ConstraintLayout>
