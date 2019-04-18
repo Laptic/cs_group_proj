@@ -27,6 +27,9 @@ public class UIClass extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_layout);
+        
+        Notifications.newNotification(this, new Alarm());
+        
         logicReference = new LogicHandler(this);
         listOfAlarms = logicReference.alarmList;
         PriorityQueue<Alarm> que = new PriorityQueue<>();
