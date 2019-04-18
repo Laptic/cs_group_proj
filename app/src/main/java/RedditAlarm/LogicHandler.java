@@ -97,8 +97,8 @@ public class LogicHandler
     }
 
     public void processFinish(List<RedditPost> output, Context conIn) {
-        Notifications.newNotification(conIn, new Alarm());
-        //Notifications newNotification = new Notifications();
-        //newNotification.newNotification(conIn);
+        Notifications noti = new Notifications();
+        noti.newNotification(conIn, new Alarm()); // will need to put something into the alarm or make another parameter
+                                                  // for newNotification -Ryan
     }
 }
