@@ -1,6 +1,7 @@
 package RedditAlarm;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.content.Context;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -23,7 +24,7 @@ public class Notifications {
                 //.setLargeIcon() // put bitmap here
                 .setTicker("Alert from Dash Alarm")
                 .setContentTitle("Good Morning!")
-                .setContentText("Have a nice Day!");
+                .setContentText("Have a nice Day!")
                 .setWhen(System.currentTimeMillis());
 
         /*if (alarm.url.equals("")) {
