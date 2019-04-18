@@ -97,8 +97,8 @@ public class LogicHandler
     }
 
     public void processFinish(List<RedditPost> output, Context conIn) {
-        Notifications.newNotification(conIn, new Alarm());
-        //Notifications newNotification = new Notifications();
-        //newNotification.newNotification(conIn);
+        Notifications newNotification = new Notifications();
+        newNotification.newNotification(conIn);
+        System.out.println("Test");
     }
 }
