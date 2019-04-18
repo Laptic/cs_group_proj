@@ -25,6 +25,7 @@ public class Notifications {
                 .setTicker("Alert from Dash Alarm")
                 .setContentTitle("Good Morning!")
                 .setContentText("Have a nice Day!")
+                .setVisibility(View.SCROLLBAR_POSITION_DEFAULT)
                 .setWhen(System.currentTimeMillis());
 
         /*if (alarm.url.equals("")) {
