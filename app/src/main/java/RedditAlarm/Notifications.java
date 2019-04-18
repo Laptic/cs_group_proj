@@ -6,43 +6,63 @@ import android.content.Context;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v4.app.NotificationCompat;
 import android.content.Context;
+import android.view.View;
 
 // NOTE: This class uses Notification.Builder, not Notification
 public class Notifications {
 
-    private static NotificationCompat.Builder notiB;
-    private static final int uniqueId = 6378291;
+    public void newNotification(Context context, Alarm alarm) {
 
-    public static void newNotification(Context context, Alarm alarm) {
+        NotificationManager mNotificationManager;
 
-        
-        notiB = new NotificationCompat.Builder(context, NotificationChannel.DEFAULT_CHANNEL_ID);
-        notiB.setAutoCancel(true)
-                .setSmallIcon(R.drawable.plus_button)
-                //.setLargeIcon() // put bitmap here
-                .setTicker("Alert from Dash Alarm")
-                .setContentTitle("Good Morning!")
-                .setContentText("Have a nice Day!")
-                .setVisibility(View.SCROLLBAR_POSITION_DEFAULT)
-                .setWhen(System.currentTimeMillis());
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(context.getApplicationContext(), "notify_001");
+        Intent ii = new Intent(context.getApplicationContext(), Notifications.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, ii, 0);
 
-        /*if (alarm.url.equals("")) {
-            // empty url
-            notiB.setContentText("Have a nice Day!");
-        } else {
-            // url present
-            notiB.setContentText("Here is your tailored news!");
-        }*/
+        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+        bigText.bigText("HahaggggggggggggggggggggggggggggPggggggggggggggggggggggggP" +
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggP" + // disregard this, testing for char limit
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggggggggggggP<<<<<<<<gggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggffggggggggggggggggggggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbjdeb");
+        bigText.setBigContentTitle("Here are the headlines for today");
+        bigText.setSummaryText("Good Morning");
 
-        Intent intent = new Intent(context, UIClass.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        notiB.setContentIntent(pendingIntent);
+        mBuilder.setContentIntent(pendingIntent);
+        mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
+        mBuilder.setContentTitle("Good Morning");
+        mBuilder.setContentText("Here are the headlines for today");
+        mBuilder.setStyle(bigText);
 
-        NotificationManager notimanager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notimanager.notify(uniqueId, notiB.build());
+        mNotificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        String channelId = "Your_channel_id";
+        NotificationChannel channel = new NotificationChannel(channelId,
+                "Channel human readable title", NotificationManager.IMPORTANCE_HIGH);
+        mNotificationManager.createNotificationChannel(channel);   //.CreateNotificationChannel(channel);
+        mBuilder.setChannelId(channelId);
+
+
+        mNotificationManager.notify(0, mBuilder.build());
     }
-
 }
+
