@@ -1,26 +1,43 @@
 package RedditAlarm;
-//import android.app.NotificationManager;
-import android.app.Notification; // Maybe change to Notification.Builder
-import android.content.Context;
 
+import android.app.Notification;
+import android.content.Context;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
+import android.content.Context;
 
 // NOTE: This class uses Notification.Builder, not Notification
 public class Notifications {
 
-    private Notification.Builder noti;
+    private static NotificationCompat.Builder notiB;
+    private static final int uniqueId = 6378291;
 
-    // assume we have context set up, method here will be called with the existing context passed in from LogicHandler
-    public Notification.Builder newNotification(Context context) {
-        noti = new Notification.Builder(context)
-        .setContentTitle("Notification.")
-        .setContentText("This is your notification.")
-        .setVisibility(Notification.VISIBILITY_PUBLIC);
-        // now methods to display it, maybe include preferences in making this better
-        return noti;
+    public static void newNotification(Context context, Alarm alarm) {
+
+        notiB = new NotificationCompat.Builder(context);
+        notiB.setAutoCancel(true)
+                .setSmallIcon(R.drawable.plus_button)
+                .setTicker("Alert from Dash Alarm")
+                .setContentTitle("Good Morning!")
+                .setWhen(System.currentTimeMillis());
+
+        if (alarm.url.equals("")) {
+            // empty url
+            notiB.setContentText("Have a nice Day!");
+        } else {
+            // url present
+            notiB.setContentText("Here is your tailored news!");
+        }
+
+        Intent intent = new Intent(context, UIClass.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        notiB.setContentIntent(pendingIntent);
+
+        NotificationManager notimanager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notimanager.notify(uniqueId, notiB.build());
+
     }
-
-    // if no reddit information
-
-    // if reddit information included
 
 }
