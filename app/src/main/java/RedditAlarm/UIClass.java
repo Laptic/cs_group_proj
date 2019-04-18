@@ -28,7 +28,9 @@ public class UIClass extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_layout);
         
-        Notifications.newNotification(this, new Alarm());
+        // call used for testing, dont push without this until notifications are done
+        Notifications noti = new Notifications();
+        noti.newNotification(this, new Alarm());
         
         logicReference = new LogicHandler(this);
         listOfAlarms = logicReference.alarmList;
