@@ -260,6 +260,14 @@ public class AlarmFragment extends Fragment {
             }
         });
 
+
+
+        //the url is inputted now
+        EditText urlText = (EditText) view.findViewById(R.id.urlText);
+        //check if its empty
+        alarm.url = urlText.getText().toString();
+
+
         //
         Button create_btn = (Button) view.findViewById(R.id.create_btn);
         create_btn.setOnClickListener(new View.OnClickListener() {
