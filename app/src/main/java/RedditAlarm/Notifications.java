@@ -16,20 +16,23 @@ public class Notifications {
 
     public static void newNotification(Context context, Alarm alarm) {
 
-        notiB = new NotificationCompat.Builder(context);
+        
+        notiB = new NotificationCompat.Builder(context, NotificationChannel.DEFAULT_CHANNEL_ID);
         notiB.setAutoCancel(true)
                 .setSmallIcon(R.drawable.plus_button)
+                //.setLargeIcon() // put bitmap here
                 .setTicker("Alert from Dash Alarm")
                 .setContentTitle("Good Morning!")
+                .setContentText("Have a nice Day!");
                 .setWhen(System.currentTimeMillis());
 
-        if (alarm.url.equals("")) {
+        /*if (alarm.url.equals("")) {
             // empty url
             notiB.setContentText("Have a nice Day!");
         } else {
             // url present
             notiB.setContentText("Here is your tailored news!");
-        }
+        }*/
 
         Intent intent = new Intent(context, UIClass.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
