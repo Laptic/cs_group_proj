@@ -65,7 +65,7 @@ class Alarm {
     void setDays(String daysIn) {
         char[] days = daysIn.toCharArray();
         for(int i = 0; i < days.length; i++) {
-            daysOfWeek[i] = (days[i] == 1);
+            daysOfWeek[i] = (days[i] == '1');
         }
     }
 
