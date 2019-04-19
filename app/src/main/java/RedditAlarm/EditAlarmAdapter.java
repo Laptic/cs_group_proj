@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -101,5 +100,6 @@ public class EditAlarmAdapter extends AlarmAdapter {
 
         return v;
     }
+
 }
 

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -100,7 +101,8 @@ public class MainMenuFragment extends Fragment {
         addImgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlarmFragment addAlarmFrag = ui.addAlarmFrag();
+                //AlarmFragment addAlarmFrag = ui.addAlarmFrag();
+
                 //editBtn.setText(editText);
 
                 // adds the alarm into the alarm list
@@ -187,5 +189,6 @@ public class MainMenuFragment extends Fragment {
         // TODO: Update argument type and name
         void onMessageRead(String message);
     }
+
 
 }
