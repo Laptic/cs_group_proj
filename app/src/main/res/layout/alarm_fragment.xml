@@ -13,6 +13,8 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="156dp"
         android:text="Button"
+        android:textOff="Sun"
+        android:textOn="Sun"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -23,6 +25,8 @@
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="156dp"
         android:text="Button"
+        android:textOff="Sat"
+        android:textOn="Sat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/toggle_sun" />
 
@@ -33,6 +37,8 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="156dp"
         android:text="Button"
+        android:textOff="Fri"
+        android:textOn="Friday"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/toggle_sat" />
 
@@ -42,7 +48,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="24dp"
-        android:text="Button"
+        android:text="Thursday"
+        android:textOff="Thurs"
+        android:textOn="Thurs"
         app:layout_constraintBottom_toTopOf="@+id/toggle_sun"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -54,6 +62,8 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:text="Button"
+        android:textOff="Wed"
+        android:textOn="Wed"
         app:layout_constraintBottom_toTopOf="@+id/toggle_sat"
         app:layout_constraintEnd_toStartOf="@+id/toggle_thurs"
         app:layout_constraintTop_toBottomOf="@+id/toggle_mon"
@@ -66,6 +76,8 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:text="Button"
+        android:textOff="Tues"
+        android:textOn="Tues"
         app:layout_constraintBottom_toTopOf="@+id/toggle_fri"
         app:layout_constraintEnd_toStartOf="@+id/toggle_wed" />
 
@@ -77,13 +89,15 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="144dp"
         android:text="Button"
+        android:textOff="Mon"
+        android:textOn="Mon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/urlText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -103,7 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="36dp"
-        android:text="Button"
+        android:text="BACK"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -169,7 +183,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="16dp"
-        android:text="Button"
+        android:text="CREATE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

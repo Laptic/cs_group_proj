@@ -29,7 +29,10 @@ public class AlarmFragment extends Fragment {
     boolean[] dayBools;
 
     logicHandler logic;
+    passAlarm passLogic;
     UIClass ui;
+    MainMenuFragment mainRef;
+
 
     public AlarmFragment() {
         this.alarm = new Alarm();
@@ -38,6 +41,11 @@ public class AlarmFragment extends Fragment {
     //used to communicate information between fragment (AlarmFragment) and activity (UIClass)
     public interface logicHandler {
         public void addAlarm(Alarm alarm);
+    }
+
+    //used to pass an alarm object to mainMenu fragment
+    public interface passAlarm {
+        public void addAlarmFromFragment(Alarm alarm);
     }
 
     //ensure that the host activity implements the proper interface
@@ -260,6 +268,14 @@ public class AlarmFragment extends Fragment {
             }
         });
 
+
+
+        //the url is inputted now
+        EditText urlText = (EditText) view.findViewById(R.id.urlText);
+        //check if its empty
+        alarm.url = urlText.getText().toString();
+
+
         //
         Button create_btn = (Button) view.findViewById(R.id.create_btn);
         create_btn.setOnClickListener(new View.OnClickListener() {
@@ -269,23 +285,19 @@ public class AlarmFragment extends Fragment {
             }
         });
 
-        /*
+
         Button back_btn = (Button) view.findViewById(R.id.back_btn);
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
 
-                MainMenuFragment mainMenu = new MainMenuFragment();
-                                                        //added this line 9:52pm 4/16/2019
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment1, mainMenu,null)
-                        .addToBackStack(null)
-                        .commit();
+
+                finish_back(view);
 
             }
         });
-*/
+
 
         //returns the fragment
         return view;
@@ -297,10 +309,13 @@ public class AlarmFragment extends Fragment {
     }
 
     public void finish(View view) {
-        this.logic.addAlarm(alarm);
+        this.logic.addAlarm(this.alarm);
+        this.mainRef.addToList(this.alarm);
         this.ui.killAlarmEdit(this);
-
     }
 
+    public void finish_back(View view) {
+        this.ui.killAlarmEdit(this);
+    }
 
 }
