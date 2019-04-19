@@ -102,6 +102,7 @@ public class MainMenuFragment extends Fragment {
                 // adds the alarm into the alarm list
                 alarmList.add(addAlarmFrag.alarm);
 
+
                 // uses the alarm adapter class to modify the alarm list view
                 AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
                 alarmListView.setAdapter(alarmAdapter);
@@ -168,6 +169,7 @@ public class MainMenuFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
 
     /**
      * This interface must be implemented by activities that contain this

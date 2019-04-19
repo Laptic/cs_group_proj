@@ -31,6 +31,7 @@ public class AlarmFragment extends Fragment {
     logicHandler logic;
     UIClass ui;
 
+
     public AlarmFragment() {
         this.alarm = new Alarm();
     }
@@ -277,23 +278,19 @@ public class AlarmFragment extends Fragment {
             }
         });
 
-        /*
+
         Button back_btn = (Button) view.findViewById(R.id.back_btn);
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
 
-                MainMenuFragment mainMenu = new MainMenuFragment();
-                                                        //added this line 9:52pm 4/16/2019
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment1, mainMenu,null)
-                        .addToBackStack(null)
-                        .commit();
+
+                finish_back(view);
 
             }
         });
-*/
+
 
         //returns the fragment
         return view;
@@ -309,6 +306,13 @@ public class AlarmFragment extends Fragment {
         this.ui.killAlarmEdit(this);
 
     }
+
+    public void finish_back(View view) {
+
+        this.ui.killAlarmEdit(this);
+
+    }
+
 
 
 }
