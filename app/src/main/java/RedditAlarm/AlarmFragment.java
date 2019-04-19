@@ -311,7 +311,7 @@ public class AlarmFragment extends Fragment {
 
     public void finish(View view) {
         this.logic.addAlarm(this.alarm);
-        //this.mainRef.addToList(this.alarm);
+        this.mainRef.addToList(this.alarm);
         this.ui.killAlarmEdit(this);
     }
 
