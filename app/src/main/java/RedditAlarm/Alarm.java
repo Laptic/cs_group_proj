@@ -8,6 +8,7 @@ class Alarm {
     int hour = 12;
     int minute = 0;
     int status = 0;
+    String ampm = "";
 
     Alarm() {
         // sets values for days of week false as default
