@@ -6,6 +6,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -101,4 +103,6 @@ public class LogicHandler
         noti.newNotification(conIn, new Alarm()); // will need to put something into the alarm or make another parameter
                                                   // for newNotification -Ryan
     }
+
+
 }

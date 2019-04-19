@@ -29,7 +29,9 @@ public class AlarmFragment extends Fragment {
     boolean[] dayBools;
 
     logicHandler logic;
+    passAlarm passLogic;
     UIClass ui;
+    MainMenuFragment mainRef;
 
 
     public AlarmFragment() {
@@ -39,6 +41,11 @@ public class AlarmFragment extends Fragment {
     //used to communicate information between fragment (AlarmFragment) and activity (UIClass)
     public interface logicHandler {
         public void addAlarm(Alarm alarm);
+    }
+
+    //used to pass an alarm object to mainMenu fragment
+    public interface passAlarm {
+        public void addAlarmFromFragment(Alarm alarm);
     }
 
     //ensure that the host activity implements the proper interface
@@ -302,17 +309,13 @@ public class AlarmFragment extends Fragment {
     }
 
     public void finish(View view) {
-        this.logic.addAlarm(alarm);
+        this.logic.addAlarm(this.alarm);
+        this.mainRef.addToList(this.alarm);
         this.ui.killAlarmEdit(this);
-
     }
 
     public void finish_back(View view) {
-
         this.ui.killAlarmEdit(this);
-
     }
-
-
 
 }

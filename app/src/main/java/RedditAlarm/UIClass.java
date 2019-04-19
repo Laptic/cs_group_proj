@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 
-public class UIClass extends AppCompatActivity {
+public class UIClass extends AppCompatActivity implements AlarmFragment.passAlarm {
 
     List<Alarm> listOfAlarms = new ArrayList<>();
     LogicHandler logicReference;
@@ -58,10 +58,11 @@ public class UIClass extends AppCompatActivity {
 
     }
 
-    public AlarmFragment addAlarmFrag() {
+    public AlarmFragment addAlarmFrag(MainMenuFragment menuIn) {
         AlarmFragment alarmFrag = new AlarmFragment();
         alarmFrag.ui = this;
         alarmFrag.logic = this.logicReference;
+        alarmFrag.mainRef = menuIn;
 
         // changes the interface to the add alarm fragment
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -78,5 +79,10 @@ public class UIClass extends AppCompatActivity {
         getSupportFragmentManager().popBackStack();
         fragmentTransaction.commit();
 
+    }
+
+    @Override
+    public void addAlarmFromFragment(Alarm alarm) {
+        //MainMenuFragment mainMenu = getSupportFragmentManager().findFragmentById(R.id.);
     }
 }

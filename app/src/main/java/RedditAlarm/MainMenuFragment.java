@@ -22,7 +22,7 @@ import java.util.List;
  * Use the {@link MainMenuFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainMenuFragment extends Fragment {
+public class MainMenuFragment extends Fragment{
     // declares and initializes the list of the alarms
     ArrayList<Alarm> alarmList = new ArrayList<>();
 
@@ -43,6 +43,8 @@ public class MainMenuFragment extends Fragment {
 
     // declares how the fragment interacts with other fragments
     private OnFragmentInteractionListener mListener;
+
+    final MainMenuFragment thisMenu = this;
 
     public MainMenuFragment() {
 
@@ -68,6 +70,7 @@ public class MainMenuFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             //mParam2 = getArguments().getString(ARG_PARAM2);
@@ -88,24 +91,22 @@ public class MainMenuFragment extends Fragment {
         final String editText = "Edit";
         final String doneText = "Done";
 
+
+
+
+
+
         // inflate the layout for this fragment
         AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
         alarmListView.setAdapter(alarmAdapter);
+
 
         // when the image view is clicked, the screen changes to the alarm add fragment
         addImgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlarmFragment addAlarmFrag = ui.addAlarmFrag();
+                AlarmFragment addAlarmFrag = ui.addAlarmFrag(thisMenu);
                 //editBtn.setText(editText);
-
-                // adds the alarm into the alarm list
-                alarmList.add(addAlarmFrag.alarm);
-
-
-                // uses the alarm adapter class to modify the alarm list view
-                AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
-                alarmListView.setAdapter(alarmAdapter);
             }
         });
 
@@ -169,6 +170,19 @@ public class MainMenuFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+    public void updateList(Alarm alarmIn) {
+
+    }
+
+    public void addToList(Alarm alarmIn) {
+        // adds the alarm into the alarm list
+        alarmList.add(alarmIn);
+        // uses the alarm adapter class to modify the alarm list view
+        AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
+        alarmListView.setAdapter(alarmAdapter);
+    }
+
 
 
     /**
