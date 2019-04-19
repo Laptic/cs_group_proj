@@ -175,6 +175,18 @@ public class MainMenuFragment extends Fragment {
         mListener = null;
     }
 
+    public void updateList(Alarm alarmIn) {
+
+    }
+
+    public void addToList(Alarm alarmIn) {
+        // adds the alarm into the alarm list
+        alarmList.add(alarmIn);
+        // uses the alarm adapter class to modify the alarm list view
+        AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
+        alarmListView.setAdapter(alarmAdapter);
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
