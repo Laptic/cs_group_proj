@@ -8,6 +8,7 @@ class Alarm {
     int hour = 12;
     int minute = 0;
     int status = 0;
+    boolean defaultVal = true;
 
     Alarm() {
         // sets values for days of week false as default
@@ -30,6 +31,7 @@ class Alarm {
                 weekRep.append("0");
             }
         }
+
         return weekRep.toString();
     }
 
@@ -65,7 +67,7 @@ class Alarm {
     void setDays(String daysIn) {
         char[] days = daysIn.toCharArray();
         for(int i = 0; i < days.length; i++) {
-            daysOfWeek[i] = (days[i] == 1);
+            daysOfWeek[i] = (days[i] == '1');
         }
     }
 
