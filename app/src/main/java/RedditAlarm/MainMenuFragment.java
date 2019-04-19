@@ -12,9 +12,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,11 +22,9 @@ import java.util.List;
  * Use the {@link MainMenuFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainMenuFragment extends Fragment {
+public class MainMenuFragment extends Fragment{
     // declares and initializes the list of the alarms
-    //List<Alarm> alarmList = new ArrayList<>();
-    Alarm[] aL = {new Alarm()};
-    ArrayList<Alarm> alarmList = new ArrayList<>(Arrays.asList(aL));
+    ArrayList<Alarm> alarmList = new ArrayList<>();
 
     // reference to UI
     UIClass ui;
@@ -48,6 +43,8 @@ public class MainMenuFragment extends Fragment {
 
     // declares how the fragment interacts with other fragments
     private OnFragmentInteractionListener mListener;
+
+    final MainMenuFragment thisMenu = this;
 
     public MainMenuFragment() {
 
@@ -73,6 +70,7 @@ public class MainMenuFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             //mParam2 = getArguments().getString(ARG_PARAM2);
@@ -93,24 +91,22 @@ public class MainMenuFragment extends Fragment {
         final String editText = "Edit";
         final String doneText = "Done";
 
+
+
+
+
+
         // inflate the layout for this fragment
-        final AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
+        AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
         alarmListView.setAdapter(alarmAdapter);
+
 
         // when the image view is clicked, the screen changes to the alarm add fragment
         addImgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //AlarmFragment addAlarmFrag = ui.addAlarmFrag();
-
+                AlarmFragment addAlarmFrag = ui.addAlarmFrag(thisMenu);
                 //editBtn.setText(editText);
-
-                // adds the alarm into the alarm list
-                //alarmList.add(addAlarmFrag.alarm);
-
-                // uses the alarm adapter class to modify the alarm list view
-                AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
-                alarmListView.setAdapter(alarmAdapter);
             }
         });
 
@@ -135,8 +131,8 @@ public class MainMenuFragment extends Fragment {
                     // uses the alarm adapter class to modify the alarm list view
                     EditAlarmAdapter editAlarmAdapter = new EditAlarmAdapter(getActivity(), alarmList);
                     alarmListView.setAdapter(editAlarmAdapter);
-
                 }
+
             }
         });
 
@@ -175,6 +171,20 @@ public class MainMenuFragment extends Fragment {
         mListener = null;
     }
 
+    public void updateList(Alarm alarmIn) {
+
+    }
+
+    public void addToList(Alarm alarmIn) {
+        // adds the alarm into the alarm list
+        alarmList.add(alarmIn);
+        // uses the alarm adapter class to modify the alarm list view
+        AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
+        alarmListView.setAdapter(alarmAdapter);
+    }
+
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -189,6 +199,4 @@ public class MainMenuFragment extends Fragment {
         // TODO: Update argument type and name
         void onMessageRead(String message);
     }
-
-
 }
