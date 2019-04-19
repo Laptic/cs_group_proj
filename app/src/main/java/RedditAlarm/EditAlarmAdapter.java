@@ -1,11 +1,16 @@
 package RedditAlarm;
 
 import android.content.Context;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import java.util.Arrays;
 import java.util.List;
 
 public class EditAlarmAdapter extends AlarmAdapter {
@@ -19,14 +24,17 @@ public class EditAlarmAdapter extends AlarmAdapter {
 
     // generates the items in the list view
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         View v = mInflater.inflate(R.layout.editalarm_listview_detail, null);
 
+        final int alarmNumber = position;
+
         // declares and initializes the parts of the alarm within the list
-        TextView timeTextView = v.findViewById(R.id.timeTextView);
-        TextView daysTextView = v.findViewById(R.id.daysTextView);
-        Switch alarmSwitch = v.findViewById(R.id.alarmSwitch);
+        TextView timeTextView = v.findViewById(R.id.timeTextView2);
+        TextView daysTextView = v.findViewById(R.id.daysTextView2);
+        Switch alarmSwitch = v.findViewById(R.id.alarmSwitch2);
         ImageView removeImageView = v.findViewById(R.id.removeImageView);
+        final ListView alarmListView = v.findViewById(R.id.alarmListView);
 
         removeImageView.setImageResource(R.drawable.minus);
 
@@ -34,15 +42,26 @@ public class EditAlarmAdapter extends AlarmAdapter {
         removeImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alarmList.remove(position);
+                alarmList.remove(alarmNumber);
+                notifyDataSetChanged();
             }
         });
 
         // declares and initializes the current alarm
         Alarm alarmViewed = getItem(position);
 
+        // declares the text of the time
+        String timeText;
+
         // sets the time of the alarm
-        String timeText = alarmViewed.hour + ":" + alarmViewed.minute;
+        if (alarmViewed.minute < 10) {
+            timeText = (alarmViewed.hour + ":");
+            timeText += String.format("%02d",  alarmViewed.minute);
+        }
+        else {
+            timeText = alarmViewed.hour + ":" + alarmViewed.minute;
+        }
+
         timeTextView.setText(timeText);
 
         // sets the days of the week

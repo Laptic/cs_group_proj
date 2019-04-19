@@ -56,9 +56,9 @@ public class Notifications {
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         String channelId = "Your_channel_id";
-        NotificationChannel channel = new NotificationChannel(channelId,
-                "Channel human readable title", NotificationManager.IMPORTANCE_HIGH);
-        mNotificationManager.createNotificationChannel(channel);   //.CreateNotificationChannel(channel);
+        //NotificationChannel channel = new NotificationChannel(channelId,
+                //"Channel human readable title", NotificationManager.IMPORTANCE_HIGH);
+        //mNotificationManager.createNotificationChannel(channel);   //.CreateNotificationChannel(channel);
         mBuilder.setChannelId(channelId);
 
 
