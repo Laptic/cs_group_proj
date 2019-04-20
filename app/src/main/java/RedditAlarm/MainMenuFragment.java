@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -90,11 +91,6 @@ public class MainMenuFragment extends Fragment{
         // declares and initializes the text of the edit button
         final String editText = "Edit";
         final String doneText = "Done";
-
-
-
-
-
 
         // inflate the layout for this fragment
         AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
@@ -183,8 +179,6 @@ public class MainMenuFragment extends Fragment{
         alarmListView.setAdapter(alarmAdapter);
     }
 
-
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -198,5 +192,16 @@ public class MainMenuFragment extends Fragment{
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onMessageRead(String message);
+    }
+
+    // sorts the list by time of day
+    ArrayList<Alarm> sortList() {
+        ArrayList<Alarm> newList = new ArrayList<>();
+
+        for (int i = 0; i < alarmList.size(); i++) {
+
+        }
+
+        return newList;
     }
 }

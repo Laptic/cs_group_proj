@@ -11,10 +11,14 @@ import android.support.v4.app.NotificationCompat;
 import android.content.Context;
 import android.view.View;
 
+import java.util.List;
+
+import RedditAlarm.Models.RedditPost;
+
 // NOTE: This class uses Notification.Builder, not Notification
 public class Notifications {
 
-    public void newNotification(Context context, Alarm alarm) {
+    public void newNotification(Context context, Alarm alarm/*, List<RedditPost> output*/) {
 
         NotificationManager mNotificationManager;
 
@@ -24,27 +28,10 @@ public class Notifications {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, ii, 0);
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
-        bigText.bigText("HahaggggggggggggggggggggggggggggPggggggggggggggggggggggggP" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggP" + // disregard this, testing for char limit
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggggggggggggP<<<<<<<<gggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggffggggggggggggggggggggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggbjdeb");
-        bigText.setBigContentTitle("Here are the headlines for today");
-        bigText.setSummaryText("Good Morning");
+
+        bigText.bigText("No url present.");
+        bigText.setBigContentTitle("BigContentTitle for no url");
+        bigText.setSummaryText("Good Morning NO URL");
 
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
@@ -65,4 +52,5 @@ public class Notifications {
         mNotificationManager.notify(0, mBuilder.build());
     }
 }
+
 

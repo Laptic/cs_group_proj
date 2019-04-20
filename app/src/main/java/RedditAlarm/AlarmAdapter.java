@@ -55,8 +55,18 @@ public class AlarmAdapter extends BaseAdapter {
         // declares and initializes the current alarm
         Alarm alarmViewed = getItem(position);
 
+        // declares the text of the time
+        String timeText;
+
         // sets the time of the alarm
-        String timeText = alarmViewed.hour + ":" + alarmViewed.minute;
+        if (alarmViewed.minute <= 10) {
+            timeText = (alarmViewed.hour + ":");
+            timeText += String.format("%02d",  alarmViewed.minute);
+        }
+        else {
+            timeText = alarmViewed.hour + ":" + alarmViewed.minute;
+        }
+
         timeTextView.setText(timeText);
 
         // sets the days of the week
