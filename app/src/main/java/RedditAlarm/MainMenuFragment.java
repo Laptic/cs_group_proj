@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +12,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MainMenuFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MainMenuFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Handles the main menu of the alarm
+ * Allows the user to add, edit and removes alarms
  */
 public class MainMenuFragment extends Fragment{
     // declares and initializes the list of the alarms
@@ -58,17 +50,14 @@ public class MainMenuFragment extends Fragment{
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * Creates a new main menu fragment
      *
-     * //@param  Parameter 1.
      * @return A new instance of fragment MainMenuFragment.
      */
     // TODO: Rename and change types and number of parameters
     public static MainMenuFragment newInstance() {
         MainMenuFragment fragment = new MainMenuFragment();
         Bundle args = new Bundle();
-        //args.putParcelableArrayList("Alarm List", al);
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,6 +76,7 @@ public class MainMenuFragment extends Fragment{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.main_menu_fragment, container, false);
 
+        // sorts the list
         alarmList = sortList();
 
         // declares and initializes the objects within the fragment
@@ -108,7 +98,6 @@ public class MainMenuFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 AlarmFragment addAlarmFrag = ui.addAlarmFrag(thisMenu);
-                //editBtn.setText(editText);
             }
         });
 
@@ -140,14 +129,17 @@ public class MainMenuFragment extends Fragment{
                     alarmListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            alarmList.remove(position);
 
                             AlarmFragment addAlarmFrag = ui.addAlarmFrag(thisMenu);
-
                             Alarm editAlarm = alarmList.get(position);
 
-                            //addAlarmFrag.populate();
+                            //addAlarmFrag.populate(editAlarm);
 
+                            // deletes the alarm
+                            logicReference.deleteAlarm(editAlarm);
+                            alarmList.remove(position);
+
+                            alarmList = sortList();
                         }
                     });
                 }
@@ -189,13 +181,10 @@ public class MainMenuFragment extends Fragment{
         mListener = null;
     }
 
-    public void updateList(Alarm alarmIn) {
-
-    }
-
     public void addToList(Alarm alarmIn) {
         // adds the alarm into the alarm list
         alarmList.add(alarmIn);
+
         // uses the alarm adapter class to modify the alarm list view
         AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
         alarmListView.setAdapter(alarmAdapter);
@@ -218,11 +207,16 @@ public class MainMenuFragment extends Fragment{
 
     // sorts the list by time of day
     public ArrayList<Alarm> sortList() {
+        // declares and initializes the sorted list
         ArrayList<Alarm> newList = alarmList;
 
+        // declares and initializes the number of the alarms
         int n = newList.size();
+
+        // declares the temporary alarm used for the sort
         Alarm temp;
 
+        // uses bubble sort
         if (n != 0) {
             for (int i = 0; i < n - 1; i++) {
                 for (int j = 0; j < n - i - 1; j++) {
@@ -235,6 +229,7 @@ public class MainMenuFragment extends Fragment{
             }
         }
 
+        // returns the sorted list
         return newList;
     }
 }

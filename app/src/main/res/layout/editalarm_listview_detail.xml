@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/timeTextView2"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="129dp"
+        android:layout_marginLeft="131dp"
         android:layout_marginTop="9dp"
         android:text="Days of the week" />
 
