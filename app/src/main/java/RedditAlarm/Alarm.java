@@ -10,6 +10,7 @@ class Alarm {
     boolean PM = false;
     int status = 0;
     boolean defaultVal = true;
+    String ampm = "";
 
     Alarm() {
         // sets values for days of week false as default
