@@ -41,7 +41,7 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.passAlar
 
         PriorityQueue<Alarm> que = new PriorityQueue<>();
         //for (int i = 0; i < 7; i++) {
-            que.add(new Alarm());
+        que.add(new Alarm());
         //}
         //AlarmAdapter ad = new AlarmAdapter(this, que);
 
@@ -52,15 +52,15 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.passAlar
         mainMenuFrag.ui = this;
         mainMenuFrag.logicReference = logicReference;
         mainMenuFrag.alarmList = (ArrayList<Alarm>) this.listOfAlarms;
-            //the next two expressions are used to call and populate a frame layout with
-            //a fragment (AlarmFragment)
-            //fragment1 is the name of the FrameLayout under base_layout.xml
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.fragment1,mainMenuFrag);
+        //the next two expressions are used to call and populate a frame layout with
+        //a fragment (AlarmFragment)
+        //fragment1 is the name of the FrameLayout under base_layout.xml
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment1,mainMenuFrag);
 
-            //commits the fragment to the layout?
-            fragmentTransaction.commit();
+        //commits the fragment to the layout?
+        fragmentTransaction.commit();
 
     }
 
@@ -73,8 +73,8 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.passAlar
         // changes the interface to the add alarm fragment
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment1, alarmFrag)
-                            .addToBackStack("add")
-                            .commit();
+                .addToBackStack("add")
+                .commit();
         return alarmFrag;
     }
 
