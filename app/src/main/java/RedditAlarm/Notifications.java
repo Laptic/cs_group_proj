@@ -29,14 +29,14 @@ public class Notifications {
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
 
-        bigText.bigText("No url present.");
+        bigText.bigText(output.get(0).getTitle());
         bigText.setBigContentTitle("BigContentTitle for no url");
         bigText.setSummaryText("Good Morning NO URL");
 
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
         mBuilder.setContentTitle("Good Morning");
-        mBuilder.setContentText(output.get(0).getTitle());
+        //mBuilder.setContentText(output.get(0).getTitle());
         mBuilder.setStyle(bigText);
 
         mNotificationManager =

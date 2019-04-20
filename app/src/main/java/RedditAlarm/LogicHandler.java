@@ -10,8 +10,9 @@ import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 import java.util.Calendar;
 import java.util.List;
+
+import RedditAlarm.Models.RedditJSON;
 import RedditAlarm.Models.RedditPost;
-import RedditAlarm.Models.RedditResult;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,7 +23,7 @@ public class LogicHandler
         extends BroadcastReceiver            //problem here
         implements RedditCall.AsyncResponse, AlarmFragment.logicHandler {
     private UIClass ui;
-    public String BASE_URL = "http://www.reddit.com/r/";
+    public String BASE_URL = "https://www.reddit.com/r/";
     public int NUM_POSTS = 3;
     private DatabaseHandler database;
     List<Alarm> alarmList;
@@ -55,7 +56,8 @@ public class LogicHandler
                 break;
             }
         }
-        if (executeAlarm != null) {
+        processFinish(null, context);
+        /*if (executeAlarm != null) {
             Retrofit retrofitCall = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
@@ -63,12 +65,13 @@ public class LogicHandler
             RedditClient apiService =
                     retrofitCall.create(RedditClient.class);
             String subreddit = executeAlarm.url;
-            Call<RedditResult> retroCall = apiService.getRedditPosts(subreddit, NUM_POSTS);
+            Call<RedditJSON> retroCall = apiService.getRedditPosts(subreddit, NUM_POSTS);
             RedditCall redditCall = new RedditCall();
             redditCall.delegate = this;
             redditCall.contextIn = context;
             redditCall.execute(retroCall);
         }
+        */
     }
 
     public LogicHandler(UIClass uiReference) {

@@ -16,23 +16,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import RedditAlarm.Models.RedditJSON;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class UIClass extends AppCompatActivity implements AlarmFragment.passAlarm {
 
     List<Alarm> listOfAlarms = new ArrayList<>();
     LogicHandler logicReference;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_layout);
-        
-        // call used for testing, dont push without this until notifications are done
 
-        
+
         logicReference = new LogicHandler(this);
         listOfAlarms = logicReference.alarmList;
+
+
         PriorityQueue<Alarm> que = new PriorityQueue<>();
         //for (int i = 0; i < 7; i++) {
             que.add(new Alarm());
