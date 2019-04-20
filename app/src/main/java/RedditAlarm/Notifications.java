@@ -29,7 +29,12 @@ public class Notifications {
 
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
-        mBuilder.setContentTitle("Good Morning");
+        String AMPM = "AM";
+        if (alarm.PM) {
+            AMPM = "PM";
+        }
+        String title = String.valueOf(alarm.hour) + ":" + String.valueOf(alarm.minute) + AMPM;
+        mBuilder.setContentTitle(title);
         //mBuilder.setContentText(output.get(0).getTitle());
         mBuilder.setStyle(bigText);
 
