@@ -144,6 +144,7 @@ public class AlarmFragment extends Fragment {
                     PM = true;
                 }
 
+                alarm.ampm = text;
 
             }
 

@@ -32,7 +32,6 @@ class Alarm {
                 weekRep.append("0");
             }
         }
-
         return weekRep.toString();
     }
 
@@ -43,18 +42,7 @@ class Alarm {
 
     // returns hour/minute alarm val in milliseconds
     long getMiliTime() {
-        if (PM) {
-            return (minute * 60 * 1000 ) + (hour * 60 * 60 * 1000) + (12 * 60 * 60 * 1000);
-        }
-        else {
-            if (hour == 12) {
-                return (minute * 60 * 1000 );
-            }
-            else {
-                return (minute * 60 * 1000 ) + (hour * 60 * 60 * 1000);
-            }
-
-        }
+        return (minute * 60 * 100 ) + (hour * 60 * 60 * 100);
     }
 
     // parses database entry for hour min value
