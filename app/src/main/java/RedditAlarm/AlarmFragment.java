@@ -41,6 +41,8 @@ public class AlarmFragment extends Fragment {
         for (int i = 0; i < dayBools.length; i++) {
             dayBools[i] = false;
         }
+        hour = 12;
+        minute = 0;
     }
 
 
@@ -76,6 +78,25 @@ public class AlarmFragment extends Fragment {
         //Create an object for the spinner box AMPM
         Spinner spinner_ampm = view.findViewById(R.id.spinner_AmOrPm);
 
+        String hour_str = this.hour + "";
+
+        String min_str = this.minute + "";
+
+        spinner_hour.setSelection(getIndex(spinner_hour,hour_str));
+
+        spinner_minute.setSelection(getIndex(spinner_minute,min_str));
+
+        String PM_str = "";
+
+        if(this.PM) {
+            PM_str = "pm";
+        }
+        else {
+            PM_str = "am";
+        }
+
+        spinner_ampm.setSelection(getIndex(spinner_ampm,PM_str));
+
         //Monday toggle button
         ToggleButton toggle_Mon = (ToggleButton) view.findViewById(R.id.toggle_mon);
 
@@ -94,8 +115,19 @@ public class AlarmFragment extends Fragment {
 
         ToggleButton toggle_Sun = (ToggleButton) view.findViewById(R.id.toggle_sun);
 
+        toggle_Sun.setChecked(dayBools[0]);
 
-        //
+        toggle_Mon.setChecked(dayBools[1]);
+
+        toggle_Tues.setChecked(dayBools[2]);
+
+        toggle_Weds.setChecked(dayBools[3]);
+
+        toggle_Thurs.setChecked(dayBools[4]);
+
+        toggle_Fri.setChecked(dayBools[5]);
+
+        toggle_Sat.setChecked(dayBools[6]);
 
 
 
