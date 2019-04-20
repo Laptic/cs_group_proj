@@ -139,7 +139,7 @@ public class AlarmFragment extends Fragment {
         adapterHr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //populates the spinner list with values
         spinner_hour.setAdapter(adapterHr);
-
+//
         spinner_hour.setSelection(getIndex(spinner_hour,hour_str));
 
         //Does something when the user clicks on the spinner box for hours
