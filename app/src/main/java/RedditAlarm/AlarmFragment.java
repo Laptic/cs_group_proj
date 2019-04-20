@@ -321,21 +321,122 @@ public class AlarmFragment extends Fragment {
     }
 
     //Not sure what to do with this anymore, ask ben
-    private void populate() {
-        if (!this.alarm.defaultVal) {
-            minute = this.alarm.minute;
-            hour = this.alarm.hour;
-            dayBools = this.alarm.daysOfWeek;
+    private void populate(Alarm alarmIn) {
 
+      Spinner spinner_hour = getView().findViewById(R.id.spinner_hour);
+
+      Spinner spinner_min = getView().findViewById(R.id.spinner_min);
+
+      Spinner spinner_amPm = getView().findViewById(R.id.spinner_hour);
+
+      String hour = alarmIn.hour + "";
+
+      spinner_hour.setSelection(getIndex(spinner_hour,hour));
+
+      String min = alarmIn.minute + "";
+
+      spinner_min.setSelection(getIndex(spinner_min,min));
+
+      String amPm = "";
+
+      if(alarmIn.PM) {
+          amPm = "pm";
+      }
+      else {
+          amPm = "am";
+      }
+
+
+      spinner_min.setSelection(getIndex(spinner_amPm,amPm));
+
+      ToggleButton sun = getView().findViewById(R.id.toggle_sun);
+
+      ToggleButton mon = getView().findViewById(R.id.toggle_mon);
+
+      ToggleButton tue = getView().findViewById(R.id.toggle_tues);
+
+      ToggleButton wed = getView().findViewById(R.id.toggle_wed);
+
+      ToggleButton thur = getView().findViewById(R.id.toggle_thurs);
+
+      ToggleButton fri = getView().findViewById(R.id.toggle_fri);
+
+      ToggleButton sat = getView().findViewById(R.id.toggle_sat);
+
+
+
+      if(alarmIn.daysOfWeek[0]) {
+          sun.setChecked(true);
+      }
+      else {
+          sun.setChecked(false);
+      }
+
+        if(alarmIn.daysOfWeek[1]) {
+            mon.setChecked(true);
+        }
+        else {
+            mon.setChecked(false);
         }
 
+        if(alarmIn.daysOfWeek[2]) {
+            tue.setChecked(true);
+        }
+        else {
+            tue.setChecked(false);
+        }
+
+        if(alarmIn.daysOfWeek[3]) {
+            wed.setChecked(true);
+        }
+        else {
+            wed.setChecked(false);
+        }
+
+        if(alarmIn.daysOfWeek[4]) {
+            thur.setChecked(true);
+        }
+        else {
+            thur.setChecked(false);
+        }
+
+        if(alarmIn.daysOfWeek[5]) {
+            fri.setChecked(true);
+        }
+        else {
+            fri.setChecked(false);
+        }
+
+        if(alarmIn.daysOfWeek[6]) {
+            sat.setChecked(true);
+        }
+        else {
+            sat.setChecked(false);
+        }
+
+
+
     }
+
+
+    private int getIndex(Spinner spinner, String myString){
+
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).equals(myString)){
+                return i;
+            }
+        }
+        return 0;
+    }
+
 
     public void finish(View view) {
 
         this.alarm.hour = hour;
         this.alarm.minute = minute;
-        this.alarm.PM = this.PM;
+        this.alarm.PM = PM;
 
         this.alarm.daysOfWeek = dayBools;
         this.logic.addAlarm(this.alarm);
