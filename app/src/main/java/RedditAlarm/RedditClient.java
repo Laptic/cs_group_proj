@@ -11,4 +11,3 @@ public interface RedditClient {
     Call<RedditJSON> getRedditPosts(@Path("value") String subredditVal,
                                       @Query("limit") int numPosts);
 }
-

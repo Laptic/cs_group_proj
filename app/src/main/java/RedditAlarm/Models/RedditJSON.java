@@ -18,9 +18,11 @@ public class RedditJSON {
         @SerializedName("modhash")
         @Expose
         private String modhash;
+
         @SerializedName("dist")
         @Expose
         private Integer dist;
+
         @SerializedName("children")
         @Expose
         private List<Child> resultChild;
