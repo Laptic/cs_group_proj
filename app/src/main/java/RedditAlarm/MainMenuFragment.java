@@ -89,7 +89,7 @@ public class MainMenuFragment extends Fragment{
         final String doneText = "Done";
 
         // inflate the layout for this fragment
-        AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
+        final AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
         alarmListView.setAdapter(alarmAdapter);
 
 
@@ -130,13 +130,11 @@ public class MainMenuFragment extends Fragment{
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                            AlarmFragment addAlarmFrag = ui.addAlarmFrag(thisMenu);
-                            Alarm editAlarm = alarmList.get(position);
-
-                            //addAlarmFrag.populate(editAlarm);
-
+                            AlarmFragment addAlarmFrag = new AlarmFragment();
+                            addAlarmFrag.populate(alarmList.get(position));
+                            ui.inflateAlarmFrag(addAlarmFrag);
                             // deletes the alarm
-                            logicReference.deleteAlarm(editAlarm);
+                            logicReference.deleteAlarm(alarmList.get(position));
                             alarmList.remove(position);
 
                             alarmList = sortList();

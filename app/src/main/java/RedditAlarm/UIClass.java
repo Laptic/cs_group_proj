@@ -1,7 +1,5 @@
 package RedditAlarm;
 
-import android.app.Notification;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -39,13 +37,6 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.passAlar
         listOfAlarms = logicReference.alarmList;
 
 
-        PriorityQueue<Alarm> que = new PriorityQueue<>();
-        //for (int i = 0; i < 7; i++) {
-        que.add(new Alarm());
-        //}
-        //AlarmAdapter ad = new AlarmAdapter(this, que);
-
-
         // temporary call for Notifications testing
         //Notification.Builder tempNotification = Notifications.newNotification(this);
         MainMenuFragment mainMenuFrag = new MainMenuFragment();
@@ -71,6 +62,10 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.passAlar
         alarmFrag.mainRef = menuIn;
 
         // changes the interface to the add alarm fragment
+
+        return inflateAlarmFrag(alarmFrag);
+    }
+    public AlarmFragment inflateAlarmFrag(AlarmFragment alarmFrag) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment1, alarmFrag)
                 .addToBackStack("add")
