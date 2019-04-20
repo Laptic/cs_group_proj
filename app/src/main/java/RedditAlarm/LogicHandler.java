@@ -20,7 +20,7 @@ public class LogicHandler
         extends BroadcastReceiver
         implements RedditCall.AsyncResponse, AlarmFragment.logicHandler {
     private UIClass ui;
-    public String BASE_URL = "https://www.reddit.com/r/";
+    public String BASE_URL = "https://www.reddit.com/r/Games/";
     public int NUM_POSTS = 3;
     private DatabaseHandler database;
     List<Alarm> alarmList;
@@ -136,6 +136,7 @@ public class LogicHandler
                 .getApplicationContext()
                 .getSystemService(ALARM_SERVICE);
         alarmManager.cancel(sender);
+
     }
 
     public void editAlarm(Alarm alarmIn) {

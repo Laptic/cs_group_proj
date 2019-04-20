@@ -110,12 +110,15 @@ public class AlarmAdapter extends BaseAdapter {
         daysTextView.setText(daysText);
 
         // sets the alarm switch based on the status variable
-        if (getItem(position).status == 1) {
+        if (alarmViewed.status) {
             alarmSwitch.setChecked(true);
+
         }
         else {
             alarmSwitch.setChecked(false);
         }
+
+
 
         return v;
     }
