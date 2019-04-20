@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -73,11 +75,11 @@ public class LogicHandler
 
     public LogicHandler(UIClass uiReference) {
         this.ui = uiReference;
+        database = new DatabaseHandler(ui);
+        database.dropTables();
         /* builds database from UI's context, populates a list of alarms with
             alarms created from database entries */
-        database = new DatabaseHandler(ui);
         alarmList = database.getAllAlarm();
-        System.out.println(alarmList.toString());
     }
 
     @Override
@@ -118,6 +120,8 @@ public class LogicHandler
         alarmMan.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 //AlarmManager.INTERVAL_DAY,
                 pendIntent);
+        alarmIn.status = true;
+        editAlarm(alarmIn);
     }
 
     public void deleteAlarm(Alarm alarmIn) {
@@ -136,6 +140,8 @@ public class LogicHandler
                 .getApplicationContext()
                 .getSystemService(ALARM_SERVICE);
         alarmManager.cancel(sender);
+        alarmIn.status = false;
+        editAlarm(alarmIn);
     }
 
     public void editAlarm(Alarm alarmIn) {
