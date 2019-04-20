@@ -67,31 +67,38 @@ public class AlarmAdapter extends BaseAdapter {
             timeText = alarmViewed.hour + ":" + alarmViewed.minute;
         }
 
+        if (alarmViewed.PM) {
+            timeText += " PM";
+        }
+        else {
+            timeText += " AM";
+        }
+
         timeTextView.setText(timeText);
 
         // sets the days of the week
         String daysText = "";
 
         if (alarmViewed.daysOfWeek[0]) {
-            daysText += "SU ";
-        }
-        if (alarmViewed.daysOfWeek[1]) {
             daysText += "M ";
         }
-        if (alarmViewed.daysOfWeek[2]) {
+        if (alarmViewed.daysOfWeek[1]) {
             daysText += "T ";
         }
-        if (alarmViewed.daysOfWeek[3]) {
+        if (alarmViewed.daysOfWeek[2]) {
             daysText += "W ";
         }
-        if (alarmViewed.daysOfWeek[4]) {
+        if (alarmViewed.daysOfWeek[3]) {
             daysText += "TH ";
         }
-        if (alarmViewed.daysOfWeek[5]) {
+        if (alarmViewed.daysOfWeek[4]) {
             daysText += "F ";
         }
-        if (alarmViewed.daysOfWeek[6]) {
+        if (alarmViewed.daysOfWeek[5]) {
             daysText += "SA ";
+        }
+        if (alarmViewed.daysOfWeek[6]) {
+            daysText += "SU ";
         }
 
         daysTextView.setText(daysText);

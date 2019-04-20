@@ -25,8 +25,9 @@ public class AlarmFragment extends Fragment {
     Alarm alarm;
     int hour;
     int minute;
-    int second;
+    boolean PM = false;
     boolean[] dayBools;
+    String url;
 
     logicHandler logic;
     passAlarm passLogic;
@@ -36,7 +37,12 @@ public class AlarmFragment extends Fragment {
 
     public AlarmFragment() {
         this.alarm = new Alarm();
+        this.dayBools = new boolean[7];
+        for (int i = 0; i < dayBools.length; i++) {
+            dayBools[i] = false;
+        }
     }
+
 
     //used to communicate information between fragment (AlarmFragment) and activity (UIClass)
     public interface logicHandler {
@@ -60,8 +66,6 @@ public class AlarmFragment extends Fragment {
                              Bundle savedInstanceState) {
         //populates the fragment with the layout of alarm_fragment, which is under res
         View view = inflater.inflate(R.layout.alarm_fragment, container,false);
-
-        alarm = new Alarm();
 
         //Create an object for the spinner box HOUR
         Spinner spinner_hour = view.findViewById(R.id.spinner_hour);
@@ -136,6 +140,9 @@ public class AlarmFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
+                if (text.equals("pm")) {
+                    PM = true;
+                }
 
                 alarm.ampm = text;
 
@@ -164,12 +171,12 @@ public class AlarmFragment extends Fragment {
 
                 if(isChecked) {
 
-                    alarm.daysOfWeek[0] = true;
+                    dayBools[0] = true;
                 }
 
                 else {
 
-                    alarm.daysOfWeek[0] = false;
+                    dayBools[0] = false;
                 }
             }
         });
@@ -184,10 +191,10 @@ public class AlarmFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if(isChecked) {
-                    alarm.daysOfWeek[1] = true;
+                    dayBools[1] = true;
                 }
                 else {
-                    alarm.daysOfWeek[1] = false;
+                    dayBools[1] = false;
                 }
             }
         });
@@ -199,10 +206,10 @@ public class AlarmFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if(isChecked) {
-                    alarm.daysOfWeek[2] = true;
+                    dayBools[2] = true;
                 }
                 else {
-                    alarm.daysOfWeek[2] = false;
+                    dayBools[2] = false;
                 }
             }
         });
@@ -214,10 +221,10 @@ public class AlarmFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if(isChecked) {
-                    alarm.daysOfWeek[3] = true;
+                    dayBools[3] = true;
                 }
                 else {
-                    alarm.daysOfWeek[3] = false;
+                    dayBools[3] = false;
                 }
             }
         });
@@ -229,10 +236,10 @@ public class AlarmFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if(isChecked) {
-                    alarm.daysOfWeek[4] = true;
+                    dayBools[4] = true;
                 }
                 else {
-                    alarm.daysOfWeek[4] = false;
+                    dayBools[4] = false;
 
                 }
             }
@@ -245,10 +252,10 @@ public class AlarmFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if(isChecked) {
-                    alarm.daysOfWeek[5] = true;
+                    dayBools[5] = true;
                 }
                 else {
-                    alarm.daysOfWeek[5] = false;
+                    dayBools[5] = false;
                 }
             }
         });
@@ -260,10 +267,10 @@ public class AlarmFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if(isChecked) {
-                    alarm.daysOfWeek[6] = true;
+                    dayBools[6] = true;
                 }
                 else {
-                    alarm.daysOfWeek[6] = false;
+                    dayBools[6] = false;
                 }
 
             }
@@ -272,7 +279,7 @@ public class AlarmFragment extends Fragment {
 
 
         //the url is inputted now
-        EditText urlText = (EditText) view.findViewById(R.id.urlText);
+        EditText urlText = (EditText) view.findViewById(R.id.url_text);
         //check if its empty
         alarm.url = urlText.getText().toString();
 
@@ -306,10 +313,17 @@ public class AlarmFragment extends Fragment {
 
     //Not sure what to do with this anymore, ask ben
     private void populate() {
-        dayBools = alarm.daysOfWeek;
+        if (!this.alarm.defaultVal) {
+            minute = this.alarm.minute;
+            hour = this.alarm.hour;
+            dayBools = this.alarm.daysOfWeek;
+        }
+
     }
 
     public void finish(View view) {
+        this.alarm.PM = this.PM;
+        this.alarm.daysOfWeek = dayBools;
         this.logic.addAlarm(this.alarm);
         this.mainRef.addToList(this.alarm);
         this.ui.killAlarmEdit(this);

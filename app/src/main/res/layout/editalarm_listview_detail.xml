@@ -17,7 +17,8 @@
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:layout_toEndOf="@+id/timeTextView"
-        android:layout_toRightOf="@+id/timeTextView" />
+        android:layout_toRightOf="@+id/timeTextView"
+        android:focusable="false" />
 
     <TextView
         android:id="@+id/daysTextView2"
@@ -38,9 +39,9 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="130dp"
         android:layout_marginLeft="130dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:text="Alarm Time"
-        android:textSize="18sp" />
+        android:textSize="24sp" />
 
     <ImageView
         android:id="@+id/removeImageView"
@@ -51,6 +52,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="9dp"
         android:clickable="true"
-        app:srcCompat="@drawable/minus" />
+        app:srcCompat="@drawable/minus"
+        android:focusable="false" />
 
 </RelativeLayout>

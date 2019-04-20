@@ -8,11 +8,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -83,6 +85,8 @@ public class MainMenuFragment extends Fragment{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.main_menu_fragment, container, false);
 
+        alarmList = sortList();
+
         // declares and initializes the objects within the fragment
         alarmListView = rootView.findViewById(R.id.alarmListView);
         addImgView = rootView.findViewById(R.id.addImgView);
@@ -111,6 +115,7 @@ public class MainMenuFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 buttonCounter++;
+                alarmList = sortList();
 
                 // sets the edit button to edit the alarms
                 if (buttonCounter % 2 == 0) {
@@ -127,8 +132,21 @@ public class MainMenuFragment extends Fragment{
                     // uses the alarm adapter class to modify the alarm list view
                     EditAlarmAdapter editAlarmAdapter = new EditAlarmAdapter(getActivity(), alarmList);
                     alarmListView.setAdapter(editAlarmAdapter);
-                }
 
+                    // allows the user to click on the alarm in order to edit it
+                    alarmListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            alarmList.remove(position);
+
+                            AlarmFragment addAlarmFrag = ui.addAlarmFrag(thisMenu);
+
+                            Alarm editAlarm = alarmList.get(position);
+
+                            //addAlarmFrag.populate();
+                        }
+                    });
+                }
             }
         });
 
@@ -195,11 +213,22 @@ public class MainMenuFragment extends Fragment{
     }
 
     // sorts the list by time of day
-    ArrayList<Alarm> sortList() {
-        ArrayList<Alarm> newList = new ArrayList<>();
+    public ArrayList<Alarm> sortList() {
+        ArrayList<Alarm> newList = alarmList;
 
-        for (int i = 0; i < alarmList.size(); i++) {
+        int n = newList.size();
+        Alarm temp;
 
+        if (n != 0) {
+            for (int i = 0; i < n - 1; i++) {
+                for (int j = 0; j < n - i - 1; j++) {
+                    if (newList.get(j).getMiliTime() > newList.get(j + 1).getMiliTime()){
+                        temp = newList.get(j);
+                        newList.set(j, newList.get(j + 1));
+                        newList.set(j + 1, temp);
+                    }
+                }
+            }
         }
 
         return newList;
