@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.List;
@@ -29,6 +30,8 @@ public class LogicHandler
     List<Alarm> alarmList;
 
 
+    public LogicHandler() {
+    }
 
 
     // run upon trigger by AlarmManager
