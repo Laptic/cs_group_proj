@@ -47,7 +47,13 @@ class Alarm {
             return (minute * 60 * 1000 ) + (hour * 60 * 60 * 1000) + (12 * 60 * 60 * 1000);
         }
         else {
-            return (minute * 60 * 1000 ) + (hour * 60 * 60 * 1000);
+            if (hour == 12) {
+                return (minute * 60 * 1000 );
+            }
+            else {
+                return (minute * 60 * 1000 ) + (hour * 60 * 60 * 1000);
+            }
+
         }
     }
 
