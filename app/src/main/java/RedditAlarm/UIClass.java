@@ -50,6 +50,7 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.passAlar
         //Notification.Builder tempNotification = Notifications.newNotification(this);
         MainMenuFragment mainMenuFrag = new MainMenuFragment();
         mainMenuFrag.ui = this;
+        mainMenuFrag.logicReference = logicReference;
         mainMenuFrag.alarmList = (ArrayList<Alarm>) this.listOfAlarms;
             //the next two expressions are used to call and populate a frame layout with
             //a fragment (AlarmFragment)

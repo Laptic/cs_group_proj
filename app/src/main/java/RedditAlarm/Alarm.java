@@ -44,7 +44,6 @@ class Alarm {
     // returns hour/minute alarm val in milliseconds
     long getMiliTime() {
         if (PM) {
-            System.out.println("test");
             return (minute * 60 * 1000 ) + (hour * 60 * 60 * 1000) + (12 * 60 * 60 * 1000);
         }
         else {

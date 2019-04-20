@@ -44,6 +44,8 @@ public class MainMenuFragment extends Fragment{
     // counts the amount of times the edit button has been pressed
     int buttonCounter = 0;
 
+    LogicHandler logicReference;
+
     // declares how the fragment interacts with other fragments
     private OnFragmentInteractionListener mListener;
 
@@ -131,6 +133,7 @@ public class MainMenuFragment extends Fragment{
 
                     // uses the alarm adapter class to modify the alarm list view
                     EditAlarmAdapter editAlarmAdapter = new EditAlarmAdapter(getActivity(), alarmList);
+                    editAlarmAdapter.logicReference = logicReference;
                     alarmListView.setAdapter(editAlarmAdapter);
 
                     // allows the user to click on the alarm in order to edit it
@@ -144,6 +147,7 @@ public class MainMenuFragment extends Fragment{
                             Alarm editAlarm = alarmList.get(position);
 
                             //addAlarmFrag.populate();
+
                         }
                     });
                 }
