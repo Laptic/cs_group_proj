@@ -52,7 +52,6 @@ public class LogicHandler
                 break;
             }
         }
-        processFinish(null, context);
         if (this.alarmExec != null) {
             Retrofit retrofitCall = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -67,7 +66,6 @@ public class LogicHandler
             redditCall.contextIn = context;
             redditCall.execute(retroCall);
         }
-
     }
 
     public LogicHandler(UIClass uiReference) {
