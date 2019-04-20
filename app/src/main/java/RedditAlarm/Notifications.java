@@ -18,7 +18,7 @@ import RedditAlarm.Models.RedditPost;
 // NOTE: This class uses Notification.Builder, not Notification
 public class Notifications {
 
-    public void newNotification(Context context, Alarm alarm/*, List<RedditPost> output*/) {
+    public void newNotification(Context context, Alarm alarm, List<RedditPost> output) {
 
         NotificationManager mNotificationManager;
 
@@ -36,7 +36,7 @@ public class Notifications {
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
         mBuilder.setContentTitle("Good Morning");
-        mBuilder.setContentText("Here are the headlines for today");
+        mBuilder.setContentText(output.get(0).getTitle());
         mBuilder.setStyle(bigText);
 
         mNotificationManager =

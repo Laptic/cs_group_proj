@@ -8,10 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
-
 import java.util.Calendar;
 import java.util.List;
-
 import RedditAlarm.Models.RedditPost;
 import RedditAlarm.Models.RedditResult;
 import retrofit2.Call;
@@ -24,7 +22,7 @@ public class LogicHandler
         extends BroadcastReceiver            //problem here
         implements RedditCall.AsyncResponse, AlarmFragment.logicHandler {
     private UIClass ui;
-    public String BASE_URL = "http://www.reddit.com/r";
+    public String BASE_URL = "http://www.reddit.com/r/";
     public int NUM_POSTS = 3;
     private DatabaseHandler database;
     List<Alarm> alarmList;
@@ -39,11 +37,12 @@ public class LogicHandler
     public void onReceive(Context context,
                           Intent intent) {
         Calendar time = Calendar.getInstance();
+
         // alarm is triggered at time set, so compares trigger times with current time
         int hourTemp = time.get(Calendar.HOUR_OF_DAY);
         int minuteTemp = time.get(Calendar.MINUTE);
         // needs to load database and search for alarm that is executed
-        database = new DatabaseHandler(ui);
+        database = new DatabaseHandler(context);
         /* can't immediately think of a better way of doing this,
         objects can't be used in alarm manager, perhaps storing id of next
         one to execute in preferences? -bchesnut*/
@@ -64,9 +63,10 @@ public class LogicHandler
             RedditClient apiService =
                     retrofitCall.create(RedditClient.class);
             String subreddit = executeAlarm.url;
-            Call<RedditResult> retroCall = apiService.getRedditPosts(NUM_POSTS, subreddit);
+            Call<RedditResult> retroCall = apiService.getRedditPosts(subreddit, NUM_POSTS);
             RedditCall redditCall = new RedditCall();
             redditCall.delegate = this;
+            redditCall.contextIn = context;
             redditCall.execute(retroCall);
         }
     }
@@ -104,7 +104,7 @@ public class LogicHandler
 
     public void processFinish(List<RedditPost> output, Context conIn) {
         Notifications noti = new Notifications();
-        noti.newNotification(conIn, new Alarm()); // will need to put something into the alarm or make another parameter
+        noti.newNotification(conIn, new Alarm(), output); // will need to put something into the alarm or make another parameter
                                                   // for newNotification -Ryan
     }
 }

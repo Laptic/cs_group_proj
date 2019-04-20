@@ -7,8 +7,8 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface RedditClient {
-    @GET("/{value}/hot")
-    Call<RedditResult> getRedditPosts(@Query("limit") int numPosts,
-                                     @Path("value") String subredditVal);
+    @GET("{value}/hot")
+    Call<RedditResult> getRedditPosts(@Path("value") String subredditVal,
+                                      @Query("limit") int numPosts);
 }
 
