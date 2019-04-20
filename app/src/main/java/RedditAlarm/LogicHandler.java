@@ -92,7 +92,7 @@ public class LogicHandler
             need to update for cases where it doesn't repeat
         */
         System.out.println(alarmIn.getMiliTime());
-        alarmMan.setExact(AlarmManager.RTC,
+        alarmMan.setExact(AlarmManager.RTC_WAKEUP,
                 alarmIn.getMiliTime(),
                 //AlarmManager.INTERVAL_DAY,
                 pendIntent);
