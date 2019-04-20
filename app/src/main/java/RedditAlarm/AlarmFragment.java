@@ -327,7 +327,7 @@ public class AlarmFragment extends Fragment {
 
       Spinner spinner_min = getView().findViewById(R.id.spinner_min);
 
-      Spinner spinner_amPm = getView().findViewById(R.id.spinner_hour);
+      Spinner spinner_amPm = getView().findViewById(R.id.spinner_AmOrPm);
 
       String hour = alarmIn.hour + "";
 
