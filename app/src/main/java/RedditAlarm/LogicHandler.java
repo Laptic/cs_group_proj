@@ -25,6 +25,7 @@ public class LogicHandler
     private DatabaseHandler database;
     List<Alarm> alarmList;
     Alarm alarmExec;
+    Context context;
 
 
     public LogicHandler() {
@@ -35,6 +36,7 @@ public class LogicHandler
     @Override
     public void onReceive(Context context,
                           Intent intent) {
+        this.context = context;
         Calendar time = Calendar.getInstance();
         // alarm is triggered at time set, so compares trigger times with current time
         int hourTemp = time.get(Calendar.HOUR_OF_DAY);
@@ -60,12 +62,13 @@ public class LogicHandler
             RedditClient apiService =
                     retrofitCall.create(RedditClient.class);
             String subreddit = this.alarmExec.url;
-            Call<RedditJSON> retroCall = apiService.getRedditPosts(subreddit);
+            Call<RedditJSON> retroCall = apiService.getRedditPosts(subreddit, NUM_POSTS);
             RedditCall redditCall = new RedditCall();
             redditCall.delegate = this;
             redditCall.contextIn = context;
             redditCall.execute(retroCall);
         }
+        systemAddAlarm(this.alarmExec);
     }
 
     public LogicHandler(UIClass uiReference) {
@@ -83,6 +86,9 @@ public class LogicHandler
         systemAddAlarm(alarmIn);
     }
     public void systemAddAlarm(Alarm alarmIn) {
+        if (context == null) {
+            this.context = ui.getApplicationContext();
+        }
         alarmList = database.getAllAlarm();
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -98,14 +104,13 @@ public class LogicHandler
         // gets alarm manager instance from system
 
         AlarmManager alarmMan =
-                (AlarmManager) ui
-                        .getApplicationContext()
-                        .getSystemService(ALARM_SERVICE);
+                (AlarmManager)
+                        context.getSystemService(ALARM_SERVICE);
         // says which class to use when alarms triggered and passes context
-        Intent intent = new Intent(ui, LogicHandler.class);
+        Intent intent = new Intent(context, LogicHandler.class);
         PendingIntent pendIntent =
                 PendingIntent.getBroadcast(
-                        ui.getApplicationContext(), alarmIn.id, intent,0);
+                        context, alarmIn.id, intent,0);
         /* sets alarm to repeat every day at set time,
             need to update for cases where it doesn't repeat
         */
@@ -135,6 +140,7 @@ public class LogicHandler
 
     public void editAlarm(Alarm alarmIn) {
         database.updateAlarm(alarmIn);
+        systemAddAlarm(alarmIn);
     }
 
     public void processFinish(List<RedditPost> output, Context conIn) {
