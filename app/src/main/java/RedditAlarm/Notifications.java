@@ -22,20 +22,15 @@ public class Notifications {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, ii, 0);
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
-
-        //bigText.bigText(output.get(0).getTitle());
-        bigText.setBigContentTitle("BigContentTitle for no url");
+        bigText.bigText(output.get(0).getTitle());
+        bigText.setBigContentTitle("Test");
         bigText.setSummaryText("Good Morning NO URL");
 
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
-        String AMPM = "AM";
-        if (alarm.PM) {
-            AMPM = "PM";
-        }
-        String title = String.valueOf(alarm.hour) + ":" + String.valueOf(alarm.minute) + AMPM;
-        mBuilder.setContentTitle(title);
-        //mBuilder.setContentText(output.get(0).getTitle());
+
+        mBuilder.setContentTitle("deez nutz");
+        mBuilder.setContentText(output.get(0).getTitle());
         mBuilder.setStyle(bigText);
 
         mNotificationManager =

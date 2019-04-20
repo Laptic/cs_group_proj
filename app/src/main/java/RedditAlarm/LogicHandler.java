@@ -1,29 +1,23 @@
 package RedditAlarm;
 
 import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
-import android.widget.Toast;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
-
 import RedditAlarm.Models.RedditJSON;
 import RedditAlarm.Models.RedditPost;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.ALARM_SERVICE;
 
 public class LogicHandler
-        extends BroadcastReceiver            //problem here
+        extends BroadcastReceiver
         implements RedditCall.AsyncResponse, AlarmFragment.logicHandler {
     private UIClass ui;
     public String BASE_URL = "https://www.reddit.com/r/";
@@ -67,7 +61,7 @@ public class LogicHandler
             RedditClient apiService =
                     retrofitCall.create(RedditClient.class);
             String subreddit = this.alarmExec.url;
-            Call<RedditJSON> retroCall = apiService.getRedditPosts(subreddit, NUM_POSTS);
+            Call<RedditJSON> retroCall = apiService.getRedditPosts(subreddit);
             RedditCall redditCall = new RedditCall();
             redditCall.delegate = this;
             redditCall.contextIn = context;
@@ -89,7 +83,6 @@ public class LogicHandler
     public void addAlarm(Alarm alarmIn) {
         database.addAlarm(alarmIn);
         systemAddAlarm(alarmIn);
-
     }
     public void systemAddAlarm(Alarm alarmIn) {
         alarmList = database.getAllAlarm();
@@ -126,6 +119,10 @@ public class LogicHandler
 
     public void deleteAlarm(Alarm alarmIn) {
         database.deleteAlarm(alarmIn);
+        deleteSystemAlarm(alarmIn);
+    }
+
+    public void deleteSystemAlarm(Alarm alarmIn) {
         Intent intent = new Intent(ui, LogicHandler.class);
         PendingIntent sender =
                 PendingIntent.getBroadcast(ui.getApplicationContext(),
