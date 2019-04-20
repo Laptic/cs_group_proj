@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import RedditAlarm.Models.RedditJSON;
 import RedditAlarm.Models.RedditPost;
@@ -29,6 +30,7 @@ public class LogicHandler
     public int NUM_POSTS = 3;
     private DatabaseHandler database;
     List<Alarm> alarmList;
+    Alarm alarmExec;
 
 
     public LogicHandler() {
@@ -40,7 +42,6 @@ public class LogicHandler
     public void onReceive(Context context,
                           Intent intent) {
         Calendar time = Calendar.getInstance();
-
         // alarm is triggered at time set, so compares trigger times with current time
         int hourTemp = time.get(Calendar.HOUR_OF_DAY);
         int minuteTemp = time.get(Calendar.MINUTE);
@@ -50,23 +51,22 @@ public class LogicHandler
         objects can't be used in alarm manager, perhaps storing id of next
         one to execute in preferences? -bchesnut*/
         alarmList = database.getAllAlarm();
-        Alarm executeAlarm = null;
         for (int i=0; i < alarmList.size(); i++ ) {
             Alarm temp = alarmList.get(i);
             if ((temp.hour == hourTemp) && (temp.minute == minuteTemp)) {
-                executeAlarm = temp;
+                this.alarmExec = temp;
                 break;
             }
         }
         processFinish(null, context);
-        if (executeAlarm != null) {
+        if (this.alarmExec != null) {
             Retrofit retrofitCall = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             RedditClient apiService =
                     retrofitCall.create(RedditClient.class);
-            String subreddit = executeAlarm.url;
+            String subreddit = this.alarmExec.url;
             Call<RedditJSON> retroCall = apiService.getRedditPosts(subreddit, NUM_POSTS);
             RedditCall redditCall = new RedditCall();
             redditCall.delegate = this;
@@ -88,20 +88,24 @@ public class LogicHandler
     @Override
     public void addAlarm(Alarm alarmIn) {
         database.addAlarm(alarmIn);
+        systemAddAlarm(alarmIn);
+
+    }
+    public void systemAddAlarm(Alarm alarmIn) {
         alarmList = database.getAllAlarm();
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.setTimeZone(TimeZone.getDefault());
 
         if ((Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= alarmIn.hour) &&
                 (Calendar.getInstance().get(Calendar.MINUTE) >= alarmIn.minute)) {
             calendar.add(Calendar.DAY_OF_YEAR, 1); // add, not set!
         }
-
-        calendar.set(Calendar.HOUR_OF_DAY, 9);
-        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, alarmIn.hour);
+        calendar.set(Calendar.MINUTE, alarmIn.minute);
         calendar.set(Calendar.SECOND, 0);
-
         // gets alarm manager instance from system
+
         AlarmManager alarmMan =
                 (AlarmManager) ui
                         .getApplicationContext()
@@ -115,8 +119,9 @@ public class LogicHandler
             need to update for cases where it doesn't repeat
         */
 
-        alarmMan.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY, pendIntent);
+        alarmMan.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                //AlarmManager.INTERVAL_DAY,
+                pendIntent);
     }
 
     public void deleteAlarm(Alarm alarmIn) {
@@ -139,7 +144,7 @@ public class LogicHandler
 
     public void processFinish(List<RedditPost> output, Context conIn) {
         Notifications noti = new Notifications();
-        noti.newNotification(conIn, new Alarm(), output); // will need to put something into the alarm or make another parameter
+        noti.newNotification(conIn, alarmExec, output); // will need to put something into the alarm or make another parameter
                                                   // for newNotification -Ryan
     }
 }
