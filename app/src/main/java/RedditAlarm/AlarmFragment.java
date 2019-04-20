@@ -94,6 +94,11 @@ public class AlarmFragment extends Fragment {
 
         ToggleButton toggle_Sun = (ToggleButton) view.findViewById(R.id.toggle_sun);
 
+
+        //
+
+
+
         //create an array that contains the strings representing HOURS
         ArrayAdapter<CharSequence> adapterHr =
                 ArrayAdapter.createFromResource(getActivity().getApplicationContext(),
