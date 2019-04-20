@@ -44,10 +44,10 @@ class Alarm {
     // returns hour/minute alarm val in miliseconds
     long getMiliTime() {
         if (PM) {
-            return (minute * 60 * 100 ) + (hour * 60 * 60 * 100) + (12 * 60 * 60 * 100);
+            return (minute * 60 * 1000 ) + (hour * 60 * 60 * 1000) + (12 * 60 * 60 * 1000);
         }
         else {
-            return (minute * 60 * 100 ) + (hour * 60 * 60 * 100);
+            return (minute * 60 * 1000 ) + (hour * 60 * 60 * 1000);
         }
     }
 

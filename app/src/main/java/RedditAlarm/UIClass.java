@@ -25,8 +25,8 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.passAlar
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //super.onCreate(savedInstanceState);
-        //setContentView(R.layout.base_layout);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.base_layout);
         
         // call used for testing, dont push without this until notifications are done
         Notifications noti = new Notifications();

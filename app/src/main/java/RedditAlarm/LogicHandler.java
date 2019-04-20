@@ -91,9 +91,10 @@ public class LogicHandler
         /* sets alarm to repeat every day at set time,
             need to update for cases where it doesn't repeat
         */
-        alarmMan.setRepeating(AlarmManager.RTC,
+        System.out.println(alarmIn.getMiliTime());
+        alarmMan.setExact(AlarmManager.RTC,
                 alarmIn.getMiliTime(),
-                AlarmManager.INTERVAL_DAY,
+                //AlarmManager.INTERVAL_DAY,
                 pendIntent);
 
     }
@@ -103,6 +104,4 @@ public class LogicHandler
         noti.newNotification(conIn, new Alarm()); // will need to put something into the alarm or make another parameter
                                                   // for newNotification -Ryan
     }
-
-
 }
