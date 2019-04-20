@@ -30,7 +30,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String CREATE_ALARMS_TABLE = "CREATE TABLE " + TABLE_ALARMS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                 + KEY_TIMESTAMP + " TEXT," + KEY_DAYS + " TEXT," + KEY_URL
-                + " TEXT," + KEY_STATUS + " INTEGER," + KEY_AM_PM + " BOOLEAN" + ")";
+                + " TEXT," + KEY_STATUS + " BOOLEAN," + KEY_AM_PM + " BOOLEAN" + ")";
         db.execSQL(CREATE_ALARMS_TABLE);
     }
 
@@ -43,6 +43,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALARMS);
 
         // Create tables again
+        onCreate(db);
+
+    }
+    public void dropTables() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALARMS);
         onCreate(db);
     }
 
@@ -81,7 +87,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 tempAlarm.setTime(cursor.getString(2));
                 tempAlarm.setDays(cursor.getString(3));
                 tempAlarm.url = cursor.getString(4);
-                tempAlarm.status = Integer.parseInt(cursor.getString(5));
+                tempAlarm.status = Boolean.getBoolean(cursor.getString(5));
                 tempAlarm.PM = Boolean.getBoolean(cursor.getString(6));
                 // Adding contact to list
                 alarmList.add(tempAlarm);
