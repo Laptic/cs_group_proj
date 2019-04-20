@@ -348,7 +348,7 @@ public class AlarmFragment extends Fragment {
         //the url is inputted now
         EditText urlText = (EditText) view.findViewById(R.id.url_text);
         //check if its empty
-        alarm.url = urlText.getText().toString();
+        url = urlText.getText().toString();
 
 
         //
@@ -480,7 +480,7 @@ public class AlarmFragment extends Fragment {
         this.alarm.hour = hour;
         this.alarm.minute = minute;
         this.alarm.PM = PM;
-
+        this.alarm.url = url;
         this.alarm.daysOfWeek = dayBools;
         this.logic.addAlarm(this.alarm);
         this.mainRef.addToList(this.alarm);
