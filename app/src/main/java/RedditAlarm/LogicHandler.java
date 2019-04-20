@@ -140,7 +140,6 @@ public class LogicHandler
 
     public void editAlarm(Alarm alarmIn) {
         database.updateAlarm(alarmIn);
-        systemAddAlarm(alarmIn);
     }
 
     public void processFinish(List<RedditPost> output, Context conIn) {
