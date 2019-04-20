@@ -3,7 +3,7 @@ package RedditAlarm;
 class Alarm {
     int id;
     String name = "news";
-    String url;
+    String url = "news";
     boolean[] daysOfWeek;
     int hour = 12;
     int minute = 0;
