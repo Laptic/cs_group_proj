@@ -72,7 +72,7 @@ public class AlarmFragment extends Fragment {
         //create an array that contains the strings representing HOURS
         ArrayAdapter<CharSequence> adapterHr =
                 ArrayAdapter.createFromResource(getActivity().getApplicationContext(),
-                R.array.hours,android.R.layout.simple_spinner_item);
+                        R.array.hours,android.R.layout.simple_spinner_item);
         //allows the spinner object to show all the different values through a drop down list
         adapterHr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //populates the spinner list with values
@@ -87,7 +87,7 @@ public class AlarmFragment extends Fragment {
                 //of the item that the user picked
                 String text = parent.getItemAtPosition(position).toString();
 
-                alarm.hour = Integer.parseInt(text);
+                hour = Integer.parseInt(text);
             }
 
             @Override
@@ -101,7 +101,7 @@ public class AlarmFragment extends Fragment {
         //create an array that contains the strings representing MINUTES
         ArrayAdapter<CharSequence> adapterMin =
                 ArrayAdapter.createFromResource(getActivity().getApplicationContext(),
-                R.array.minutes,android.R.layout.simple_spinner_item);
+                        R.array.minutes,android.R.layout.simple_spinner_item);
 
         //allows the spinner object to show all the different values through a drop down list
         adapterMin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -114,7 +114,7 @@ public class AlarmFragment extends Fragment {
 
                 String text = parent.getItemAtPosition(position).toString();
 
-                alarm.minute = Integer.parseInt(text);
+                minute = Integer.parseInt(text);
             }
 
             @Override
@@ -140,11 +140,20 @@ public class AlarmFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
+
+
                 if (text.equals("pm")) {
                     PM = true;
+
+                    if(hour == 12) {
+                        return;
+                    }
+                    hour = hour + 12;
                 }
 
-                alarm.ampm = text;
+                else {
+                    PM = false;
+                }
 
             }
 
@@ -317,12 +326,17 @@ public class AlarmFragment extends Fragment {
             minute = this.alarm.minute;
             hour = this.alarm.hour;
             dayBools = this.alarm.daysOfWeek;
+
         }
 
     }
 
     public void finish(View view) {
+
+        this.alarm.hour = hour;
+        this.alarm.minute = minute;
         this.alarm.PM = this.PM;
+
         this.alarm.daysOfWeek = dayBools;
         this.logic.addAlarm(this.alarm);
         this.mainRef.addToList(this.alarm);
