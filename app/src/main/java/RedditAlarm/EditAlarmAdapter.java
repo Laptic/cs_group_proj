@@ -1,21 +1,19 @@
 package RedditAlarm;
 
 import android.content.Context;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
-import java.util.Arrays;
 import java.util.List;
 
 public class EditAlarmAdapter extends AlarmAdapter {
 
+    // declares the list of alarms
     private List<Alarm> alarmList;
+
+    // declares the logic handler
     public LogicHandler logicReference;
 
     public EditAlarmAdapter(Context c, List<Alarm> al) {
@@ -35,8 +33,8 @@ public class EditAlarmAdapter extends AlarmAdapter {
         TextView daysTextView = v.findViewById(R.id.daysTextView2);
         Switch alarmSwitch = v.findViewById(R.id.alarmSwitch2);
         ImageView removeImageView = v.findViewById(R.id.removeImageView);
-        //final ListView alarmListView = v.findViewById(R.id.alarmListView);
 
+        // sets the image view to the minus image
         removeImageView.setImageResource(R.drawable.minus);
 
         // removes the alarm if the remove image view is clicked
@@ -47,8 +45,6 @@ public class EditAlarmAdapter extends AlarmAdapter {
                 logicReference.deleteAlarm(temp);
                 alarmList.remove(alarmNumber);
                 notifyDataSetChanged();
-
-
             }
         });
 
@@ -67,12 +63,12 @@ public class EditAlarmAdapter extends AlarmAdapter {
             timeText = alarmViewed.hour + ":" + alarmViewed.minute;
         }
 
-        if (alarmViewed.PM) {
-            timeText += " PM";
-        }
-        else {
-            timeText += " AM";
-        }
+        //if (alarmViewed.PM) {
+            //timeText += " PM";
+        //}
+        //else {
+            //timeText += " AM";
+        //}
 
         timeTextView.setText(timeText);
 

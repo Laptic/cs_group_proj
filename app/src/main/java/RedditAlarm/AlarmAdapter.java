@@ -67,12 +67,12 @@ public class AlarmAdapter extends BaseAdapter {
             timeText = alarmViewed.hour + ":" + alarmViewed.minute;
         }
 
-        if (alarmViewed.PM) {
-            timeText += " PM";
-        }
-        else {
-            timeText += " AM";
-        }
+        //if (alarmViewed.PM) {
+            //timeText += " PM";
+        //}
+        //else {
+            //timeText += " AM";
+        //}
 
         timeTextView.setText(timeText);
 
