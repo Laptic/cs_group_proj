@@ -25,7 +25,7 @@ public class AlarmFragment extends Fragment {
     Alarm alarm;
     int hour;
     int minute;
-
+    boolean PM = false;
     boolean[] dayBools;
     String url;
 
@@ -37,6 +37,10 @@ public class AlarmFragment extends Fragment {
 
     public AlarmFragment() {
         this.alarm = new Alarm();
+        this.dayBools = new boolean[7];
+        for (int i = 0; i < dayBools.length; i++) {
+            dayBools[i] = false;
+        }
     }
 
 
@@ -62,8 +66,6 @@ public class AlarmFragment extends Fragment {
                              Bundle savedInstanceState) {
         //populates the fragment with the layout of alarm_fragment, which is under res
         View view = inflater.inflate(R.layout.alarm_fragment, container,false);
-
-        alarm = new Alarm();
 
         //Create an object for the spinner box HOUR
         Spinner spinner_hour = view.findViewById(R.id.spinner_hour);
@@ -138,6 +140,9 @@ public class AlarmFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = parent.getItemAtPosition(position).toString();
+                if (text.equals("pm")) {
+                    PM = true;
+                }
 
 
             }
@@ -310,13 +315,14 @@ public class AlarmFragment extends Fragment {
         if (!this.alarm.defaultVal) {
             minute = this.alarm.minute;
             hour = this.alarm.hour;
-
             dayBools = this.alarm.daysOfWeek;
         }
 
     }
 
     public void finish(View view) {
+        this.alarm.PM = this.PM;
+        this.alarm.daysOfWeek = dayBools;
         this.logic.addAlarm(this.alarm);
         this.mainRef.addToList(this.alarm);
         this.ui.killAlarmEdit(this);

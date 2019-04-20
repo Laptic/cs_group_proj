@@ -7,6 +7,7 @@ class Alarm {
     boolean[] daysOfWeek;
     int hour = 12;
     int minute = 0;
+    boolean PM = false;
     int status = 0;
     boolean defaultVal = true;
 
@@ -42,7 +43,12 @@ class Alarm {
 
     // returns hour/minute alarm val in miliseconds
     long getMiliTime() {
-        return (minute * 60 * 100 ) + (hour * 60 * 60 * 100);
+        if (PM) {
+            return (minute * 60 * 100 ) + (hour * 60 * 60 * 100) + (12 * 60 * 60 * 100);
+        }
+        else {
+            return (minute * 60 * 100 ) + (hour * 60 * 60 * 100);
+        }
     }
 
     // parses database entry for hour min value

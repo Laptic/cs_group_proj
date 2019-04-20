@@ -82,12 +82,12 @@ public class LogicHandler
         database.addAlarm(alarmIn);
         alarmList = database.getAllAlarm();
         // gets alarm manager instance from system
-        AlarmManager alarmMan = (AlarmManager) ui.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmMan = (AlarmManager) ui.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         // says which class to use when alarms triggered and passes context
         Intent intent = new Intent(ui, LogicHandler.class);
         PendingIntent pendIntent =
                 PendingIntent.getBroadcast(
-                        ui,0, intent,0);
+                        ui.getApplicationContext(),0, intent,0);
         /* sets alarm to repeat every day at set time,
             need to update for cases where it doesn't repeat
         */
