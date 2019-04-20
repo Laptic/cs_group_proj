@@ -19,6 +19,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.content.Context.ALARM_SERVICE;
+
 public class LogicHandler
         extends BroadcastReceiver            //problem here
         implements RedditCall.AsyncResponse, AlarmFragment.logicHandler {
@@ -57,7 +59,7 @@ public class LogicHandler
             }
         }
         processFinish(null, context);
-        /*if (executeAlarm != null) {
+        if (executeAlarm != null) {
             Retrofit retrofitCall = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
@@ -71,7 +73,7 @@ public class LogicHandler
             redditCall.contextIn = context;
             redditCall.execute(retroCall);
         }
-        */
+
     }
 
     public LogicHandler(UIClass uiReference) {
@@ -87,22 +89,52 @@ public class LogicHandler
     public void addAlarm(Alarm alarmIn) {
         database.addAlarm(alarmIn);
         alarmList = database.getAllAlarm();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        if ((Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= alarmIn.hour) &&
+                (Calendar.getInstance().get(Calendar.MINUTE) >= alarmIn.minute)) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1); // add, not set!
+        }
+
+        calendar.set(Calendar.HOUR_OF_DAY, 9);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
         // gets alarm manager instance from system
-        AlarmManager alarmMan = (AlarmManager) ui.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmMan =
+                (AlarmManager) ui
+                        .getApplicationContext()
+                        .getSystemService(ALARM_SERVICE);
         // says which class to use when alarms triggered and passes context
         Intent intent = new Intent(ui, LogicHandler.class);
         PendingIntent pendIntent =
                 PendingIntent.getBroadcast(
-                        ui.getApplicationContext(),0, intent,0);
+                        ui.getApplicationContext(), alarmIn.id, intent,0);
         /* sets alarm to repeat every day at set time,
             need to update for cases where it doesn't repeat
         */
-        System.out.println(alarmIn.getMiliTime());
-        alarmMan.setExact(AlarmManager.RTC_WAKEUP,
-                alarmIn.getMiliTime(),
-                //AlarmManager.INTERVAL_DAY,
-                pendIntent);
 
+        alarmMan.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY, pendIntent);
+    }
+
+    public void deleteAlarm(Alarm alarmIn) {
+        database.deleteAlarm(alarmIn);
+        Intent intent = new Intent(ui, LogicHandler.class);
+        PendingIntent sender =
+                PendingIntent.getBroadcast(ui.getApplicationContext(),
+                        alarmIn.id,
+                        intent,
+                        0);
+        AlarmManager alarmManager = (AlarmManager) ui
+                .getApplicationContext()
+                .getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(sender);
+    }
+
+    public void editAlarm(Alarm alarmIn) {
+        database.updateAlarm(alarmIn);
     }
 
     public void processFinish(List<RedditPost> output, Context conIn) {

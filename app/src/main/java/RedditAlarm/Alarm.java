@@ -7,7 +7,9 @@ class Alarm {
     boolean[] daysOfWeek;
     int hour = 12;
     int minute = 0;
+    boolean PM = false;
     int status = 0;
+    boolean defaultVal = true;
     String ampm = "";
 
     Alarm() {
@@ -39,7 +41,7 @@ class Alarm {
         return hour + "," + minute;
     }
 
-    // returns hour/minute alarm val in miliseconds
+    // returns hour/minute alarm val in milliseconds
     long getMiliTime() {
         return (minute * 60 * 100 ) + (hour * 60 * 60 * 100);
     }

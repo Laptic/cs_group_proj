@@ -1,18 +1,12 @@
 package RedditAlarm;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.content.Context;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.support.v4.app.NotificationCompat;
-import android.content.Context;
-import android.view.View;
-
 import java.util.List;
-
 import RedditAlarm.Models.RedditPost;
 
 // NOTE: This class uses Notification.Builder, not Notification
@@ -29,7 +23,7 @@ public class Notifications {
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
 
-        bigText.bigText(output.get(0).getTitle());
+        //bigText.bigText(output.get(0).getTitle());
         bigText.setBigContentTitle("BigContentTitle for no url");
         bigText.setSummaryText("Good Morning NO URL");
 

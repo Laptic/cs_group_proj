@@ -2,6 +2,7 @@ package RedditAlarm;
 
 import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,6 +16,7 @@ import java.util.List;
 public class EditAlarmAdapter extends AlarmAdapter {
 
     private List<Alarm> alarmList;
+    public LogicHandler logicReference;
 
     public EditAlarmAdapter(Context c, List<Alarm> al) {
         super(c, al);
@@ -41,8 +43,12 @@ public class EditAlarmAdapter extends AlarmAdapter {
         removeImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Alarm temp = alarmList.get(alarmNumber);
+                logicReference.deleteAlarm(temp);
                 alarmList.remove(alarmNumber);
                 notifyDataSetChanged();
+
+
             }
         });
 
