@@ -130,14 +130,17 @@ public class MainMenuFragment extends Fragment{
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                            AlarmFragment addAlarmFrag = new AlarmFragment();
+                            AlarmFragment addAlarmFrag = ui.addAlarmFrag(thisMenu);
+                            //AlarmFragment addAlarmFrag = new AlarmFragment();
                             addAlarmFrag.populate(alarmList.get(position));
-                            ui.inflateAlarmFrag(addAlarmFrag);
+                            //ui.inflateAlarmFrag(addAlarmFrag);
+
                             // deletes the alarm
                             logicReference.deleteAlarm(alarmList.get(position));
                             alarmList.remove(position);
 
                             alarmList = sortList();
+
                         }
                     });
                 }

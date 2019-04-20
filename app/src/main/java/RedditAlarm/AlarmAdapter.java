@@ -56,23 +56,29 @@ public class AlarmAdapter extends BaseAdapter {
         Alarm alarmViewed = getItem(position);
 
         // declares the text of the time
-        String timeText;
+        String timeText = "";
 
         // sets the time of the alarm
-        if (alarmViewed.minute <= 10) {
-            timeText = (alarmViewed.hour + ":");
-            timeText += String.format("%02d",  alarmViewed.minute);
+        if (alarmViewed.hour > 12) {
+            timeText += (alarmViewed.hour - 12);
         }
         else {
-            timeText = alarmViewed.hour + ":" + alarmViewed.minute;
+            timeText += alarmViewed.hour;
         }
 
-        //if (alarmViewed.PM) {
-            //timeText += " PM";
-        //}
-        //else {
-            //timeText += " AM";
-        //}
+        if (alarmViewed.minute < 10) {
+            timeText += ":" + String.format("%02d",  alarmViewed.minute);
+        }
+        else {
+            timeText = ":" + alarmViewed.minute;
+        }
+
+        if (alarmViewed.PM) {
+            timeText += " PM";
+        }
+        else {
+            timeText += " AM";
+        }
 
         timeTextView.setText(timeText);
 
@@ -80,25 +86,25 @@ public class AlarmAdapter extends BaseAdapter {
         String daysText = "";
 
         if (alarmViewed.daysOfWeek[0]) {
-            daysText += "M ";
+            daysText += "SU ";
         }
         if (alarmViewed.daysOfWeek[1]) {
-            daysText += "T ";
+            daysText += "M ";
         }
         if (alarmViewed.daysOfWeek[2]) {
-            daysText += "W ";
+            daysText += "T ";
         }
         if (alarmViewed.daysOfWeek[3]) {
-            daysText += "TH ";
+            daysText += "W ";
         }
         if (alarmViewed.daysOfWeek[4]) {
-            daysText += "F ";
+            daysText += "TH ";
         }
         if (alarmViewed.daysOfWeek[5]) {
-            daysText += "SA ";
+            daysText += "F ";
         }
         if (alarmViewed.daysOfWeek[6]) {
-            daysText += "SU ";
+            daysText += "SA ";
         }
 
         daysTextView.setText(daysText);

@@ -82,9 +82,9 @@ public class AlarmFragment extends Fragment {
 
         String min_str = this.minute + "";
 
-        spinner_hour.setSelection(getIndex(spinner_hour,hour_str));
+        //spinner_hour.setSelection(getIndex(spinner_hour,hour_str));
 
-        spinner_minute.setSelection(getIndex(spinner_minute,min_str));
+        //spinner_minute.setSelection(getIndex(spinner_minute,min_str));
 
         String PM_str = "";
 
@@ -140,6 +140,8 @@ public class AlarmFragment extends Fragment {
         //populates the spinner list with values
         spinner_hour.setAdapter(adapterHr);
 
+        spinner_hour.setSelection(getIndex(spinner_hour,hour_str));
+
         //Does something when the user clicks on the spinner box for hours
         spinner_hour.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -168,6 +170,9 @@ public class AlarmFragment extends Fragment {
         adapterMin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //populates the spinner list with values
         spinner_minute.setAdapter(adapterMin);
+
+        spinner_minute.setSelection(getIndex(spinner_minute,min_str));
+
         //Does something when the user clicks on the spinner box for minutes
         spinner_minute.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -195,6 +200,7 @@ public class AlarmFragment extends Fragment {
         spinner_ampm.setAdapter(adapterAmPm);
 
 
+        spinner_ampm.setSelection(getIndex(spinner_ampm,PM_str));
         //Does something when the user clicks on the spinner box for AMPM
         spinner_ampm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -244,26 +250,11 @@ public class AlarmFragment extends Fragment {
 
                 if(isChecked) {
 
-                    dayBools[0] = true;
-                }
-
-                else {
-
-                    dayBools[0] = false;
-                }
-            }
-        });
-
-
-
-        toggle_Tues.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if(isChecked) {
                     dayBools[1] = true;
                 }
+
                 else {
+
                     dayBools[1] = false;
                 }
             }
@@ -271,7 +262,7 @@ public class AlarmFragment extends Fragment {
 
 
 
-        toggle_Weds.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        toggle_Tues.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
@@ -285,7 +276,8 @@ public class AlarmFragment extends Fragment {
         });
 
 
-        toggle_Thurs.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        toggle_Weds.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
@@ -299,7 +291,7 @@ public class AlarmFragment extends Fragment {
         });
 
 
-        toggle_Fri.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        toggle_Thurs.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
@@ -308,6 +300,20 @@ public class AlarmFragment extends Fragment {
                 }
                 else {
                     dayBools[4] = false;
+                }
+            }
+        });
+
+
+        toggle_Fri.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(isChecked) {
+                    dayBools[5] = true;
+                }
+                else {
+                    dayBools[5] = false;
 
                 }
             }
@@ -319,10 +325,10 @@ public class AlarmFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if(isChecked) {
-                    dayBools[5] = true;
+                    dayBools[6] = true;
                 }
                 else {
-                    dayBools[5] = false;
+                    dayBools[6] = false;
                 }
             }
         });
@@ -334,10 +340,10 @@ public class AlarmFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if(isChecked) {
-                    dayBools[6] = true;
+                    dayBools[0] = true;
                 }
                 else {
-                    dayBools[6] = false;
+                    dayBools[0] = false;
                 }
 
             }
@@ -382,7 +388,13 @@ public class AlarmFragment extends Fragment {
     public void populate(Alarm alarmIn) {
 
 
-      this.hour = alarmIn.hour;
+
+      if(alarmIn.hour  > 12) {
+          this.hour = alarmIn.hour - 12;
+      }
+      else {
+          this.hour = alarmIn.hour;
+      }
 
       this.minute = alarmIn.minute;
 
