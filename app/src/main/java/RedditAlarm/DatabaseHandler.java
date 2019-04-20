@@ -19,6 +19,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_NAME = "name";
     private static final String KEY_URL = "url";
     private static final String KEY_STATUS = "status";
+    private static final String KEY_AM_PM = "am_pm";
 
     DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,7 +30,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String CREATE_ALARMS_TABLE = "CREATE TABLE " + TABLE_ALARMS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                 + KEY_TIMESTAMP + " TEXT," + KEY_DAYS + " TEXT," + KEY_URL
-                + " TEXT," + KEY_STATUS + " INTEGER" + ")";
+                + " TEXT," + KEY_STATUS + " INTEGER," + KEY_AM_PM + " BOOLEAN" + ")";
         db.execSQL(CREATE_ALARMS_TABLE);
     }
 
@@ -54,7 +55,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_DAYS, alarmIn.strRepDays());
         values.put(KEY_URL, alarmIn.url);
         values.put(KEY_STATUS, alarmIn.status);
-
+        values.put(KEY_AM_PM, alarmIn.PM);
 
         // Inserting Row
         db.insert(TABLE_ALARMS, null, values);
@@ -81,6 +82,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 tempAlarm.setDays(cursor.getString(3));
                 tempAlarm.url = cursor.getString(4);
                 tempAlarm.status = Integer.parseInt(cursor.getString(5));
+                tempAlarm.PM = Boolean.getBoolean(cursor.getString(6));
                 // Adding contact to list
                 alarmList.add(tempAlarm);
             } while (cursor.moveToNext());
@@ -100,6 +102,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_DAYS, alarmIn.strRepDays());
         values.put(KEY_URL, alarmIn.url);
         values.put(KEY_STATUS, alarmIn.status);
+        values.put(KEY_AM_PM, alarmIn.PM);
 
         // updating row
         return db.update(TABLE_ALARMS, values, KEY_ID + " = ?",
