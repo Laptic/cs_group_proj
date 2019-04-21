@@ -296,7 +296,7 @@ public class AlarmFragment extends Fragment {
             }
         });
 
-
+//
         toggle_Thurs.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
