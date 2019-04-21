@@ -134,7 +134,7 @@ public class AlarmFragment extends Fragment {
 
         toggle_Sat.setChecked(dayBools[6]);
 
-
+//
 
         //create an array that contains the strings representing HOURS
         ArrayAdapter<CharSequence> adapterHr =
