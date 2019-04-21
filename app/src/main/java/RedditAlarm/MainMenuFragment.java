@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -127,6 +128,7 @@ public class MainMenuFragment extends Fragment{
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             AlarmFragment addAlarmFrag = ui.addAlarmFrag(thisMenu);
                             addAlarmFrag.populate(alarmList.get(position));
+                            addAlarmFrag.edit = true;
 
                             // deletes the alarm
                             //logicReference.editAlarm(alarmList.get(position));
@@ -155,8 +157,9 @@ public class MainMenuFragment extends Fragment{
 
     public void updateAdapter() {
         alarmList = (ArrayList<Alarm>) logicReference.alarmList;
-        AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList, logicReference);
-        alarmListView.setAdapter(alarmAdapter);
+        sortList();
+        AlarmAdapter newAdapt = new AlarmAdapter(getActivity(), alarmList, logicReference);
+        alarmListView.setAdapter(newAdapt);
     }
 
     /**

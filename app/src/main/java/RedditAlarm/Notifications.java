@@ -5,8 +5,10 @@ import android.content.Context;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Handler;
 import android.os.VibrationEffect;
 import android.support.v4.app.NotificationCompat;
 import java.util.List;
@@ -27,9 +29,6 @@ public class Notifications {
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
 
-        // For testing invalid subreddit info
-        //output = null;
-
         // start of alarm representation in notification
         String AMPM = "AM";
         if (alarm.PM) {
@@ -47,23 +46,25 @@ public class Notifications {
         bigText.setBigContentTitle("Alarm for: " + title);
         // end of alarm representation in notification
         Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+        v.vibrate(VibrationEffect.createOneShot(1100, VibrationEffect.DEFAULT_AMPLITUDE));
 
         bigText.setSummaryText("Good Morning");
-        mBuilder.setSound(Uri.parse("uri://sadfasdfasdf.mp3"));
+
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        final Ringtone r = RingtoneManager.getRingtone(context.getApplicationContext(), notification);
+        r.play();
 
         if (output != null) {
             mBuilder.setContentTitle("Here are your three headlines for today.");
             mBuilder.setContentText("Tap here for your Headlines.");
-            mBuilder.setStyle(bigText.bigText("1: " + output.get(0).getTitle() +
-                    ".\n2: " + output.get(1).getTitle() + ".\n3: " + output.get(2).getTitle() + "."));
+            mBuilder.setStyle(bigText.bigText("1: " + output.get(0).getTitle() + ".\nPosted by: " + output.get(0).getAuthor() + " at " + output.get(0).getScore() +
+                    " upvotes.\n2: " + output.get(1).getTitle() + ".\nPosted by: " + output.get(1).getAuthor() + " at " + output.get(1).getScore() +
+                    " upvotes.\n3: " + output.get(2).getTitle() + ".\nPosted by: " + output.get(2).getAuthor() + " at " + output.get(2).getScore() + " upvotes."));
         } else {
             mBuilder.setContentText("No/Invalid subreddit provided. No Headlines today.");
             mBuilder.setStyle(bigText);
         }
 
-        //Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        //mBuilder.setSound(alarmSound);
         mBuilder.setContentIntent(pendingIntent)
                 .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
         mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
@@ -74,12 +75,20 @@ public class Notifications {
         String channelId = "Your_channel_id";
         NotificationChannel channel = new NotificationChannel(channelId,
                 "Channel human readable title", NotificationManager.IMPORTANCE_HIGH);
-        mNotificationManager.createNotificationChannel(channel);   //.CreateNotificationChannel(channel);
+        mNotificationManager.createNotificationChannel(channel); 
         mBuilder.setChannelId(channelId);
 
 
         mNotificationManager.notify(0, mBuilder.build());
+
+        Runnable s = new Runnable() {
+            @Override
+            public void run(){
+                r.stop();
+            }
+        };
+
+        Handler h = new Handler();
+        h.postDelayed(s, 15000);
     }
 }
-
-

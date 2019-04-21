@@ -23,12 +23,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        getNextKey();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_ALARMS_TABLE = "CREATE TABLE " + TABLE_ALARMS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + " TEXT,"
                 + KEY_TIMESTAMP + " TEXT," + KEY_DAYS + " TEXT," + KEY_URL
                 + " TEXT," + KEY_STATUS + " TEXT," + KEY_AM_PM + " TEXT" + ")";
         db.execSQL(CREATE_ALARMS_TABLE);
@@ -42,8 +43,37 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALARMS);
 
+
+
         // Create tables again
         onCreate(db);
+
+    }
+
+    int getNextKey() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sqliteSeqTableName = "sqlite_sequence";
+        /*
+         * Relevant columns to retrieve from <code>sqliteSequenceTableName</code>
+         */
+        String[] columns = {"seq"};
+        String selection = "name=?";
+        String[] selectionArgs = { TABLE_ALARMS };
+
+        Cursor cursor = db.query(sqliteSeqTableName,
+                columns, selection, selectionArgs, null, null, null);
+
+        long autoIncrement = 0;
+
+        if (cursor.moveToFirst()) {
+            int indexSeq = cursor.getColumnIndex(columns[0]);
+            autoIncrement = cursor.getLong(indexSeq);
+        }
+
+        cursor.close();
+        db.close();
+        //return autoIncrement + 1;
+        return (int) autoIncrement + 1;
 
     }
 
@@ -124,9 +154,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String countQuery = "SELECT  * FROM " + TABLE_ALARMS;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
         cursor.close();
-
         // return count
-        return cursor.getCount();
+        return count;
     }
 }

@@ -8,8 +8,7 @@ class Alarm {
     int hour = 12;
     int minute = 0;
     boolean PM = false;
-    boolean status = false;
-    boolean defaultVal = true;
+    boolean status = true;
     String ampm = "";
 
     Alarm() {
@@ -70,6 +69,13 @@ class Alarm {
         for(int i = 0; i < days.length; i++) {
             daysOfWeek[i] = (days[i] == '1');
         }
+    }
+
+    int getHash() {
+        String hashStr = String.valueOf(hour) + String.valueOf(minute) + strRepDays();
+        long hashLong = Long.parseLong(hashStr);
+        int hashInt = (int) Math.sqrt(hashLong);
+        return hashInt;
     }
 
 }

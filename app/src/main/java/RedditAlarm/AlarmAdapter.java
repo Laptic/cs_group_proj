@@ -128,9 +128,11 @@ public class AlarmAdapter extends BaseAdapter {
             public void onCheckedChanged(CompoundButton cb, boolean on){
                 if (on) {
                     alarmViewed.status = true;
+
                 }
                 else {
                     alarmViewed.status = false;
+
                 }
 
                 logicHandler.editAlarm(alarmViewed);
