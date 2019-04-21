@@ -3,6 +3,7 @@ package RedditAlarm;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -14,11 +15,13 @@ public class EditAlarmAdapter extends AlarmAdapter {
     private List<Alarm> alarmList;
 
     // declares the logic handler
-    public LogicHandler logicReference;
+    public LogicHandler logicHandler;
 
-    public EditAlarmAdapter(Context c, List<Alarm> al) {
-        super(c, al);
+    // constructs the edit alarm adapter
+    public EditAlarmAdapter(Context c, List<Alarm> al, LogicHandler lh) {
+        super(c, al, lh);
         alarmList = al;
+        logicHandler = lh;
     }
 
     // generates the items in the list view
@@ -42,14 +45,14 @@ public class EditAlarmAdapter extends AlarmAdapter {
             @Override
             public void onClick(View v) {
                 Alarm temp = alarmList.get(alarmNumber);
-                logicReference.deleteAlarm(temp);
+                logicHandler.deleteAlarm(temp);
                 alarmList.remove(alarmNumber);
                 notifyDataSetChanged();
             }
         });
 
         // declares and initializes the current alarm
-        Alarm alarmViewed = getItem(position);
+        final Alarm alarmViewed = getItem(position);
 
         // declares the text of the time
         String timeText = "";
@@ -112,6 +115,21 @@ public class EditAlarmAdapter extends AlarmAdapter {
         else {
             alarmSwitch.setChecked(false);
         }
+
+        // sets the alarm on or off
+        alarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton cb, boolean on){
+                if (on) {
+                    alarmViewed.status = true;
+                }
+                else {
+                    alarmViewed.status = false;
+                }
+
+                logicHandler.editAlarm(alarmViewed);
+            }
+        });
 
         return v;
     }

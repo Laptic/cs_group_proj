@@ -76,7 +76,7 @@ public class LogicHandler
     public LogicHandler(UIClass uiReference) {
         this.ui = uiReference;
         database = new DatabaseHandler(ui);
-        database.dropTables();
+        //database.dropTables();
         /* builds database from UI's context, populates a list of alarms with
             alarms created from database entries */
         alarmList = database.getAllAlarm();
