@@ -150,7 +150,7 @@ public class LogicHandler
                 if (Calendar.getInstance().get(hourOfCurDay) >= alarmIn.hour) {
                     if (Calendar.getInstance().get(minOfCurDay) >= alarmIn.minute) {
                         int num = numDaysToEx(alarmIn);
-                        calendar.add(hourOfCurDay, num);
+                        calendar.add(Calendar.DAY_OF_YEAR, num);
                     }
                 }
             }
@@ -176,15 +176,23 @@ public class LogicHandler
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.setTimeZone(TimeZone.getDefault());
-        int index = 0;
-        int numAdded = 0;
+
+        // gets index representing tomorrow
+        int index = Calendar.DAY_OF_WEEK % 7;
+
+        int numAdded = 1;
+        // if index gets back to today, exits.
         while (index != Calendar.DAY_OF_WEEK - 1) {
+
+            // checks if the alarm can be set at day represented by index
             if (alarmIn.daysOfWeek[index]) {
                 break;
             }
             else {
+                // index and num added incremented
                 index ++;
                 numAdded++;
+                // if index == 7, loops back to 0
                 if (index > alarmIn.daysOfWeek.length -1) {
                     index = 0;
                 }
