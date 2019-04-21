@@ -30,7 +30,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String CREATE_ALARMS_TABLE = "CREATE TABLE " + TABLE_ALARMS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                 + KEY_TIMESTAMP + " TEXT," + KEY_DAYS + " TEXT," + KEY_URL
-                + " TEXT," + KEY_STATUS + " BOOLEAN," + KEY_AM_PM + " BOOLEAN" + ")";
+                + " TEXT," + KEY_STATUS + " TEXT," + KEY_AM_PM + " TEXT" + ")";
         db.execSQL(CREATE_ALARMS_TABLE);
     }
 
@@ -46,11 +46,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
 
     }
-    public void dropTables() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALARMS);
-        onCreate(db);
-    }
 
     void addAlarm(Alarm alarmIn) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -60,8 +55,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TIMESTAMP, alarmIn.getTimeStamp());
         values.put(KEY_DAYS, alarmIn.strRepDays());
         values.put(KEY_URL, alarmIn.url);
-        values.put(KEY_STATUS, alarmIn.status);
-        values.put(KEY_AM_PM, alarmIn.PM);
+        values.put(KEY_STATUS, String.valueOf(alarmIn.status));
+        values.put(KEY_AM_PM, String.valueOf(alarmIn.PM));
+        System.out.println(String.valueOf(alarmIn.PM));
 
         // Inserting Row
         db.insert(TABLE_ALARMS, null, values);
@@ -87,8 +83,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 tempAlarm.setTime(cursor.getString(2));
                 tempAlarm.setDays(cursor.getString(3));
                 tempAlarm.url = cursor.getString(4);
-                tempAlarm.status = Boolean.getBoolean(cursor.getString(5));
-                tempAlarm.PM = Boolean.getBoolean(cursor.getString(6));
+                tempAlarm.status = cursor.getString(5).equals("true");
+                tempAlarm.PM = cursor.getString(6).equals("true");
+
                 // Adding contact to list
                 alarmList.add(tempAlarm);
             } while (cursor.moveToNext());
@@ -107,8 +104,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TIMESTAMP, alarmIn.getTimeStamp());
         values.put(KEY_DAYS, alarmIn.strRepDays());
         values.put(KEY_URL, alarmIn.url);
-        values.put(KEY_STATUS, alarmIn.status);
-        values.put(KEY_AM_PM, alarmIn.PM);
+        values.put(KEY_STATUS, String.valueOf(alarmIn.status));
+        values.put(KEY_AM_PM, String.valueOf(alarmIn.PM));
 
         // updating row
         return db.update(TABLE_ALARMS, values, KEY_ID + " = ?",
