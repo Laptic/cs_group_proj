@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Handles the main menu of the alarm
@@ -128,8 +129,8 @@ public class MainMenuFragment extends Fragment{
                             addAlarmFrag.populate(alarmList.get(position));
 
                             // deletes the alarm
-                            logicReference.deleteAlarm(alarmList.get(position));
-                            alarmList.remove(position);
+                            //logicReference.editAlarm(alarmList.get(position));
+                            //alarmList.remove(position);
 
                             alarmList = sortList();
                         }
@@ -152,11 +153,8 @@ public class MainMenuFragment extends Fragment{
         mListener = null;
     }
 
-    public void addToList(Alarm alarmIn) {
-        // adds the alarm into the alarm list
-        alarmList.add(alarmIn);
-
-        // uses the alarm adapter class to modify the alarm list view
+    public void updateAdapter() {
+        alarmList = (ArrayList<Alarm>) logicReference.alarmList;
         AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList, logicReference);
         alarmListView.setAdapter(alarmAdapter);
     }
