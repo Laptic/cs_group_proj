@@ -86,6 +86,7 @@ public class LogicHandler
         System.out.println("AddAlarm " + alarmIn.id);
         database.addAlarm(alarmIn);
         systemAddAlarm(alarmIn);
+        alarmList = database.getAllAlarm();
     }
     public void systemAddAlarm(Alarm alarmIn) {
         if (context == null) {
@@ -116,6 +117,7 @@ public class LogicHandler
     public void deleteAlarm(Alarm alarmIn) {
         database.deleteAlarm(alarmIn);
         deleteSystemAlarm(alarmIn);
+        alarmList = database.getAllAlarm();
     }
 
     public void deleteSystemAlarm(Alarm alarmIn) {
