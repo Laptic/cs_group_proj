@@ -128,6 +128,7 @@ public class MainMenuFragment extends Fragment{
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             AlarmFragment addAlarmFrag = ui.addAlarmFrag(thisMenu);
                             addAlarmFrag.populate(alarmList.get(position));
+                            addAlarmFrag.edit = true;
 
                             // deletes the alarm
                             //logicReference.editAlarm(alarmList.get(position));

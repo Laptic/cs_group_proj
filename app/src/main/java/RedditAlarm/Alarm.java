@@ -71,4 +71,11 @@ class Alarm {
         }
     }
 
+    int getHash() {
+        String hashStr = String.valueOf(hour) + String.valueOf(minute) + strRepDays();
+        long hashLong = Long.parseLong(hashStr);
+        int hashInt = (int) Math.sqrt(hashLong);
+        return hashInt;
+    }
+
 }

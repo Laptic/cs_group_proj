@@ -24,7 +24,7 @@ public class LogicHandler
     private UIClass ui;
     public String BASE_URL = "https://www.reddit.com/r/";
     public int NUM_POSTS = 3;
-    private DatabaseHandler database;
+    public DatabaseHandler database;
     List<Alarm> alarmList;
     Alarm alarmExec;
     Context context;
@@ -83,6 +83,7 @@ public class LogicHandler
 
     @Override
     public void addAlarm(Alarm alarmIn) {
+        System.out.println("AddAlarm " + alarmIn.id);
         database.addAlarm(alarmIn);
         systemAddAlarm(alarmIn);
     }
@@ -98,6 +99,8 @@ public class LogicHandler
                         context.getSystemService(ALARM_SERVICE);
         // says which class to use when alarms triggered and passes context
         Intent intent = new Intent(context, LogicHandler.class);
+
+        System.out.println("Add " + alarmIn.id);
         PendingIntent pendIntent =
                 PendingIntent.getBroadcast(
                         context, alarmIn.id, intent,0);
@@ -108,8 +111,6 @@ public class LogicHandler
         alarmMan.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 //AlarmManager.INTERVAL_DAY,
                 pendIntent);
-        alarmIn.status = true;
-        editAlarm(alarmIn);
     }
 
     public void deleteAlarm(Alarm alarmIn) {
@@ -118,17 +119,15 @@ public class LogicHandler
     }
 
     public void deleteSystemAlarm(Alarm alarmIn) {
-        Intent intent = new Intent(ui, LogicHandler.class);
+        Intent intent = new Intent(ui.getApplicationContext(), LogicHandler.class);
         PendingIntent sender =
                 PendingIntent.getBroadcast(ui.getApplicationContext(),
                         alarmIn.id,
                         intent,
                         0);
         AlarmManager alarmManager = (AlarmManager) ui
-                .getApplicationContext()
                 .getSystemService(ALARM_SERVICE);
         alarmManager.cancel(sender);
-        editAlarm(alarmIn);
     }
 
     public Calendar getNextTime(Alarm alarmIn) {
@@ -191,6 +190,12 @@ public class LogicHandler
 
     public void editAlarm(Alarm alarmIn) {
         database.updateAlarm(alarmIn);
+        if (alarmIn.status) {
+            systemAddAlarm(alarmIn);
+        }
+        else {
+            deleteSystemAlarm(alarmIn);
+        }
         alarmList = database.getAllAlarm();
     }
 

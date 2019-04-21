@@ -23,6 +23,7 @@ import android.widget.ToggleButton;
 
 public class AlarmFragment extends Fragment {
     Alarm alarm;
+    int id;
     int hour;
     int minute;
     boolean PM = false;
@@ -30,7 +31,7 @@ public class AlarmFragment extends Fragment {
     String url;
     boolean edit = false;
 
-    logicHandler logic;
+    LogicHandler logic;
     UIClass ui;
     MainMenuFragment mainRef;
 
@@ -397,20 +398,19 @@ public class AlarmFragment extends Fragment {
     //Not sure what to do with this anymore, ask ben
     public void populate(Alarm alarmIn) {
 
+        this.id = alarmIn.id;
+        if(alarmIn.hour  > 12) {
+            this.hour = alarmIn.hour - 12;
+        }
+        else {
+            this.hour = alarmIn.hour;
+        }
 
+        this.minute = alarmIn.minute;
 
-      if(alarmIn.hour  > 12) {
-          this.hour = alarmIn.hour - 12;
-      }
-      else {
-          this.hour = alarmIn.hour;
-      }
+        this.PM = alarmIn.PM;
 
-      this.minute = alarmIn.minute;
-
-      this.PM = alarmIn.PM;
-
-      this.url = alarmIn.url;
+        this.url = alarmIn.url;
 
 /*
       spinner_min.setSelection(getIndex(spinner_amPm,amPm));
@@ -504,6 +504,7 @@ public class AlarmFragment extends Fragment {
             this.alarm.PM = PM;
             this.alarm.url = url;
             this.alarm.daysOfWeek = dayBools;
+            this.alarm.id = id;
             this.logic.editAlarm(alarm);
             this.mainRef.updateAdapter();
             this.ui.killAlarmEdit(this);
@@ -514,6 +515,7 @@ public class AlarmFragment extends Fragment {
             this.alarm.PM = PM;
             this.alarm.url = url;
             this.alarm.daysOfWeek = dayBools;
+            this.alarm.id = logic.database.getAlarmCount() + 1;
             this.logic.addAlarm(alarm);
             this.mainRef.updateAdapter();
             this.ui.killAlarmEdit(this);
