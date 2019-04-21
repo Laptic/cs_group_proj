@@ -46,7 +46,7 @@ public class EditAlarmAdapter extends AlarmAdapter {
             public void onClick(View v) {
                 Alarm temp = alarmList.get(alarmNumber);
                 logicHandler.deleteAlarm(temp);
-                alarmList = logicHandler.alarmList;
+                alarmList.remove(alarmNumber);
                 notifyDataSetChanged();
             }
         });

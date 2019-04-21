@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -155,8 +156,9 @@ public class MainMenuFragment extends Fragment{
 
     public void updateAdapter() {
         alarmList = (ArrayList<Alarm>) logicReference.alarmList;
-        AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList, logicReference);
-        alarmListView.setAdapter(alarmAdapter);
+        sortList();
+        AlarmAdapter newAdapt = new AlarmAdapter(getActivity(), alarmList, logicReference);
+        alarmListView.setAdapter(newAdapt);
     }
 
     /**

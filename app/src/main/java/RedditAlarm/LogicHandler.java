@@ -128,7 +128,6 @@ public class LogicHandler
                 .getApplicationContext()
                 .getSystemService(ALARM_SERVICE);
         alarmManager.cancel(sender);
-        alarmIn.status = false;
         editAlarm(alarmIn);
     }
 

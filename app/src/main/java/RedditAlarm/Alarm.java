@@ -8,8 +8,7 @@ class Alarm {
     int hour = 12;
     int minute = 0;
     boolean PM = false;
-    boolean status = false;
-    boolean defaultVal = true;
+    boolean status = true;
     String ampm = "";
 
     Alarm() {
