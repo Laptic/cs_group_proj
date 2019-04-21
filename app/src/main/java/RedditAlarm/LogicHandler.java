@@ -83,8 +83,9 @@ public class LogicHandler
 
     @Override
     public void addAlarm(Alarm alarmIn) {
-        System.out.println("AddAlarm " + alarmIn.id);
+        //System.out.println("AddAlarm " + alarmIn.id);
         database.addAlarm(alarmIn);
+        System.out.println(alarmIn.id);
         systemAddAlarm(alarmIn);
         alarmList = database.getAllAlarm();
     }
@@ -92,7 +93,7 @@ public class LogicHandler
         if (context == null) {
             this.context = ui.getApplicationContext();
         }
-        alarmList = database.getAllAlarm();
+
         // gets alarm manager instance from system
         Calendar calendar = getNextTime(alarmIn);
         AlarmManager alarmMan =
@@ -110,13 +111,13 @@ public class LogicHandler
         */
 
         alarmMan.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                //AlarmManager.INTERVAL_DAY,
                 pendIntent);
+        alarmList = database.getAllAlarm();
     }
 
     public void deleteAlarm(Alarm alarmIn) {
-        database.deleteAlarm(alarmIn);
         deleteSystemAlarm(alarmIn);
+        database.deleteAlarm(alarmIn);
         alarmList = database.getAllAlarm();
     }
 
@@ -199,6 +200,9 @@ public class LogicHandler
             deleteSystemAlarm(alarmIn);
         }
         alarmList = database.getAllAlarm();
+    }
+    public int getKey() {
+        return database.getNextKey();
     }
 
     public void processFinish(List<RedditPost> output, Context conIn) {

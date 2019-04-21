@@ -515,7 +515,7 @@ public class AlarmFragment extends Fragment {
             this.alarm.PM = PM;
             this.alarm.url = url;
             this.alarm.daysOfWeek = dayBools;
-            this.alarm.id = logic.database.getAlarmCount() + 1;
+            this.alarm.id = logic.getKey();
             this.logic.addAlarm(alarm);
             this.mainRef.updateAdapter();
             this.ui.killAlarmEdit(this);
