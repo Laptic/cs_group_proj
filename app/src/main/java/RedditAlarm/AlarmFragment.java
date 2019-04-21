@@ -296,7 +296,7 @@ public class AlarmFragment extends Fragment {
             }
         });
 
-
+//
         toggle_Thurs.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -357,13 +357,15 @@ public class AlarmFragment extends Fragment {
 
         final EditText urlText = (EditText) view.findViewById(R.id.url_text);
 
+        urlText.setText(url);
+
         Button url_button = (Button) view.findViewById(R.id.url_button);
 
         url_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-               url = urlText.getText().toString();
+                url = urlText.getText().toString();
 
             }
         });
@@ -414,29 +416,22 @@ public class AlarmFragment extends Fragment {
 
 /*
       spinner_min.setSelection(getIndex(spinner_amPm,amPm));
-
       ToggleButton sun = getView().findViewById(R.id.toggle_sun);
-
       ToggleButton mon = getView().findViewById(R.id.toggle_mon);
-
       ToggleButton tue = getView().findViewById(R.id.toggle_tues);
-
       ToggleButton wed = getView().findViewById(R.id.toggle_wed);
-
       ToggleButton thur = getView().findViewById(R.id.toggle_thurs);
-
       ToggleButton fri = getView().findViewById(R.id.toggle_fri);
-
       ToggleButton sat = getView().findViewById(R.id.toggle_sat);
 */
 
 
-      if(alarmIn.daysOfWeek[0]) {
-          dayBools[0] = true;
-      }
-      else {
-          dayBools[0] = false;
-      }
+        if(alarmIn.daysOfWeek[0]) {
+            dayBools[0] = true;
+        }
+        else {
+            dayBools[0] = false;
+        }
 
         if(alarmIn.daysOfWeek[1]) {
             dayBools[1] = true;
