@@ -23,7 +23,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        getNextKey();
+
+        //TODO: RUN ONCE WITH DROPTABLES THEN REMOVE LINE
+        dropTable();
     }
 
     @Override
@@ -48,6 +50,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Create tables again
         onCreate(db);
 
+    }
+
+    void dropTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Drop older table if existed
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALARMS);
+
+
+
+        // Create tables again
+        onCreate(db);
+        db.close();
     }
 
     int getNextKey() {
