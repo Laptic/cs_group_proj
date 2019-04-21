@@ -374,6 +374,7 @@ public class AlarmFragment extends Fragment {
         create_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                url = urlText.getText().toString();
                 finish(view);
             }
         });
@@ -385,7 +386,6 @@ public class AlarmFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                url = urlText.getText().toString();
                 finish_back(view);
 
             }

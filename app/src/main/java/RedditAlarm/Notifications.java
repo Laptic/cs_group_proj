@@ -75,7 +75,7 @@ public class Notifications {
         String channelId = "Your_channel_id";
         NotificationChannel channel = new NotificationChannel(channelId,
                 "Channel human readable title", NotificationManager.IMPORTANCE_HIGH);
-        mNotificationManager.createNotificationChannel(channel); 
+        mNotificationManager.createNotificationChannel(channel);
         mBuilder.setChannelId(channelId);
 
 

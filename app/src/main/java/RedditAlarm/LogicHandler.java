@@ -221,6 +221,6 @@ public class LogicHandler
     public void processFinish(List<RedditPost> output, Context conIn) {
         Notifications noti = new Notifications();
         noti.newNotification(conIn, alarmExec, output); // will need to put something into the alarm or make another parameter
-                                                  // for newNotification -Ryan
+        // for newNotification -Ryan
     }
 }
