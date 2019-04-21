@@ -161,6 +161,12 @@ public class MainMenuFragment extends Fragment{
         AlarmAdapter newAdapt = new AlarmAdapter(getActivity(), alarmList, logicReference);
         alarmListView.setAdapter(newAdapt);
     }
+    public void updateEditAdapter() {
+        alarmList = (ArrayList<Alarm>) logicReference.alarmList;
+        sortList();
+        EditAlarmAdapter newAdapt = new EditAlarmAdapter(getActivity(), alarmList, logicReference);
+        alarmListView.setAdapter(newAdapt);
+    }
 
     /**
      * Allows the fragment to interact with activities

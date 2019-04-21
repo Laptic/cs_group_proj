@@ -500,7 +500,7 @@ public class AlarmFragment extends Fragment {
             this.alarm.daysOfWeek = dayBools;
             this.alarm.id = id;
             this.logic.editAlarm(alarm);
-            this.mainRef.updateAdapter();
+            this.mainRef.updateEditAdapter();
             this.ui.killAlarmEdit(this);
         }
         else {

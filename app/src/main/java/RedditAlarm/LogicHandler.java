@@ -5,8 +5,6 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -32,7 +30,6 @@ public class LogicHandler
 
     public LogicHandler() {
     }
-
 
     // run upon trigger by AlarmManager
     @Override
@@ -68,9 +65,10 @@ public class LogicHandler
             RedditCall redditCall = new RedditCall();
             redditCall.delegate = this;
             redditCall.contextIn = context;
+            systemAddAlarm(this.alarmExec);
             redditCall.execute(retroCall);
         }
-        systemAddAlarm(this.alarmExec);
+
     }
 
     public LogicHandler(UIClass uiReference) {
@@ -96,6 +94,7 @@ public class LogicHandler
 
         // gets alarm manager instance from system
         Calendar calendar = getNextTime(alarmIn);
+        System.out.println(calendar.getTime().toString());
         AlarmManager alarmMan =
                 (AlarmManager)
                         context.getSystemService(ALARM_SERVICE);
@@ -143,23 +142,26 @@ public class LogicHandler
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.setTimeZone(TimeZone.getDefault());
+        int currentDay = Calendar.DAY_OF_WEEK - 1;
+        int hourOfCurDay = Calendar.HOUR_OF_DAY;
+        int minOfCurDay = Calendar.MINUTE;
         if (someDays){
-            if(alarmIn.daysOfWeek[Calendar.DAY_OF_WEEK - 1]) {
-                if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= alarmIn.hour) {
-                    if (Calendar.getInstance().get(Calendar.MINUTE) >= alarmIn.minute) {
+            if(alarmIn.daysOfWeek[currentDay]) {
+                if (Calendar.getInstance().get(hourOfCurDay) >= alarmIn.hour) {
+                    if (Calendar.getInstance().get(minOfCurDay) >= alarmIn.minute) {
                         int num = numDaysToEx(alarmIn);
-                        calendar.add(Calendar.DAY_OF_YEAR, num);
+                        calendar.add(hourOfCurDay, num);
                     }
                 }
             }
             else {
                 int num = numDaysToEx(alarmIn);
-                calendar.add(Calendar.DAY_OF_YEAR, num); // add, not set!
+                calendar.add(Calendar.YEAR, num); // add, not set!
             }
         }
         else {
-            if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= alarmIn.hour) {
-                if (Calendar.getInstance().get(Calendar.MINUTE) >= alarmIn.minute) {
+            if (Calendar.getInstance().get(hourOfCurDay) >= alarmIn.hour) {
+                if (Calendar.getInstance().get(minOfCurDay) >= alarmIn.minute) {
                     calendar.add(Calendar.DAY_OF_YEAR, 1);
                 }
             }
