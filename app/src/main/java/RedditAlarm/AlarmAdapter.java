@@ -70,7 +70,7 @@ public class AlarmAdapter extends BaseAdapter {
             timeText += ":" + String.format("%02d",  alarmViewed.minute);
         }
         else {
-            timeText = ":" + alarmViewed.minute;
+            timeText += ":" + alarmViewed.minute;
         }
 
         if (alarmViewed.PM) {
@@ -110,7 +110,7 @@ public class AlarmAdapter extends BaseAdapter {
         daysTextView.setText(daysText);
 
         // sets the alarm switch based on the status variable
-        if (getItem(position).status == true) {
+        if (alarmViewed.status) {
             alarmSwitch.setChecked(true);
         }
         else {
