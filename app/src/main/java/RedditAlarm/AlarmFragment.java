@@ -28,9 +28,9 @@ public class AlarmFragment extends Fragment {
     boolean PM = false;
     boolean[] dayBools;
     String url;
+    boolean edit = false;
 
     logicHandler logic;
-    passAlarm passLogic;
     UIClass ui;
     MainMenuFragment mainRef;
 
@@ -49,6 +49,7 @@ public class AlarmFragment extends Fragment {
     //used to communicate information between fragment (AlarmFragment) and activity (UIClass)
     public interface logicHandler {
         public void addAlarm(Alarm alarm);
+        public void editAlarm(Alarm alarm);
     }
 
     //used to pass an alarm object to mainMenu fragment
@@ -488,15 +489,27 @@ public class AlarmFragment extends Fragment {
 
 
     public void finish(View view) {
+        if (edit) {
+            this.alarm.hour = hour;
+            this.alarm.minute = minute;
+            this.alarm.PM = PM;
+            this.alarm.url = url;
+            this.alarm.daysOfWeek = dayBools;
+            this.logic.editAlarm(alarm);
+            this.mainRef.updateAdapter();
+            this.ui.killAlarmEdit(this);
+        }
+        else {
+            this.alarm.hour = hour;
+            this.alarm.minute = minute;
+            this.alarm.PM = PM;
+            this.alarm.url = url;
+            this.alarm.daysOfWeek = dayBools;
+            this.logic.addAlarm(alarm);
+            this.mainRef.updateAdapter();
+            this.ui.killAlarmEdit(this);
+        }
 
-        this.alarm.hour = hour;
-        this.alarm.minute = minute;
-        this.alarm.PM = PM;
-        this.alarm.url = url;
-        this.alarm.daysOfWeek = dayBools;
-        this.logic.addAlarm(this.alarm);
-        this.mainRef.addToList(this.alarm);
-        this.ui.killAlarmEdit(this);
     }
 
     public void finish_back(View view) {

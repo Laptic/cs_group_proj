@@ -192,6 +192,7 @@ public class LogicHandler
 
     public void editAlarm(Alarm alarmIn) {
         database.updateAlarm(alarmIn);
+        alarmList = database.getAllAlarm();
     }
 
     public void processFinish(List<RedditPost> output, Context conIn) {

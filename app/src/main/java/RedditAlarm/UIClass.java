@@ -27,7 +27,7 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.passAlar
         MainMenuFragment mainMenuFrag = new MainMenuFragment();
         mainMenuFrag.ui = this;
         mainMenuFrag.logicReference = logicReference;
-        mainMenuFrag.alarmList = (ArrayList<Alarm>) this.listOfAlarms;
+        mainMenuFrag.alarmList = (ArrayList<Alarm>) logicReference.alarmList;
         //the next two expressions are used to call and populate a frame layout with
         //a fragment (AlarmFragment)
         //fragment1 is the name of the FrameLayout under base_layout.xml
@@ -71,4 +71,5 @@ public class UIClass extends AppCompatActivity implements AlarmFragment.passAlar
     public void addAlarmFromFragment(Alarm alarm) {
         //MainMenuFragment mainMenu = getSupportFragmentManager().findFragmentById(R.id.);
     }
+
 }
