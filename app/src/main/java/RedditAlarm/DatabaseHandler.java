@@ -25,7 +25,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
         //TODO: RUN ONCE WITH DROPTABLES THEN REMOVE LINE
-        dropTable();
+        //dropTable();
     }
 
     @Override
