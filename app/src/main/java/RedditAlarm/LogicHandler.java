@@ -5,8 +5,6 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -32,7 +30,6 @@ public class LogicHandler
 
     public LogicHandler() {
     }
-
 
     // run upon trigger by AlarmManager
     @Override
@@ -68,9 +65,10 @@ public class LogicHandler
             RedditCall redditCall = new RedditCall();
             redditCall.delegate = this;
             redditCall.contextIn = context;
+            systemAddAlarm(this.alarmExec);
             redditCall.execute(retroCall);
         }
-        systemAddAlarm(this.alarmExec);
+
     }
 
     public LogicHandler(UIClass uiReference) {
