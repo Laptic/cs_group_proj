@@ -47,16 +47,18 @@ public class Notifications {
         bigText.setBigContentTitle("Alarm for: " + title);
         // end of alarm representation in notification
         Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+        v.vibrate(VibrationEffect.createOneShot(1100, VibrationEffect.DEFAULT_AMPLITUDE));
 
         bigText.setSummaryText("Good Morning");
         mBuilder.setSound(Uri.parse("uri://sadfasdfasdf.mp3"));
 
+
         if (output != null) {
             mBuilder.setContentTitle("Here are your three headlines for today.");
             mBuilder.setContentText("Tap here for your Headlines.");
-            mBuilder.setStyle(bigText.bigText("1: " + output.get(0).getTitle() +
-                    ".\n2: " + output.get(1).getTitle() + ".\n3: " + output.get(2).getTitle() + "."));
+            mBuilder.setStyle(bigText.bigText("1: " + output.get(0).getTitle() + ".\nPosted by: " + output.get(0).getAuthor() + " at " + output.get(0).getScore() +
+                    " upvotes.\n2: " + output.get(1).getTitle() + ".\nPosted by: " + output.get(1).getAuthor() + " at " + output.get(1).getScore() +
+                    " upvotes.\n3: " + output.get(2).getTitle() + ".\nPosted by: " + output.get(2).getAuthor() + " at " + output.get(2).getScore() + " upvotes."));
         } else {
             mBuilder.setContentText("No/Invalid subreddit provided. No Headlines today.");
             mBuilder.setStyle(bigText);
