@@ -76,7 +76,6 @@ public class LogicHandler
     public LogicHandler(UIClass uiReference) {
         this.ui = uiReference;
         database = new DatabaseHandler(ui);
-        database.dropTables();
         /* builds database from UI's context, populates a list of alarms with
             alarms created from database entries */
         alarmList = database.getAllAlarm();
@@ -92,19 +91,8 @@ public class LogicHandler
             this.context = ui.getApplicationContext();
         }
         alarmList = database.getAllAlarm();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.setTimeZone(TimeZone.getDefault());
-
-        if ((Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= alarmIn.hour) &&
-                (Calendar.getInstance().get(Calendar.MINUTE) >= alarmIn.minute)) {
-            calendar.add(Calendar.DAY_OF_YEAR, 1); // add, not set!
-        }
-        calendar.set(Calendar.HOUR_OF_DAY, alarmIn.hour);
-        calendar.set(Calendar.MINUTE, alarmIn.minute);
-        calendar.set(Calendar.SECOND, 0);
         // gets alarm manager instance from system
-
+        Calendar calendar = getNextTime(alarmIn);
         AlarmManager alarmMan =
                 (AlarmManager)
                         context.getSystemService(ALARM_SERVICE);
@@ -142,6 +130,64 @@ public class LogicHandler
         alarmManager.cancel(sender);
         alarmIn.status = false;
         editAlarm(alarmIn);
+    }
+
+    public Calendar getNextTime(Alarm alarmIn) {
+        boolean someDays = false;
+        for (int i = 0; i < alarmIn.daysOfWeek.length; i++) {
+            if (alarmIn.daysOfWeek[i]) {
+                someDays = true;
+            }
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.setTimeZone(TimeZone.getDefault());
+        if (someDays){
+            if(alarmIn.daysOfWeek[Calendar.DAY_OF_WEEK - 1]) {
+                if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= alarmIn.hour) {
+                    if (Calendar.getInstance().get(Calendar.MINUTE) >= alarmIn.minute) {
+                        int num = numDaysToEx(alarmIn);
+                        calendar.add(Calendar.DAY_OF_YEAR, num);
+                    }
+                }
+            }
+            else {
+                int num = numDaysToEx(alarmIn);
+                calendar.add(Calendar.DAY_OF_YEAR, num); // add, not set!
+            }
+        }
+        else {
+            if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= alarmIn.hour) {
+                if (Calendar.getInstance().get(Calendar.MINUTE) >= alarmIn.minute) {
+                    calendar.add(Calendar.DAY_OF_YEAR, 1);
+                }
+            }
+        }
+        calendar.set(Calendar.HOUR_OF_DAY, alarmIn.hour);
+        calendar.set(Calendar.MINUTE, alarmIn.minute);
+        calendar.set(Calendar.SECOND, 0);
+        return calendar;
+    }
+
+    private int numDaysToEx(Alarm alarmIn) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.setTimeZone(TimeZone.getDefault());
+        int index = 0;
+        int numAdded = 0;
+        while (index != Calendar.DAY_OF_WEEK - 1) {
+            if (alarmIn.daysOfWeek[index]) {
+                break;
+            }
+            else {
+                index ++;
+                numAdded++;
+                if (index > alarmIn.daysOfWeek.length -1) {
+                    index = 0;
+                }
+            }
+        }
+        return numAdded;
     }
 
     public void editAlarm(Alarm alarmIn) {

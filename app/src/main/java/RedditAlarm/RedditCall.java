@@ -24,7 +24,6 @@ public class RedditCall extends AsyncTask<Call<RedditJSON>, Void, RedditJSON> {
             return data.body();
         }
         catch (IOException e) {
-
             return null;
         }
 
