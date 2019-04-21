@@ -65,8 +65,8 @@ public class LogicHandler
             RedditCall redditCall = new RedditCall();
             redditCall.delegate = this;
             redditCall.contextIn = context;
-            systemAddAlarm(this.alarmExec);
             redditCall.execute(retroCall);
+            systemAddAlarm(this.alarmExec);
         }
 
     }
@@ -139,16 +139,18 @@ public class LogicHandler
                 someDays = true;
             }
         }
+        //Date date = new Date();
+
         Calendar calendar = Calendar.getInstance();
+        calendar.clear();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.setTimeZone(TimeZone.getDefault());
-        int currentDay = Calendar.DAY_OF_WEEK - 1;
-        int hourOfCurDay = Calendar.HOUR_OF_DAY;
-        int minOfCurDay = Calendar.MINUTE;
+        int currentDay = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        int hourOfCurDay = calendar.get(Calendar.HOUR_OF_DAY);
+        int minOfCurDay = calendar.get(Calendar.MINUTE);
         if (someDays){
             if(alarmIn.daysOfWeek[currentDay]) {
-                if (Calendar.getInstance().get(hourOfCurDay) >= alarmIn.hour) {
-                    if (Calendar.getInstance().get(minOfCurDay) >= alarmIn.minute) {
+                if (hourOfCurDay >= alarmIn.hour) {
+                    if (minOfCurDay >= alarmIn.minute) {
                         int num = numDaysToEx(alarmIn);
                         calendar.add(Calendar.DAY_OF_YEAR, num);
                     }
@@ -160,8 +162,8 @@ public class LogicHandler
             }
         }
         else {
-            if (Calendar.getInstance().get(hourOfCurDay) >= alarmIn.hour) {
-                if (Calendar.getInstance().get(minOfCurDay) >= alarmIn.minute) {
+            if (hourOfCurDay >= alarmIn.hour) {
+                if (minOfCurDay >= alarmIn.minute) {
                     calendar.add(Calendar.DAY_OF_YEAR, 1);
                 }
             }
@@ -174,15 +176,16 @@ public class LogicHandler
 
     private int numDaysToEx(Alarm alarmIn) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.setTimeZone(TimeZone.getDefault());
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
 
         // gets index representing tomorrow
-        int index = Calendar.DAY_OF_WEEK % 7;
+        int index = currentDay % 7;
 
         int numAdded = 1;
         // if index gets back to today, exits.
-        while (index != Calendar.DAY_OF_WEEK - 1) {
+        while (index != currentDay - 1) {
 
             // checks if the alarm can be set at day represented by index
             if (alarmIn.daysOfWeek[index]) {
