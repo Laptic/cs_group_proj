@@ -43,7 +43,9 @@ public class AlarmFragment extends Fragment {
         }
         hour = 12;
         minute = 0;
+        url = "";
     }
+
 
 
     //used to communicate information between fragment (AlarmFragment) and activity (UIClass)
@@ -94,6 +96,8 @@ public class AlarmFragment extends Fragment {
         else {
             PM_str = "am";
         }
+
+
 
         spinner_ampm.setSelection(getIndex(spinner_ampm,PM_str));
 
@@ -349,15 +353,20 @@ public class AlarmFragment extends Fragment {
             }
         });
 
+        final EditText urlText = (EditText) view.findViewById(R.id.url_text);
+
+        Button url_button = (Button) view.findViewById(R.id.url_button);
+
+        url_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+               url = urlText.getText().toString();
+
+            }
+        });
 
 
-        //the url is inputted now
-        EditText urlText = (EditText) view.findViewById(R.id.url_text);
-        //check if its empty
-        url = urlText.getText().toString();
-
-
-        //
         Button create_btn = (Button) view.findViewById(R.id.create_btn);
         create_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -400,7 +409,7 @@ public class AlarmFragment extends Fragment {
 
       this.PM = alarmIn.PM;
 
-
+      this.url = alarmIn.url;
 
 /*
       spinner_min.setSelection(getIndex(spinner_amPm,amPm));
