@@ -1,6 +1,5 @@
 package RedditAlarm;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -36,17 +35,17 @@ public class MainMenuFragment extends Fragment{
     // counts the amount of times the edit button has been pressed
     int buttonCounter = 0;
 
+    // declares the logic handler
     LogicHandler logicReference;
 
     // declares how the fragment interacts with other fragments
     private OnFragmentInteractionListener mListener;
 
+    // declares and initializes the main menu fragment
     final MainMenuFragment thisMenu = this;
 
     public MainMenuFragment() {
-
         // Required empty public constructor
-
     }
 
     /**
@@ -54,7 +53,6 @@ public class MainMenuFragment extends Fragment{
      *
      * @return A new instance of fragment MainMenuFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static MainMenuFragment newInstance() {
         MainMenuFragment fragment = new MainMenuFragment();
         Bundle args = new Bundle();
@@ -64,11 +62,7 @@ public class MainMenuFragment extends Fragment{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            //mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -98,6 +92,7 @@ public class MainMenuFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 AlarmFragment addAlarmFrag = ui.addAlarmFrag(thisMenu);
+                alarmList = sortList();
             }
         });
 
@@ -129,18 +124,14 @@ public class MainMenuFragment extends Fragment{
                     alarmListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                             AlarmFragment addAlarmFrag = ui.addAlarmFrag(thisMenu);
-                            //AlarmFragment addAlarmFrag = new AlarmFragment();
                             addAlarmFrag.populate(alarmList.get(position));
-                            //ui.inflateAlarmFrag(addAlarmFrag);
 
                             // deletes the alarm
                             logicReference.deleteAlarm(alarmList.get(position));
                             alarmList.remove(position);
 
                             alarmList = sortList();
-
                         }
                     });
                 }
@@ -150,30 +141,9 @@ public class MainMenuFragment extends Fragment{
         return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    //public void onButtonPressed(Uri uri) {
-    //if (mListener != null) {
-    //mListener.onFragmentInteraction(uri);
-    //}
-    //}
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        Activity activity = (Activity) context;
-
-        //if (context instanceof OnFragmentInteractionListener) {
-        //mListener = (OnFragmentInteractionListener) context;
-        //} else {
-        //throw new RuntimeException(context.toString()
-        //+ " must implement OnFragmentInteractionListener");
-        //}
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        }catch (ClassCastException e) {
-            //throw new ClassCastException(activity.toString() + " must override onMessageRead...");
-        }
     }
 
     @Override
@@ -192,17 +162,9 @@ public class MainMenuFragment extends Fragment{
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * Allows the fragment to interact with activities
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onMessageRead(String message);
     }
 
@@ -221,7 +183,8 @@ public class MainMenuFragment extends Fragment{
         if (n != 0) {
             for (int i = 0; i < n - 1; i++) {
                 for (int j = 0; j < n - i - 1; j++) {
-                    if (newList.get(j).getMiliTime() > newList.get(j + 1).getMiliTime()){
+                    //if (newList.get(j).getMiliTime() > newList.get(j + 1).getMiliTime()){
+                    if (getTotalMin(newList.get(j)) > getTotalMin(newList.get(j + 1))){
                         temp = newList.get(j);
                         newList.set(j, newList.get(j + 1));
                         newList.set(j + 1, temp);
@@ -232,5 +195,19 @@ public class MainMenuFragment extends Fragment{
 
         // returns the sorted list
         return newList;
+    }
+
+    // converts the time to minutes
+    public int getTotalMin(Alarm a) {
+        int time = (60 * a.hour) + (a.minute);
+
+        if (a.hour == 12 && !(a.PM)) {
+            time = a.minute;
+        }
+        else if (a.hour == 24 && a.PM) {
+            time = (60 * 11) * a.minute;
+        }
+
+        return time;
     }
 }
