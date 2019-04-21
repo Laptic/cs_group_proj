@@ -358,18 +358,17 @@ public class AlarmFragment extends Fragment {
         final EditText urlText = (EditText) view.findViewById(R.id.url_text);
 
         urlText.setText(url);
-
+/*
         Button url_button = (Button) view.findViewById(R.id.url_button);
 
         url_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                url = urlText.getText().toString();
 
             }
         });
-
+*/
 
         Button create_btn = (Button) view.findViewById(R.id.create_btn);
         create_btn.setOnClickListener(new View.OnClickListener() {
@@ -386,7 +385,7 @@ public class AlarmFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-
+                url = urlText.getText().toString();
                 finish_back(view);
 
             }
