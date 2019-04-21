@@ -17,6 +17,7 @@ public class AlarmAdapter extends BaseAdapter {
     // declares the list of the alarms
     private List<Alarm> alarmList;
 
+    LogicHandler logic = new LogicHandler();
     // constructs the alarm adapter
     public AlarmAdapter(Context c, List<Alarm> al){
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -112,9 +113,11 @@ public class AlarmAdapter extends BaseAdapter {
         // sets the alarm switch based on the status variable
         if (alarmViewed.status) {
             alarmSwitch.setChecked(true);
+            logic.systemAddAlarm(alarmViewed);
         }
         else {
             alarmSwitch.setChecked(false);
+            logic.deleteSystemAlarm(alarmViewed);
         }
 
         return v;
