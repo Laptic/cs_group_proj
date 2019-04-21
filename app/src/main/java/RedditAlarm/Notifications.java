@@ -87,7 +87,7 @@ public class Notifications {
                 r.stop();
             }
         };
-
+///
         Handler h = new Handler();
         h.postDelayed(s, 15000);
     }
