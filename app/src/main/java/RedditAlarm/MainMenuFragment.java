@@ -83,7 +83,7 @@ public class MainMenuFragment extends Fragment{
         final String doneText = "Done";
 
         // inflate the layout for this fragment
-        final AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
+        final AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList, logicReference);
         alarmListView.setAdapter(alarmAdapter);
 
 
@@ -108,7 +108,7 @@ public class MainMenuFragment extends Fragment{
                     editBtn.setText(editText);
 
                     // uses the alarm adapter class to modify the alarm list view
-                    AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
+                    AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList, logicReference);
                     alarmListView.setAdapter(alarmAdapter);
                 }
                 // sets the edit button to instead bring the user back to the main menu
@@ -116,8 +116,8 @@ public class MainMenuFragment extends Fragment{
                     editBtn.setText(doneText);
 
                     // uses the alarm adapter class to modify the alarm list view
-                    EditAlarmAdapter editAlarmAdapter = new EditAlarmAdapter(getActivity(), alarmList);
-                    editAlarmAdapter.logicReference = logicReference;
+                    EditAlarmAdapter editAlarmAdapter = new EditAlarmAdapter(getActivity(), alarmList, logicReference);
+                    editAlarmAdapter.logicHandler = logicReference;
                     alarmListView.setAdapter(editAlarmAdapter);
 
                     // allows the user to click on the alarm in order to edit it
@@ -157,7 +157,7 @@ public class MainMenuFragment extends Fragment{
         alarmList.add(alarmIn);
 
         // uses the alarm adapter class to modify the alarm list view
-        AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList);
+        AlarmAdapter alarmAdapter = new AlarmAdapter(getActivity(), alarmList, logicReference);
         alarmListView.setAdapter(alarmAdapter);
     }
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import java.util.List;
@@ -17,11 +18,14 @@ public class AlarmAdapter extends BaseAdapter {
     // declares the list of the alarms
     private List<Alarm> alarmList;
 
-    LogicHandler logic = new LogicHandler();
+    // declares the logic handler
+    public LogicHandler logicHandler;
+
     // constructs the alarm adapter
-    public AlarmAdapter(Context c, List<Alarm> al){
+    public AlarmAdapter(Context c, List<Alarm> al, LogicHandler lh){
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         alarmList = al;
+        logicHandler = lh;
     }
 
     // gets the number of alarms
@@ -45,7 +49,7 @@ public class AlarmAdapter extends BaseAdapter {
 
     // generates the items in the list view
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View v = mInflater.inflate(R.layout.alarm_listview_detail, null);
 
         // declares and initializes the parts of the alarm within the list
@@ -54,7 +58,7 @@ public class AlarmAdapter extends BaseAdapter {
         Switch alarmSwitch = v.findViewById(R.id.alarmSwitch);
 
         // declares and initializes the current alarm
-        Alarm alarmViewed = getItem(position);
+        final Alarm alarmViewed = getItem(position);
 
         // declares the text of the time
         String timeText = "";
@@ -113,12 +117,25 @@ public class AlarmAdapter extends BaseAdapter {
         // sets the alarm switch based on the status variable
         if (alarmViewed.status) {
             alarmSwitch.setChecked(true);
-            logic.systemAddAlarm(alarmViewed);
         }
         else {
             alarmSwitch.setChecked(false);
-            logic.deleteSystemAlarm(alarmViewed);
         }
+
+        // sets the alarm on or off
+        alarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton cb, boolean on){
+                if (on) {
+                    alarmViewed.status = true;
+                }
+                else {
+                    alarmViewed.status = false;
+                }
+
+                logicHandler.editAlarm(alarmViewed);
+            }
+        });
 
         return v;
     }
