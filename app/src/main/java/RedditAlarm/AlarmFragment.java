@@ -496,7 +496,9 @@ public class AlarmFragment extends Fragment {
             this.alarm.hour = hour;
             this.alarm.minute = minute;
             this.alarm.PM = PM;
-            this.alarm.url = url;
+            if (url != null) {
+                this.alarm.url = url;
+            }
             this.alarm.daysOfWeek = dayBools;
             this.alarm.id = id;
             this.logic.editAlarm(alarm);
@@ -507,7 +509,9 @@ public class AlarmFragment extends Fragment {
             this.alarm.hour = hour;
             this.alarm.minute = minute;
             this.alarm.PM = PM;
-            this.alarm.url = url;
+            if (url != null) {
+                this.alarm.url = url;
+            }
             this.alarm.daysOfWeek = dayBools;
             this.alarm.id = logic.getKey();
             this.logic.addAlarm(alarm);
